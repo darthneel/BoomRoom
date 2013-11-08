@@ -31,9 +31,6 @@ class DeviseCreateUsers < ActiveRecord::Migration
       # t.datetime :locked_at
 
       t.integer :room_id
-      t.boolean :played, :default => false 
-
-
       t.timestamps
     end
 
