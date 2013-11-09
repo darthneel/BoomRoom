@@ -8,7 +8,6 @@ class CreateSongs < ActiveRecord::Migration
       t.boolean :played, :default => false 
       t.integer :room_id
 
-
       t.timestamps
     end
   end
