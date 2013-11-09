@@ -14,18 +14,23 @@ var app = {
 			data: {room_id: room_id}
 		}).done(function(data) {
 			console.log(data);
+			// Need to set the media player to the data.elapsed that is passed back
+
 		});
 	},
 
-	// Function to send an AJAX request
+	// Function to send an AJAX request to add new song to the database
+	// and include it in the current room song list
+
+	// TODO: Need to add add_song method to Rooms controller and have it
+	// 			 create the song and append it to Room.songs. Find out how 
+  //       we'll be accessing song object data to pass back
 	addNewSong: function() {
 		$.ajax({
 			type: 'POST',
 			url: '/rooms/add_song',
 			dataType: 'json',
-			data: {}
-		}).done(function(data) {
-
+			data: {song: {artist: , title: , sc_link: , album_art: }}
 		});
 	}
 }
