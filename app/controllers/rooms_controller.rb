@@ -4,6 +4,10 @@ class RoomsController < ApplicationController
 
 	def index
 	end
+
+	def test_room
+		
+	end
 	
 
 end

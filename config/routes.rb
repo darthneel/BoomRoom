@@ -3,6 +3,9 @@ WdiProject3::Application.routes.draw do
 
   root 'rooms#index'
 
+  get '/rooms/test_room', to: "rooms#test_room"
+
+
   # root 'welcome#index'
 
   # The priority is based upon order of creation: first created -> highest priority.
