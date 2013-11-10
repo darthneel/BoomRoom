@@ -13,34 +13,33 @@ class RoomsController < ApplicationController
 	end
 
 	def initialize_room
+		@room = Room.find(params[:id])
 	end
 
 # Might need to be moved depending on how we want to trigger it (room show, for example)
-	def add_user
-    response.headers['Content-Type'] = 'text/javascript'
-    if current_user
-	    $redis.publish('rooms.add_user', {username: current_user.username, room_id: current_user.room.id}.to_json)
-	  end
-    render nothing: true
-	end
+	# def add_user
+ #    if current_user
+ #      response.headers['Content-Type'] = 'text/javascript'
+	#     $redis.publish('rooms.add_user', {username: current_user.id, room_id: current_user.room.id}.to_json)
+	#   end
+ #    render nothing: true
+	# end
 
 	def get_time
 		current_song = Song.where(currently_playing: true)
 		elapsed = Time.now - current_song.updated_at
 
-		render :json => {elapsed: elapsed, username: current_user.username}
+		render :json => {elapsed: elapsed, username: current_user.id}
 	end
 
 	def add_song
-		song = Song.new(song_params)
-		# room = current_user.room
-
-		if song.save
-			# room.songs << song
-			render :json => true
-		else
-			render :json => false
-		end
+		response.headers['Content-Type'] = 'text/javascript'
+		@song = Song.create(song_params)
+		room = current_user.room
+		room.songs << @song
+    $redis.publish('rooms.add_song', {title: @song.title, room_id: current_user.room.id}.to_json)
+    render nothing: true
+		# render :json => true
 	end
 
 	def change_song
@@ -69,18 +68,24 @@ class RoomsController < ApplicationController
   def events
     response.headers['Content-Type'] = 'text/event-stream'
     sse = Streamer::SSE.new(response.stream)
-    redis = Redis.new
-    redis.subscribe('rooms.add_user') do |on|
-      on.username do |event, data|
-        sse.write(data, event: 'rooms.add_user')
+    $redis = Redis.new
+    # redis.subscribe(['rooms.add_user', 'rooms.add_song']) do |on|
+    $redis.subscribe('rooms.add_song') do |on|
+      on.message do |event, data|
+      	# if event == 'rooms.add_song'
+      		sse.write(data, event: 'rooms.add_song')
+      	# elsif event == 'rooms.add_user'
+       #  	sse.write(data, event: 'rooms.add_user')
+      	# end
       end
     end
     render nothing: true
   rescue IOError
     # Client disconnected
   ensure
-    redis.quit
+    $redis.quit
     sse.close
+    # response.stream.close
   end
 
   def song_params

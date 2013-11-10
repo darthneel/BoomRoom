@@ -1,20 +1,28 @@
 #search-button {
-								height: 25px;
-								width: 100px;
-								margin-top: 25px;
-								border: 1px black solid;
-								text-align: center;
-								background: gray;
-								}
+	height: 25px;
+	width: 100px;
+	margin-top: 25px;
+	border: 1px black solid;
+	text-align: center;
+	background: gray;
+}
 
 .each-result {
-							width: 400px;
-							}
+	width: 400px;
+}
 
 #search-results{
-								float: left;
-								}
+	width: 45%;
+	float: left;
+}
 
 .hidden-index {
-							display: none;
-							}
+	display: none;
+}
+
+#playlist {
+	width: 45%;
+	float: left;
+	margin-left: 5%;
+}
+

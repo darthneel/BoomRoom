@@ -41,7 +41,7 @@ $(function() {
 		} else {
 		 	album_art = search_return[index].artwork_url;
 		}
-		app.addNewSong(title, artist, album_art, stream_url, sc_ident);
+		app.addNewSong(title, artist, stream_url, album_art, sc_ident);
 	});
 
 });
