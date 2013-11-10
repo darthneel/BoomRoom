@@ -46,15 +46,42 @@ $(function() {
 
 	function playSong(sc_ident){
 		if ($('#playlist').is(':empty')){
-	  			SC.stream('/tracks/' + sc_ident, function(sound){
-	  				song = sound;
-	          console.log(sound);
+	  			SC.stream('/tracks/' + sc_ident, {onfinish: function(){ 
+	  				app.changeCurrentSong(sc_ident);
+	  				}
+	  			}, function(sound){
+			  				song = sound;
+			          console.log(sound);
 
-	  				song.setVolume(100);
-	  				song.play();
-	  			});
+			  				song.setVolume(100);
+			  				song.play();
+			  			});
+		} else {
+	  			SC.stream('/tracks/' + sc_ident, {onfinish: function(){ 
+	  				app.changeCurrentSong(sc_ident);
+	  				}
+	  			}, function(sound){
+			  				song = sound;
+			          console.log(sound);
+
+			  				song.setVolume(100);
+			  				song.play();
+			  		});
 		}
 	}
+
+		// changeCurrentSong: function() {
+	// 	$.ajax({
+	// 		type: 'POST',
+	// 		url: '/rooms/change_song',
+	// 		dataType: 'json',
+	// 		// TODO: Find out how to get the id of current song into this param
+	// 		data: {current_sc_link: }
+	// 	}).done(function(data) {
+	// 		console.log(data);
+	// 		// Possibly have the next song as callback on end of last song?
+	// 	});
+	// }
 
 //** Media buttons 
 	
