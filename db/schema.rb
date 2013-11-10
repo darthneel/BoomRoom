@@ -40,7 +40,8 @@ ActiveRecord::Schema.define(version: 20131108194158) do
   create_table "songs", force: true do |t|
     t.string   "artist"
     t.string   "title"
-    t.string   "sc_link"
+    t.string   "stream_url"
+    t.integer  "sc_ident"
     t.text     "album_art"
     t.boolean  "played",     default: false
     t.integer  "room_id"

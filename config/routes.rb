@@ -9,4 +9,5 @@ WdiProject3::Application.routes.draw do
 
   get '/rooms/events', to: "rooms#events", as: "events_rooms"
 
+  post '/rooms/add_song', to: "rooms#add_song"
 end

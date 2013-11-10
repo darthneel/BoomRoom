@@ -6,6 +6,7 @@ class RoomsController < ApplicationController
 	# before_filter :authenticate_user!
 
 	def index
+		@rooms = Room.all
 	end
 
 	def test_room
@@ -31,11 +32,11 @@ class RoomsController < ApplicationController
 	end
 
 	def add_song
-		song = Song.new(params[:song])
-		room = current_user.room
+		song = Song.new(song_params)
+		# room = current_user.room
 
 		if song.save
-			room.songs << song
+			# room.songs << song
 			render :json => true
 		else
 			render :json => false
@@ -81,4 +82,9 @@ class RoomsController < ApplicationController
     redis.quit
     sse.close
   end
+
+  def song_params
+		params.require(:song).permit(:title, :artist, :stream_url, :album_art, :sc_ident)
+	end
+
 end 
