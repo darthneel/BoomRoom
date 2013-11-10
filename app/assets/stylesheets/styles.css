@@ -5,16 +5,23 @@
 								border: 1px black solid;
 								text-align: center;
 								background: gray;
-								}
+}
 
 .each-result {
 							width: 400px;
-							}
+}
 
 #search-results{
 								float: left;
-								}
+}
 
-.hidden-index {
-							display: none;
-							}
+#search {
+					margin-top: 20px;
+}
+
+#buttons li {
+							padding: 10px;
+}
+
+
+

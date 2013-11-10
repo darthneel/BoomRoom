@@ -31,7 +31,7 @@ var app = {
 			url: '/rooms/add_song',
 			dataType: 'json',
 			// TODO: Find out how to get the song info into this param
-			data: {song: {artist: artist , title: title , sc_link: stream_url, album_art: album_art, sc_ident: sc_ident}}
+			data: {song: {artist: artist , title: title , stream_url: stream_url, album_art: album_art, sc_ident: sc_ident}}
 		});
 	},
 

@@ -1,11 +1,11 @@
 var search_return;
+var song;
 
 $(function() {
 
 //***Connect to SoundCloud
 	SC.initialize({
 		client_id: '6fd538372b02e1f99a4145ee258cda36'
-		// client_secret: '487edef04ffa1df054d3551e26d80cd1'
 	});
 
 //***Searches SC API and return results
@@ -21,7 +21,7 @@ $(function() {
 		 	$search_results.empty();
 	 		for(i=0; i<tracks.length; i++){
 	 			var id = tracks[i].id;
-	 			$search_results.append($("<div class='each-result' id='song-"+id+"' data-index='"+i+"'><ul><li>"+tracks[i].title+"<ul><li><h5>"+tracks[i].user.username+"</h5></li></ul></li></ul></div>"));
+	 			$search_results.append($("<div class='each-result' id='song-"+id+"' data-index='"+i+"'><ul><li>"+tracks[i].title+"<ul><li><h4>"+tracks[i].user.username+"</h4></li></ul></li></ul></div>"));
 		 	}
 	 	});
 	});
@@ -41,9 +41,41 @@ $(function() {
 		} else {
 		 	album_art = search_return[index].artwork_url;
 		}
-		app.addNewSong(title, artist, album_art, stream_url, sc_ident);
+		app.addNewSong(title, artist, stream_url, album_art, sc_ident);
+		playSong(sc_ident);
+	});
+
+	function playSong(sc_ident){
+		if ($('#playlist').is(':empty')){
+	  			SC.stream('/tracks/' + sc_ident, function(sound){
+	  				song = sound;
+	          console.log(sound);
+
+	  				song.setVolume(100);
+	  				song.play();
+	  			});
+		}
+	}
+
+//** Media buttons 
+	
+	$('#play').on('click', function(){
+		song.play();
+	});
+	$('#pause').on('click', function(){
+		song.pause();
+	});
+	$('#mute').on('click', function(){
+		song.toggleMute();
 	});
 
 });
+
+
+
+
+
+
+
 
 

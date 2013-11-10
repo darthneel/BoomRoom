@@ -7,7 +7,8 @@ gem 'devise'
 gem 'soundcloud'
 gem 'puma'
 gem 'redis'
-
+gem 'font-awesome-less'
+gem 'pry'
 # Use postgresql as the database for Active Record
 gem 'pg'
 

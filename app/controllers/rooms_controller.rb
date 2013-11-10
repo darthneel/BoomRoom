@@ -12,7 +12,9 @@ class RoomsController < ApplicationController
 	def test_room
 	end
 
-	def initialize_room
+	def initialize_room # *** Adds a user to a room
+		@room = Room.find(params[:id])
+		@room.users << current_user
 	end
 
 # Might need to be moved depending on how we want to trigger it (room show, for example)
