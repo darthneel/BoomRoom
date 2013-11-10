@@ -13,7 +13,7 @@ class RoomsController < ApplicationController
 	end
 
 
-	def initialize_room # *** Adds a user to a room
+	def initialize_room  # *** Adds a user to a room
 		@room = Room.find(params[:id])
 		@room.users << current_user
 	end
@@ -41,7 +41,6 @@ class RoomsController < ApplicationController
 		room.songs << @song
     $redis.publish('rooms.add_song', {title: @song.title, room_id: current_user.room.id}.to_json)
     render nothing: true
-		# render :json => true
 	end
 
 	def change_song
@@ -70,9 +69,9 @@ class RoomsController < ApplicationController
   def events
     response.headers['Content-Type'] = 'text/event-stream'
     sse = Streamer::SSE.new(response.stream)
-    $redis = Redis.new
+    redis = Redis.new
     # redis.subscribe(['rooms.add_user', 'rooms.add_song']) do |on|
-    $redis.subscribe('rooms.add_song') do |on|
+    redis.subscribe('rooms.add_song') do |on|
       on.message do |event, data|
       	# if event == 'rooms.add_song'
       		sse.write(data, event: 'rooms.add_song')
@@ -85,9 +84,8 @@ class RoomsController < ApplicationController
   rescue IOError
     # Client disconnected
   ensure
-    $redis.quit
+    redis.quit
     sse.close
-    # response.stream.close
   end
 
   def song_params
