@@ -1,11 +1,20 @@
 <div id="room-<%= @room.id %>">
 
+	<div id = "buttons">
+		<ul>
+			<li id="play">Play</li>
+			<li id="pause">Pause</li>
+			<li id="mute">Mute</li>
+		</ul>
+	</div>
+
 	<div id="search">
-		<input type="text" name="search_box" id="search-text" size="15" placeholder="Search" autofocus />
+		<input type="text" name="search_box" id="search-text" size="15" placeholder="Search" autofocusf>
 		<div id="search-button">Search</div>
 	</div>
 
 	<div id="search-results"></div>
+
 	<ul id="playlist"></ul>
 
 </div>

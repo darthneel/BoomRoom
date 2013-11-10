@@ -16,13 +16,16 @@
 	float: left;
 }
 
-.hidden-index {
-	display: none;
-}
-
 #playlist {
 	width: 45%;
 	float: left;
 	margin-left: 5%;
 }
 
+#search {
+					margin-top: 20px;
+}
+
+#buttons li {
+							padding: 10px;
+}
