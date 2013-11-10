@@ -9,7 +9,6 @@ class RoomsController < ApplicationController
 	end
 
 	def test_room
-		
 	end
 
 # Might need to be moved depending on how we want to trigger it (room show, for example)
