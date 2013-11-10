@@ -11,7 +11,6 @@ $(function() {
 //***Searches SC API and return results
 	
 	$('#search-button').on('click', function(){
-
 		var search_string = $('#search-text').val();
 
 		SC.get('/tracks', { q: search_string, license: 'cc-by-sa' }, function(tracks) {
