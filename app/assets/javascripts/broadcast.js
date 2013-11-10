@@ -5,6 +5,6 @@ $(document).ready(function() {
   source.addEventListener('rooms.add_user', function (e) {
     data = JSON.parse(e.data);
     console.log(data);
-    $("#user-list-" + data.room_id).append($('<li>').text(data.username));
+    $("#" + data.room_id + " #user-list").append($('<li>').text(data.username));
   });
 });
