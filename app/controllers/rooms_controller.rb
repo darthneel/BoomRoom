@@ -3,13 +3,15 @@ require 'streamer/sse'
 class RoomsController < ApplicationController
 	include ActionController::Live
 
-	before_filter :authenticate_user!
+	# before_filter :authenticate_user!
 
 	def index
 	end
 
 	def test_room
-		
+	end
+
+	def initialize_room
 	end
 	
 	def get_time

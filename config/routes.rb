@@ -5,8 +5,8 @@ WdiProject3::Application.routes.draw do
 
   get '/rooms/test_room', to: "rooms#test_room"
 
-  resources :rooms do
-    collection { get :events }
-  end
+  get '/rooms/:id', to: "rooms#initialize_room", as: "room"
+
+  get '/rooms/events', to: "rooms#events", as: "events_rooms"
 
 end
