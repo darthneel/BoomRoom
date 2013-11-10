@@ -6,3 +6,15 @@
 								text-align: center;
 								background: gray;
 								}
+
+.each-result {
+							width: 400px;
+							}
+
+#search-results{
+								float: left;
+								}
+
+.hidden-index {
+							display: none;
+							}

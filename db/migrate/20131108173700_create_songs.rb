@@ -3,7 +3,8 @@ class CreateSongs < ActiveRecord::Migration
     create_table :songs do |t|
       t.string :artist
       t.string :title
-      t.string :sc_link
+      t.string :stream_url      
+      t.integer :sc_ident
       t.text :album_art
       t.boolean :played, :default => false 
       t.integer :room_id
@@ -12,3 +13,4 @@ class CreateSongs < ActiveRecord::Migration
     end
   end
 end
+
