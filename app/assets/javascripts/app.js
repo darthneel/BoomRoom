@@ -13,7 +13,8 @@ var app = {
 			dataType: 'json',
 			data: {room_id: room_id}
 		}).done(function(data) {
-			console.log(data);
+			console.log(data.elapsed);
+			window.playSong(data.sc_ident, data.elapsed);
 		});
 	},
 

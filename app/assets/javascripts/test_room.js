@@ -4,8 +4,10 @@ var room_id;
 
 
 // *** Plays a song based on the soundcloud id that is being passed in
-	function playSong(sc_ident){
-		SC.stream('/tracks/' + sc_ident, {onfinish: function(){ 
+	function playSong(sc_ident, position){
+		if(typeof(position)==='undefined') position = 0;
+
+		SC.stream('/tracks/' + sc_ident, {position: position, onfinish: function(){ 
 			app.changeCurrentSong(sc_ident);
 			}
 		}, function(sound){
@@ -17,15 +19,12 @@ var room_id;
 			});
 	}
 
-		function getRoomId() {
-			room_id_unparsed = $(".room").attr('id');
-			room_id = parseInt(room_id_unparsed.replace("room-",""));
-		}
+	function getRoomId() {
+		room_id_unparsed = $(".room").attr('id');
+		room_id = parseInt(room_id_unparsed.replace("room-",""));
+	}
 
 $(function() {
-
-	
-
 //***Connect to SoundCloud
 	SC.initialize({
 		client_id: '6fd538372b02e1f99a4145ee258cda36'
