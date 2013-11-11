@@ -13,10 +13,15 @@ class RoomsController < ApplicationController
 		response.headers['Content-Type'] = 'text/javascript'
 		room = Room.find(params[:room_id])
 		current_song = Song.where(currently_playing: true).first
-		$redis.publish(room.id + '.add_user', {user: current_user.email, room_id: room.id}.to_json)
+		$redis.publish("add_user_#{room.id}", {user: current_user.email}.to_json)
 		room.users << current_user
-		elapsed = ((Time.now - current_song.updated_at) * 1000).to_i
-		render :json => {elapsed: elapsed, sc_ident: current_song.sc_ident}
+
+		if current_song
+			elapsed = ((Time.now - current_song.updated_at) * 1000).to_i
+			render :json => {elapsed: elapsed, sc_ident: current_song.sc_ident}
+		else
+			render :json => false
+		end
 	end
 
 	def add_song
@@ -30,7 +35,7 @@ class RoomsController < ApplicationController
 
 		@song = Song.create(new_song_params)
 		room.songs << @song
-    $redis.publish(room.id + '.add_song', {title: @song.title, room_id: room.id}.to_json)
+    $redis.publish("add_song_#{room.id}", {title: @song.title}.to_json)
     render nothing: true
 	end
 
@@ -59,26 +64,31 @@ class RoomsController < ApplicationController
 			new_song = Song.where(played: false, room_id: room.id).limit(1).first
 			new_song.update_attributes(currently_playing: true)
 
-			$redis.publish(room.id + '.change_song', {sc_ident: new_song.sc_ident, room_id: room.id}.to_json)
-			render nothing: true
-			# render :json => {sc_ident: new_song.sc_ident}
+			# $redis.publish("#{room.id}.change_song", {sc_ident: new_song.sc_ident, room_id: room.id}.to_json)
+			# render nothing: true
+			render :json => {sc_ident: new_song.sc_ident}
 		end
 	end
 
   def events
     response.headers['Content-Type'] = 'text/event-stream'
-    room = current_user.room
+    # room_id = /\/rooms\/(.+)/.match(request.original_url)[1].to_i
+    room_id = params[:room_id]
+
+    puts "THIS IS THE URL: #{request.original_url}"
+    puts "THIS IS THE ROOM ID: #{room_id}"
+
     sse = Streamer::SSE.new(response.stream)
     redis = Redis.new
     # redis.subscribe(['rooms.add_user', 'rooms.add_song']) do |on|
-    redis.subscribe([room.id + '.add_song', room.id + '.add_user', room.id + '.change_song']) do |on|
+    redis.subscribe(["add_song_#{room_id}", "add_user_#{room_id}", "change_song_#{room_id}"]) do |on|
       on.message do |event, data|
-      	if event == room.id + '.add_song'
-      		sse.write(data, event: room.id + '.add_song')
-      	elsif event == room.id + '.add_user'
-        	sse.write(data, event: room.id + '.add_user')
-        elsif event == room.id + '.change_song'
-        	sse.write(data, event: room.id + '.change_song')
+      	if event == "add_song_#{room_id}"
+      		sse.write(data, event: "add_song_#{room_id}")
+      	elsif event == "add_user_#{room_id}"
+        	sse.write(data, event: "add_user_#{room_id}")
+        elsif event == "change_song_#{room_id}"
+        	sse.write(data, event: "change_song_#{room_id}")
       	end
       end
     end

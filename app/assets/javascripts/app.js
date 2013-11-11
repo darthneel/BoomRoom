@@ -14,7 +14,9 @@ var app = {
 			data: {room_id: room_id}
 		}).done(function(data) {
 			console.log(data.elapsed);
-			window.playSong(data.sc_ident, data.elapsed);
+			if(data.sc_ident) {
+				window.playSong(data.sc_ident, data.elapsed);
+			}
 		});
 	},
 
