@@ -12,7 +12,10 @@
 //
 //= require jquery
 //= require jquery_ujs
-// require jquery.turbolinks
+//= require soundcloud_sdk
 //= require app
+//= require test_room
+// require jquery.turbolinks
 // require turbolinks
-//= require_tree .
+//= require broadcast
+// require_tree .

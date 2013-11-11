@@ -100,6 +100,7 @@ $(function() {
 	// TODO: Talk to one of instructors for better way to do this.
 	if((document.URL).match(/\/rooms\/.+/)) {
 		getRoomId();
+		console.log(room_id);
 		app.newUser(room_id);
 	}
 });
