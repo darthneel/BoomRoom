@@ -2,31 +2,18 @@ var search_return;
 var song;
 
 
-// *** Plays song if no other song is in the playlist, otherwise it plays the next song based on the ajax call in changeCurrentSong
+// *** Plays a song based on the soundcloud id that is being passed in
 	function playSong(sc_ident){
-		if ($('#playlist').is(':empty')){
-	  			SC.stream('/tracks/' + sc_ident, {onfinish: function(){ 
-	  				app.changeCurrentSong(sc_ident);
-	  				}
-	  			}, function(sound){
-			  				song = sound;
-			          console.log(sound);
+		SC.stream('/tracks/' + sc_ident, {onfinish: function(){ 
+			app.changeCurrentSong(sc_ident);
+			}
+		}, function(sound){
+					song = sound;
+		      console.log(sound);
 
-			  				song.setVolume(100);
-			  				song.play();
-			  			});
-		} else {
-	  			SC.stream('/tracks/' + sc_ident, {onfinish: function(){ 
-	  				app.changeCurrentSong(sc_ident);
-	  				}
-	  			}, function(sound){
-			  				song = sound;
-			          console.log(sound);
-
-			  				song.setVolume(100);
-			  				song.play();
-			  		});
-		}
+					song.setVolume(100);
+					song.play();
+			});
 	}
 
 $(function() {
@@ -69,7 +56,9 @@ $(function() {
 		 	album_art = search_return[index].artwork_url;
 		}
 		app.addNewSong(title, artist, stream_url, album_art, sc_ident);
-		playSong(sc_ident);
+		if ($('#playlist').is(':empty')){
+			playSong(sc_ident);
+		}
 	});
 
 //** Media buttons 
