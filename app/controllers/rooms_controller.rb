@@ -47,7 +47,7 @@ class RoomsController < ApplicationController
 
 	def first_song
 		room = current_user.room
-		first_song = Song.find_by_sc_ident(params[:sc_ident])
+		first_song = Song.find_by_sc_ident(params[:current_sc_ident])
 		first_song.update_attributes(currently_playing: true)
 
 		render :json => {sc_ident: first_song.sc_ident}
