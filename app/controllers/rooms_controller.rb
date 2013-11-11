@@ -20,10 +20,10 @@ class RoomsController < ApplicationController
 
 	def get_time
 		response.headers['Content-Type'] = 'text/javascript'
-		current_song = Song.where(currently_playing: true)
+		current_song = Song.where(currently_playing: true).first
 		$redis.publish('rooms.add_user', {user: current_user.email, room_id: current_user.room.id}.to_json)
 		
-		elapsed = Time.now - current_song[0].updated_at
+		elapsed = Time.now - current_song.updated_at
 		render :json => {elapsed: elapsed}
 	end
 
