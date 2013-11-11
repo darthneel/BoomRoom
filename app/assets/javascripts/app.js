@@ -6,16 +6,13 @@ var app = {
 
 	// TODO: Need to add get_time method to Rooms controller and have it
 	// 			 render json for the soundcloud stream url
-	afterAddNewUser: function(room_id) {
+	newUser: function() {
 		$.ajax({
 			url: '/rooms/get_time',
 			type: 'POST',
-			dataType: 'json',
-			data: {room_id: room_id}
+			dataType: 'json'
 		}).done(function(data) {
 			console.log(data);
-			// Need to set the media player to the data.elapsed that is passed back
-
 		});
 	},
 

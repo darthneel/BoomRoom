@@ -13,6 +13,6 @@ $(document).ready(function() {
   	console.log('add user redis triggered');
     data = JSON.parse(e.data);
     console.log(data);
-    $("#" + data.room_id + " #current-users").append($('<li>').text(data.user));
+    $("#room-" + data.room_id + " #current-users").append($('<li>').text(data.user));
   });
 });

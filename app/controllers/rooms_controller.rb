@@ -16,7 +16,6 @@ class RoomsController < ApplicationController
 	def initialize_room  # *** Adds a user to a room
 		@room = Room.find(params[:id])
 		@room.users << current_user
-		$redis.publish('rooms.add_user', {user: current_user.email, room_id: current_user.room.id}.to_json)
 	end
 
 # Might need to be moved depending on how we want to trigger it (room show, for example)
@@ -29,10 +28,12 @@ class RoomsController < ApplicationController
 	# end
 
 	def get_time
+		response.headers['Content-Type'] = 'text/javascript'
 		current_song = Song.where(currently_playing: true)
-		elapsed = Time.now - current_song.updated_at
-
-		render :json => {elapsed: elapsed, username: current_user.id}
+		$redis.publish('rooms.add_user', {user: current_user.email, room_id: current_user.room.id}.to_json)
+		
+		elapsed = Time.now - current_song[0].updated_ats
+		render :json => {elapsed: elapsed}
 	end
 
 	def add_song
