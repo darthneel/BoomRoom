@@ -32,7 +32,7 @@ class RoomsController < ApplicationController
 		current_song = Song.where(currently_playing: true)
 		$redis.publish('rooms.add_user', {user: current_user.email, room_id: current_user.room.id}.to_json)
 		
-		elapsed = Time.now - current_song[0].updated_ats
+		elapsed = Time.now - current_song[0].updated_at
 		render :json => {elapsed: elapsed}
 	end
 
@@ -49,12 +49,16 @@ class RoomsController < ApplicationController
 		room = current_user.room
 		current_sc_ident = params[:current_sc_ident]
 
-		ended_song = Song.where(sc_ident: current_sc_ident, room_id: room.id)
-		ended_song.first.update_attributes(played: true)
+		ended_song = Song.where(sc_ident: current_sc_ident, room_id: room.id).first
+
+		if ended_song
+			ended_song.update_attributes(played: true, currently_playing: false)
+		end
 
 		new_song = Song.where(played: false, room_id: current_user.room.id).limit(1).first
 
 		if new_song
+			new_song.update_attributes(currently_playing: true)
 			render :json => {sc_ident: new_song.sc_ident}
 		else
 			songs = Song.where(played: true, room_id: room.id)
@@ -63,7 +67,8 @@ class RoomsController < ApplicationController
 				song.update_attributes(played: false)
 			end
 
-			new_song = Song.where(played: false, room_id: room.id).limit(1)
+			new_song = Song.where(played: false, room_id: room.id).limit(1).first
+			new_song.update_attributes(currently_playing: true)
 			render :json => {sc_ident: new_song.sc_ident}
 		end
 	end

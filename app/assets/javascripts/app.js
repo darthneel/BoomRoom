@@ -22,13 +22,13 @@ var app = {
 	// TODO: Need to add add_song method to Rooms controller and have it
 	// 			 create the song and append it to Room.songs. Find out how 
   //       we'll be accessing song object data to pass back
-	addNewSong: function(artist, title, stream_url, album_art, sc_ident) {
+	addNewSong: function(artist, title, stream_url, album_art, sc_ident, genre) {
 		$.ajax({
 			type: 'POST',
 			url: '/rooms/add_song',
 			dataType: 'json',
 			// TODO: Find out how to get the song info into this param
-			data: {song: {artist: artist , title: title , stream_url: stream_url, album_art: album_art, sc_ident: sc_ident}}
+			data: {song: {artist: artist , title: title , stream_url: stream_url, album_art: album_art, sc_ident: sc_ident, genre: genre}}
 		});
 	},
 
