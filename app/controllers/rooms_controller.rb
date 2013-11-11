@@ -69,7 +69,7 @@ class RoomsController < ApplicationController
     response.headers['Content-Type'] = 'text/event-stream'
     room = current_user.room
     sse = Streamer::SSE.new(response.stream)
-    redis = Redis.new
+    redis = Redis.new 
     # redis.subscribe(['rooms.add_user', 'rooms.add_song']) do |on|
     redis.subscribe([room.id + '.add_song', room.id + '.add_user', room.id + '.change_song']) do |on|
       on.message do |event, data|

@@ -2,9 +2,7 @@ var search_return;
 var song;
 var room_id;
 
-window.onbeforeunload = function(e) {
-  alert('Bye!');
-};
+
 
 // *** Plays a song based on the soundcloud id that is being passed in
 	function playSong(sc_ident, position){
@@ -18,7 +16,7 @@ window.onbeforeunload = function(e) {
 			song.unload();
 		}
 		song = sound;
-    console.log(sound);
+		console.log(sound);
 		song.setVolume(100);
 		song.play();
 	});
@@ -28,6 +26,12 @@ window.onbeforeunload = function(e) {
 		room_id_unparsed = $(".room").attr('id');
 		room_id = parseInt(room_id_unparsed.replace("room-",""));
 	}
+
+	window.onbeforeunload = function(e) {
+	console.log("Bye!");
+	
+	return null;
+	};
 
 $(function() {
 //***Connect to SoundCloud
@@ -40,15 +44,15 @@ $(function() {
 	$('#search-button').on('click', function(){
 		var search_string = $('#search-text').val();
 		SC.get('/tracks', { q: search_string, limit: 25, order: 'hotness', streamable: true }, function(tracks) {
-		 	console.log(tracks); 
-		 	search_return = tracks;
-		 	var $search_results = $('#search-results');
-		 	$search_results.empty();
-	 		for(i=0; i<tracks.length; i++){
-	 			var id = tracks[i].id;
-	 			$search_results.append($("<div class='each-result' id='song-"+id+"' data-index='"+i+"'><ul><li>"+tracks[i].title+"<ul><li><h4>"+tracks[i].user.username+"</h4></li></ul></li></ul></div>"));
-		 	}
-	 	});
+			console.log(tracks); 
+			search_return = tracks;
+			var $search_results = $('#search-results');
+			$search_results.empty();
+			for(i=0; i<tracks.length; i++){
+				var id = tracks[i].id;
+				$search_results.append($("<div class='each-result' id='song-"+id+"' data-index='"+i+"'><ul><li>"+tracks[i].title+"<ul><li><h4>"+tracks[i].user.username+"</h4></li></ul></li></ul></div>"));
+			}
+		});
 	});
 
 //***Allows user to move songs from search results to playlist.  Also calls a function to add the song to the database
@@ -63,14 +67,14 @@ $(function() {
 		var album_art;
 		var genre;
 		if(search_return[index].artwork_url === null){
-		 	album_art = "no image";
+			album_art = "no image";
 		} else {
-		 	album_art = search_return[index].artwork_url;
+			album_art = search_return[index].artwork_url;
 		}
 		if(search_return[index].genre === null){
-		 	genre = "no genre"; 
+			genre = "no genre"; 
 		} else {
-		 	genre = search_return[index].genre;
+			genre = search_return[index].genre;
 		}
 		app.addNewSong(artist, title, stream_url, album_art, sc_ident, genre);
 		if ($('#playlist').is(':empty')){
