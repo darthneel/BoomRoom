@@ -43,18 +43,36 @@ $(function() {
 		app.addNewSong(title, artist, stream_url, album_art, sc_ident);
 		playSong(sc_ident);
 	});
+// 
+
+	sc_ident = app.changeCurrentSong();
 
 	function playSong(sc_ident){
 		if ($('#playlist').is(':empty')){
-	  			SC.stream('/tracks/' + sc_ident, function(sound){
-	  				song = sound;
-	          console.log(sound);
+	  			SC.stream('/tracks/' + sc_ident, {onfinish: function(){ 
+	  				app.changeCurrentSong(sc_ident);
+	  				}
+	  			}, function(sound){
+			  				song = sound;
+			          console.log(sound);
 
-	  				song.setVolume(100);
-	  				song.play();
-	  			});
+			  				song.setVolume(100);
+			  				song.play();
+			  			});
+		} else {
+	  			SC.stream('/tracks/' + sc_ident, {onfinish: function(){ 
+	  				app.changeCurrentSong(sc_ident);
+	  				}
+	  			}, function(sound){
+			  				song = sound;
+			          console.log(sound);
+
+			  				song.setVolume(100);
+			  				song.play();
+			  		});
 		}
 	}
+
 
 //** Media buttons 
 	

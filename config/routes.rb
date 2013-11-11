@@ -11,5 +11,7 @@ WdiProject3::Application.routes.draw do
 
   post '/rooms/add_song', to: "rooms#add_song"
 
+  post '/rooms/change_song', to: "rooms#change_song"
+
   root 'rooms#index'
 end

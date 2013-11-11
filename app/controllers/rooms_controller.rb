@@ -46,15 +46,15 @@ class RoomsController < ApplicationController
 
 	def change_song
 		room = current_user.room
-		current_sc_link = params[:current_sc_link]
+		current_sc_ident = params[:current_sc_ident]
 
-		ended_song = Song.where(sc_link: current_sc_link, room_id: room.id)
-		ended_song.update_attributes(played: true)
+		ended_song = Song.where(sc_ident: current_sc_ident, room_id: room.id)
+		ended_song.first.update_attributes(played: true)
 
-		new_song = Song.where(played: false, room_id: current_user.room.id).limit(1)
+		new_song = Song.where(played: false, room_id: current_user.room.id).limit(1).first
 
-		if new_song[0]
-			render :json => {sc_link: new_song.sc_link}
+		if new_song
+			render :json => {sc_ident: new_song.sc_ident}
 		else
 			songs = Song.where(played: true, room_id: room.id)
 			
@@ -63,7 +63,7 @@ class RoomsController < ApplicationController
 			end
 
 			new_song = Song.where(played: false, room_id: room.id).limit(1)
-			render :json => {sc_link: new_song.sc_link}
+			render :json => {sc_ident: new_song.sc_ident}
 		end
 	end
 

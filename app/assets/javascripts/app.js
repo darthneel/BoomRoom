@@ -34,16 +34,18 @@ var app = {
 
 	// Function to send an AJAX request to change the current song in the room
 	// and to return the next song to the room?
-	// changeCurrentSong: function() {
-	// 	$.ajax({
-	// 		type: 'POST',
-	// 		url: '/rooms/change_song',
-	// 		dataType: 'json',
-	// 		// TODO: Find out how to get the id of current song into this param
-	// 		data: {current_sc_link: }
-	// 	}).done(function(data) {
-	// 		console.log(data);
-	// 		// Possibly have the next song as callback on end of last song?
-	// 	});
-	// }
-}
+	changeCurrentSong: function(sc_ident) {
+		$.ajax({
+			type: 'POST',
+			url: '/rooms/change_song',
+			dataType: 'json',
+			// TODO: Find out how to get the id of current song into this param
+			data: {current_sc_ident: sc_ident}
+		}).done(function(data) {
+			sc_ident = data.sc_ident;
+			window.opener.document.calledonready.playSong(sc_ident);
+			// return data.sc_ident;
+			// Possibly have the next song as callback on end of last song?
+		});
+	}
+};
