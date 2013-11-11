@@ -15,14 +15,15 @@ class RoomsController < ApplicationController
 
 	def initialize_room  # *** Adds a user to a room
 		@room = Room.find(params[:id])
-		@room.users << current_user
+		@users = @room.users
 	end
 
 	def get_time
 		response.headers['Content-Type'] = 'text/javascript'
+		room = Room.find(params[:room_id])
 		current_song = Song.where(currently_playing: true)
-		$redis.publish('rooms.add_user', {user: current_user.email, room_id: current_user.room.id}.to_json)
-		
+		$redis.publish('rooms.add_user', {user: current_user.email, room_id: room.id}.to_json)
+		room.users << current_user
 		elapsed = Time.now - current_song[0].updated_at
 		render :json => {elapsed: elapsed}
 	end
