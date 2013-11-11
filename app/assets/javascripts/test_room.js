@@ -4,18 +4,47 @@ var room_id;
 
 
 // *** Plays a song based on the soundcloud id that is being passed in
-	function playSong(sc_ident){
-		SC.stream('/tracks/' + sc_ident, {onfinish: function(){ 
-			app.changeCurrentSong(sc_ident);
-			}
-		}, function(sound){
-					song = sound;
-		      console.log(sound);
+	// function playSong(sc_ident, position){
+	// 	if(typeof(position)==='undefined') position = 0;
+	// 	SC.whenStreamingReady(function(){
+	// 		var sound = SC.stream('/tracks/' + sc_ident, {autoPlay: true, position: position, onfinish: function(){ 
+	// 			app.changeCurrentSong(sc_ident);
+	// 			}
+	// 		}, function(sound){
+	// 					song = sound;
+	// 		      console.log(sound);
+	// 			    song.setVolume(100);
+	// 			});
+	// 	});
+	// }
 
-					song.setVolume(100);
-					song.play();
-			});
-	}
+
+
+function playSong(sc_ident, position){
+	SC.stream('/tracks/' + sc_ident, {autoPlay: true, onfinish: function(){ 
+			app.changeCurrentSong(sc_ident);
+		}
+	}, function(sound){
+		song = sound;
+    console.log(sound);
+		song.setVolume(100);
+	});
+	song.setPosition(180000);
+}
+
+// 	var play_sound = function(id) {
+
+//     SC.whenStreamingReady(function() {
+//         var sound = SC.stream("/tracks/"+id,{autoPlay: false}, function(sound) {
+//             sound.play({
+//                 whileplaying: function() {
+//                     console.log( this.position );
+//                 }
+//             });
+//         });
+//     });
+
+// };
 
 		function getRoomId() {
 			room_id_unparsed = $(".room").attr('id');
