@@ -38,19 +38,16 @@ class RoomsController < ApplicationController
 
 	def add_song
 		response.headers['Content-Type'] = 'text/javascript'
-		@song = Song.create(song_params)
 		room = current_user.room
+		new_song_params = song_params
+		if room.songs.length == 0
+			new_song_params[:currently_playing] = true
+		end
+
+		@song = Song.create(new_song_params)
 		room.songs << @song
     $redis.publish('rooms.add_song', {title: @song.title, room_id: current_user.room.id}.to_json)
     render nothing: true
-	end
-
-	def first_song
-		room = current_user.room
-		first_song = Song.find_by_sc_ident(params[:current_sc_ident])
-		first_song.update_attributes(currently_playing: true)
-
-		render :json => {sc_ident: first_song.sc_ident}
 	end
 
 	def change_song
@@ -104,7 +101,7 @@ class RoomsController < ApplicationController
   end
 
   def song_params
-		params.require(:song).permit(:title, :artist, :stream_url, :album_art, :sc_ident)
+		params.require(:song).permit(:title, :artist, :stream_url, :album_art, :sc_ident, :genre)
 	end
 
 end 
