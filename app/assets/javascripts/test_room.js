@@ -1,5 +1,6 @@
 var search_return;
 var song;
+var room_id;
 
 
 // *** Plays a song based on the soundcloud id that is being passed in
@@ -16,7 +17,14 @@ var song;
 			});
 	}
 
+		function getRoomId() {
+			room_id_unparsed = $(".room").attr('id');
+			room_id = parseInt(room_id_unparsed.replace("room-",""));
+		}
+
 $(function() {
+
+	
 
 //***Connect to SoundCloud
 	SC.initialize({
@@ -56,7 +64,7 @@ $(function() {
 		 	album_art = search_return[index].artwork_url;
 		}
 		if(search_return[index].genre === null){
-		 	genre = "no genre";
+		 	genre = "no genre"; 
 		} else {
 		 	genre = search_return[index].genre;
 		}
@@ -83,7 +91,8 @@ $(function() {
 
 	// TODO: Talk to one of instructors for better way to do this.
 	if((document.URL).match(/\/rooms\/.+/)) {
-		app.newUser();
+		getRoomId();
+		app.newUser(room_id);
 	}
 });
 

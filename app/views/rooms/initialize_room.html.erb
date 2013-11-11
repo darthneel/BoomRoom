@@ -1,4 +1,4 @@
-<div id="room-<%= @room.id %>">
+<div class="room" id="room-<%= @room.id %>">
 
 	<div id = "buttons">
 		<ul>
@@ -9,7 +9,7 @@
 	</div>
 
 	<div id="search">
-		<input type="text" name="search_box" id="search-text" size="15" placeholder="Search" autofocusf>
+		<input type="text" name="search_box" id="search-text" size="15" placeholder="Search" autofocus>
 		<div id="search-button">Search</div>
 	</div>
 
@@ -17,6 +17,12 @@
 
 	<ul id="playlist"></ul>
 
-	<ul id="current-users"></ul>
+	<ul id="current-users">
+		<% @users.each do |user| %>
+		<li>
+			<%= user.email %>
+		</li>
+		<% end %>	
+	</ul>
 
 </div>
