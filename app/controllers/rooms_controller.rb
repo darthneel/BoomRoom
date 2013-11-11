@@ -16,6 +16,7 @@ class RoomsController < ApplicationController
 	def initialize_room  # *** Adds a user to a room
 		@room = Room.find(params[:id])
 		@room.users << current_user
+		$redis.publish('rooms.add_user', {user: current_user.email, room_id: current_user.room.id}.to_json)
 	end
 
 # Might need to be moved depending on how we want to trigger it (room show, for example)
@@ -71,13 +72,13 @@ class RoomsController < ApplicationController
     sse = Streamer::SSE.new(response.stream)
     redis = Redis.new
     # redis.subscribe(['rooms.add_user', 'rooms.add_song']) do |on|
-    redis.subscribe('rooms.add_song') do |on|
+    redis.subscribe(['rooms.add_song', 'rooms.add_user']) do |on|
       on.message do |event, data|
-      	# if event == 'rooms.add_song'
+      	if event == 'rooms.add_song'
       		sse.write(data, event: 'rooms.add_song')
-      	# elsif event == 'rooms.add_user'
-       #  	sse.write(data, event: 'rooms.add_user')
-      	# end
+      	elsif event == 'rooms.add_user'
+        	sse.write(data, event: 'rooms.add_user')
+      	end
       end
     end
     render nothing: true
