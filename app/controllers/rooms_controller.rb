@@ -18,15 +18,6 @@ class RoomsController < ApplicationController
 		@room.users << current_user
 	end
 
-# Might need to be moved depending on how we want to trigger it (room show, for example)
-	# def add_user
- #    if current_user
- #      response.headers['Content-Type'] = 'text/javascript'
-	#     $redis.publish('rooms.add_user', {username: current_user.id, room_id: current_user.room.id}.to_json)
-	#   end
- #    render nothing: true
-	# end
-
 	def get_time
 		response.headers['Content-Type'] = 'text/javascript'
 		current_song = Song.where(currently_playing: true)
