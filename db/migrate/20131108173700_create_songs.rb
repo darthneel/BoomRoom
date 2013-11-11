@@ -6,7 +6,9 @@ class CreateSongs < ActiveRecord::Migration
       t.string :stream_url      
       t.integer :sc_ident
       t.text :album_art
-      t.boolean :played, :default => false 
+      t.string :genre
+      t.boolean :played, :default => false
+      t.boolean :currently_playing, :default => false
       t.integer :room_id
 
       t.timestamps
