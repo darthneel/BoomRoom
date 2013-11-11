@@ -68,8 +68,11 @@ $(function() {
 		song.toggleMute();
 	});
 
+	// TODO: Talk to one of instructors for better way to do this.
+	if((document.URL).match(/\/rooms\/.+/)) {
+		app.newUser();
+	}
 });
-
 
 
 
