@@ -27,7 +27,7 @@ $(function() {
 	
 	$('#search-button').on('click', function(){
 		var search_string = $('#search-text').val();
-		SC.get('/tracks', { q: search_string, limit: 25, order: 'hotness' }, function(tracks) {
+		SC.get('/tracks', { q: search_string, limit: 25, order: 'hotness', streamable: true }, function(tracks) {
 		 	console.log(tracks); 
 		 	search_return = tracks;
 		 	var $search_results = $('#search-results');
@@ -49,7 +49,7 @@ $(function() {
 		var stream_url = search_return[index].stream_url;
 		var artist = search_return[index].user.username;
 		var album_art;
-		var genre
+		var genre;
 		if(search_return[index].artwork_url === null){
 		 	album_art = "no image";
 		} else {
@@ -60,7 +60,7 @@ $(function() {
 		} else {
 		 	genre = search_return[index].genre;
 		}
-		app.addNewSong(title, artist, stream_url, album_art, sc_ident, genre);
+		app.addNewSong(artist, title, stream_url, album_art, sc_ident, genre);
 		if ($('#playlist').is(':empty')){
 			playSong(sc_ident);
 		}
