@@ -42,9 +42,9 @@ var app = {
 			// TODO: Find out how to get the id of current song into this param
 			data: {current_sc_ident: sc_ident}
 		}).done(function(data) {
-			sc_ident = data.sc_ident;
-			window.opener.document.calledonready.playSong(sc_ident);
-			// return data.sc_ident;
+			var sc_ident = data.sc_ident;
+			console.log(sc_ident);
+			window.playSong(sc_ident);
 			// Possibly have the next song as callback on end of last song?
 		});
 	}
