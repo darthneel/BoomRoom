@@ -55,7 +55,7 @@ class RoomsController < ApplicationController
 			ended_song.update_attributes(played: true, currently_playing: false)
 		end
 
-		new_song = Song.where(played: false, room_id: current_user.room.id).limit(1).first
+		new_song = Song.where(played: false, room_id: room.id).limit(1).first
 
 		if new_song
 			new_song.update_attributes(currently_playing: true)

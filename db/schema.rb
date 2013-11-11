@@ -43,6 +43,7 @@ ActiveRecord::Schema.define(version: 20131108194158) do
     t.string   "stream_url"
     t.integer  "sc_ident"
     t.text     "album_art"
+    t.string   "genre"
     t.boolean  "played",            default: false
     t.boolean  "currently_playing", default: false
     t.integer  "room_id"
