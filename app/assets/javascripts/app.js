@@ -47,18 +47,6 @@ var app = {
 			window.playSong(sc_ident);
 			// Possibly have the next song as callback on end of last song?
 		});
-	},
-
-	firstSong: function(sc_ident) {
-		$.ajax({
-			type: 'POST',
-			url: '/rooms/first_song',
-			dataType: 'json',
-			data: {current_sc_ident: sc_ident}
-		}).done(function(data) {
-			var sc_ident = data.sc_ident;
-			console.log(sc_ident);
-			window.firstSongPlay(sc_ident);
-		});
 	}
+
 };
