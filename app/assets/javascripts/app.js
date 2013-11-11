@@ -46,7 +46,8 @@ var app = {
 			data: {current_sc_ident: sc_ident}
 		}).done(function(data) {
 			sc_ident = data.sc_ident;
-			playSong(sc_ident);
+			window.opener.document.calledonready.playSong(sc_ident);
+			// return data.sc_ident;
 			// Possibly have the next song as callback on end of last song?
 		});
 	}

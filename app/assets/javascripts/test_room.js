@@ -43,6 +43,9 @@ $(function() {
 		app.addNewSong(title, artist, stream_url, album_art, sc_ident);
 		playSong(sc_ident);
 	});
+// 
+
+	sc_ident = app.changeCurrentSong();
 
 	function playSong(sc_ident){
 		if ($('#playlist').is(':empty')){
@@ -70,18 +73,6 @@ $(function() {
 		}
 	}
 
-		// changeCurrentSong: function() {
-	// 	$.ajax({
-	// 		type: 'POST',
-	// 		url: '/rooms/change_song',
-	// 		dataType: 'json',
-	// 		// TODO: Find out how to get the id of current song into this param
-	// 		data: {current_sc_link: }
-	// 	}).done(function(data) {
-	// 		console.log(data);
-	// 		// Possibly have the next song as callback on end of last song?
-	// 	});
-	// }
 
 //** Media buttons 
 	
