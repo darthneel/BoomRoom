@@ -15,5 +15,5 @@ WdiProject3::Application.routes.draw do
 
   post '/rooms/get_time', to: "rooms#get_time"
 
-  root 'rooms#index'
+  root 'home#index'
 end

@@ -2,59 +2,34 @@ var search_return;
 var song;
 var room_id;
 
+window.onbeforeunload = function(e) {
+  alert('Bye!');
+};
 
 // *** Plays a song based on the soundcloud id that is being passed in
-	// function playSong(sc_ident, position){
-	// 	if(typeof(position)==='undefined') position = 0;
-	// 	SC.whenStreamingReady(function(){
-	// 		var sound = SC.stream('/tracks/' + sc_ident, {autoPlay: true, position: position, onfinish: function(){ 
-	// 			app.changeCurrentSong(sc_ident);
-	// 			}
-	// 		}, function(sound){
-	// 					song = sound;
-	// 		      console.log(sound);
-	// 			    song.setVolume(100);
-	// 			});
-	// 	});
-	// }
+	function playSong(sc_ident, position){
+		if(typeof(position)==='undefined') position = 0;
 
-
-
-function playSong(sc_ident, position){
-	SC.stream('/tracks/' + sc_ident, {autoPlay: true, onfinish: function(){ 
+		SC.stream('/tracks/' + sc_ident, {position: position, onfinish: function(){
 			app.changeCurrentSong(sc_ident);
 		}
 	}, function(sound){
+		if(song){
+			song.unload();
+		}
 		song = sound;
     console.log(sound);
 		song.setVolume(100);
+		song.play();
 	});
-	song.setPosition(180000);
 }
 
-// 	var play_sound = function(id) {
-
-//     SC.whenStreamingReady(function() {
-//         var sound = SC.stream("/tracks/"+id,{autoPlay: false}, function(sound) {
-//             sound.play({
-//                 whileplaying: function() {
-//                     console.log( this.position );
-//                 }
-//             });
-//         });
-//     });
-
-// };
-
-		function getRoomId() {
-			room_id_unparsed = $(".room").attr('id');
-			room_id = parseInt(room_id_unparsed.replace("room-",""));
-		}
+	function getRoomId() {
+		room_id_unparsed = $(".room").attr('id');
+		room_id = parseInt(room_id_unparsed.replace("room-",""));
+	}
 
 $(function() {
-
-	
-
 //***Connect to SoundCloud
 	SC.initialize({
 		client_id: '6fd538372b02e1f99a4145ee258cda36'
@@ -105,12 +80,12 @@ $(function() {
 
 //** Media buttons 
 	
-	$('#play').on('click', function(){
-		song.play();
-		console.log(song);
-	});
+	// $('#play').on('click', function(){
+	// 	song.play();
+	// 	console.log(song);
+	// });
 	$('#pause').on('click', function(){
-		song.pause();
+		song.togglePause();
 		console.log(song);
 	});
 	$('#mute').on('click', function(){
