@@ -2,15 +2,7 @@ require 'streamer/sse'
 
 class RoomsController < ApplicationController
 	include ActionController::Live
-
-	# before_filter :authenticate_user!
-
-	def index
-	end
-
-	def test_room
-	end
-
+	
 
 	def initialize_room  # *** Adds a user to a room
 		@room = Room.find(params[:id])
@@ -21,7 +13,7 @@ class RoomsController < ApplicationController
 		response.headers['Content-Type'] = 'text/javascript'
 		room = Room.find(params[:room_id])
 		current_song = Song.where(currently_playing: true).first
-		$redis.publish('rooms.add_user', {user: current_user.email, room_id: room.id}.to_json)
+		$redis.publish(room.id + '.add_user', {user: current_user.email, room_id: room.id}.to_json)
 		room.users << current_user
 		elapsed = ((Time.now - current_song.updated_at) * 1000).to_i
 		render :json => {elapsed: elapsed, sc_ident: current_song.sc_ident}
@@ -38,7 +30,7 @@ class RoomsController < ApplicationController
 
 		@song = Song.create(new_song_params)
 		room.songs << @song
-    $redis.publish('rooms.add_song', {title: @song.title, room_id: current_user.room.id}.to_json)
+    $redis.publish(room.id + '.add_song', {title: @song.title, room_id: room.id}.to_json)
     render nothing: true
 	end
 
@@ -66,21 +58,27 @@ class RoomsController < ApplicationController
 
 			new_song = Song.where(played: false, room_id: room.id).limit(1).first
 			new_song.update_attributes(currently_playing: true)
-			render :json => {sc_ident: new_song.sc_ident}
+
+			$redis.publish(room.id + '.change_song', {sc_ident: new_song.sc_ident, room_id: room.id}.to_json)
+			render nothing: true
+			# render :json => {sc_ident: new_song.sc_ident}
 		end
 	end
 
   def events
     response.headers['Content-Type'] = 'text/event-stream'
+    room = current_user.room
     sse = Streamer::SSE.new(response.stream)
     redis = Redis.new
     # redis.subscribe(['rooms.add_user', 'rooms.add_song']) do |on|
-    redis.subscribe(['rooms.add_song', 'rooms.add_user']) do |on|
+    redis.subscribe([room.id + '.add_song', room.id + '.add_user', room.id + '.change_song']) do |on|
       on.message do |event, data|
-      	if event == 'rooms.add_song'
-      		sse.write(data, event: 'rooms.add_song')
-      	elsif event == 'rooms.add_user'
-        	sse.write(data, event: 'rooms.add_user')
+      	if event == room.id + '.add_song'
+      		sse.write(data, event: room.id + '.add_song')
+      	elsif event == room.id + '.add_user'
+        	sse.write(data, event: room.id + '.add_user')
+        elsif event == room.id + '.change_song'
+        	sse.write(data, event: room.id + '.change_song')
       	end
       end
     end
