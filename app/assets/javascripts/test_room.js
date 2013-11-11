@@ -16,6 +16,19 @@ var song;
 			});
 	}
 
+	function firstSongPlay(sc_ident){
+		SC.stream('/tracks/' + sc_ident, {onfinish: function(){ 
+			app.changeCurrentSong(sc_ident);
+			}
+		}, function(sound){
+					song = sound;
+		      console.log(sound);
+
+					song.setVolume(100);
+					song.play();
+			});
+	}
+
 $(function() {
 
 //***Connect to SoundCloud
@@ -62,7 +75,7 @@ $(function() {
 		}
 		app.addNewSong(artist, title, stream_url, album_art, sc_ident, genre);
 		if ($('#playlist').is(':empty')){
-			playSong(sc_ident);
+			firstSongPlay(sc_ident);
 		}
 	});
 
@@ -86,11 +99,6 @@ $(function() {
 		app.newUser();
 	}
 });
-
-
-
-
-
 
 
 
