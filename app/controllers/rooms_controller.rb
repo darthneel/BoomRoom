@@ -3,7 +3,6 @@ require 'streamer/sse'
 class RoomsController < ApplicationController
 	include ActionController::Live
 	
-
 	def initialize_room  # *** Adds a user to a room
 		@room = Room.find(params[:id])
 		@users = @room.users
