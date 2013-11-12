@@ -8,6 +8,7 @@ class RoomsController < ApplicationController
 		@room = Room.find(params[:id])
 		@users = @room.users
 		@playlist = @room.songs
+		@this_user = current_user
 	end
 
 	def get_time
