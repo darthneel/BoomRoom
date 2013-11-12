@@ -80,7 +80,7 @@ $(function() {
 
 		if (typeof(song) === 'undefined'){
 			console.log('if loop worked');
-			app.newUser(room_id);
+			playSong(sc_ident);
 		}
 
 
