@@ -70,6 +70,17 @@ class RoomsController < ApplicationController
 		end
 	end
 
+	def remove_user
+		room = Room.find(params[:room_id].to_i)
+		puts room
+		puts room.id
+		user = current_user
+		puts user
+		room.users.delete(user)
+
+		render nothing: true
+	end
+
   def events
     response.headers['Content-Type'] = 'text/event-stream'
     # room_id = /\/rooms\/(.+)/.match(request.original_url)[1].to_i

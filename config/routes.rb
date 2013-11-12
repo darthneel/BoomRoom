@@ -15,5 +15,7 @@ WdiProject3::Application.routes.draw do
 
   post '/rooms/get_time', to: "rooms#get_time"
 
+  post '/rooms/remove_user', to: "rooms#remove_user"
+
   root 'home#index'
 end

@@ -28,9 +28,13 @@ var room_id;
 	}
 
 	window.onbeforeunload = function(e) {
-	console.log("Bye!");
-	
-	return null;
+		// console.log("Bye!");
+		// console.log(room_id);
+		var id = parseInt(room_id);
+		app.removeUser(id);
+		setTimeout(function(){
+		  return null;
+		}, 5000)
 	};
 
 $(function() {

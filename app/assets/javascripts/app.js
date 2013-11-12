@@ -20,15 +20,14 @@ var app = {
 		});
 	},
 
-	//  unsubscribeUser: function() {
-	// 	$.ajax({
-	// 		url: '/rooms/unsubscribe_user',
-	// 		type: 'POST',
-	// 		dataType: 'json'
-	// 	}).done(function(data) {
-	// 		console.log(data);
-	// 	});
-	// },
+	removeUser: function(room_id) {
+		$.ajax({
+			url: '/rooms/remove_user',
+			type: 'POST',
+			dataType: 'json',
+			data: {room_id: room_id}
+		});
+	},
 
 	// Function to send an AJAX request to add new song to the database
 	// and include it in the current room song list
