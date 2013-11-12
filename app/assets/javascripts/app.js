@@ -23,6 +23,7 @@ var app = {
 	removeUser: function(id) {
 		$.ajax({
 			url: '/rooms/remove_user',
+			async: false,
 			type: 'POST',
 			dataType: 'json',
 			data: {room_id: id}
@@ -63,3 +64,4 @@ var app = {
 	}
 
 };
+e

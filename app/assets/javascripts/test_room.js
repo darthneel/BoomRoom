@@ -29,10 +29,7 @@ var room_id;
 
 	window.onbeforeunload = function(e) {
 		var id = parseInt(room_id);
-		app.removeUser(id);
-		setTimeout(function(){
-		  return null;
-		}, 5000);
+		return null;
 	};
 
 $(function() {

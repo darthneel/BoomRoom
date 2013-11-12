@@ -15,7 +15,14 @@
 
 	<div id="search-results"></div>
 
-	<ul id="playlist"></ul>
+<div>
+	<h2>Playlist</h2>
+	<ul id="playlist">
+		<% @playlist.each do |song| %>
+			<li><%= song.title %></li>
+		<% end %>
+	</ul>
+</div>
 
 	<ul id="current-users">
 		<% @users.each do |user| %>

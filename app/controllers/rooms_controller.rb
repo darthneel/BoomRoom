@@ -7,6 +7,7 @@ class RoomsController < ApplicationController
 	def initialize_room  # *** Adds a user to a room
 		@room = Room.find(params[:id])
 		@users = @room.users
+		@playlist = @room.songs
 	end
 
 	def get_time
