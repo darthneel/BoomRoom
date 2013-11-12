@@ -28,11 +28,11 @@ var room_id;
 	}
 
 	window.onbeforeunload = function(e) {
-		var id = parseInt(room_id);
-		app.removeUser(id);
-		setTimeout(function(){
+		if((document.URL).match(/\/rooms\/.+/)) {
+			var id = parseInt(room_id);
+			app.removeUser(id);
 		  return null;
-		}, 5000);
+		}
 	};
 
 $(function() {

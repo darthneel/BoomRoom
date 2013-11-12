@@ -25,6 +25,7 @@ var app = {
 			url: '/rooms/remove_user',
 			type: 'POST',
 			dataType: 'json',
+			async: false,
 			data: {room_id: id}
 		});
 	},

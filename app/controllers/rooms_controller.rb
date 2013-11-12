@@ -13,7 +13,7 @@ class RoomsController < ApplicationController
 		response.headers['Content-Type'] = 'text/javascript'
 		room = Room.find(params[:room_id])
 		current_song = Song.where(currently_playing: true).first
-		$redis.publish("add_user_#{room.id}", {user: current_user.email}.to_json)
+		$redis.publish("add_user_#{room.id}", {user: current_user.email, id: current_user.id}.to_json)
 		room.users << current_user
 
 		if current_song
@@ -71,12 +71,11 @@ class RoomsController < ApplicationController
 	end
 
 	def remove_user
-		room = Room.find(params[:room_id])
-		puts room
-		puts room.id
+		room = Room.find(params[:room_id].to_i)
 		user = current_user
-		puts user
 		room.users.delete(user)
+
+		$redis.publish("remove_user_#{room.id}", {user: current_user.email, id: current_user.id}.to_json)
 
 		render nothing: true
 	end
@@ -92,7 +91,7 @@ class RoomsController < ApplicationController
     sse = Streamer::SSE.new(response.stream)
     redis = Redis.new 
     # redis.subscribe(['rooms.add_user', 'rooms.add_song']) do |on|
-    redis.subscribe(["add_song_#{room_id}", "add_user_#{room_id}", "change_song_#{room_id}"]) do |on|
+    redis.subscribe(["add_song_#{room_id}", "add_user_#{room_id}", "change_song_#{room_id}", "remove_user_#{room_id}"]) do |on|
       on.message do |event, data|
       	if event == "add_song_#{room_id}"
       		sse.write(data, event: "add_song_#{room_id}")
@@ -100,6 +99,8 @@ class RoomsController < ApplicationController
         	sse.write(data, event: "add_user_#{room_id}")
         elsif event == "change_song_#{room_id}"
         	sse.write(data, event: "change_song_#{room_id}")
+        elsif event == "remove_user_#{room_id}"
+        	sse.write(data, event: "remove_user_#{room_id}")
       	end
       end
     end
