@@ -88,11 +88,11 @@ function searchResultClick() {
 		} else {
 			genre = search_return[index].genre;
 		}
+		app.addNewSong(artist, title, stream_url, album_art, sc_ident, genre);
 		if(typeof(song) === 'undefined'){
-			playSong(sc_ident);
+			app.changeCurrentSong(sc_ident);
 			$('#current-track').text(title);
 		}
-		app.addNewSong(artist, title, stream_url, album_art, sc_ident, genre);
 	});
 }
 
