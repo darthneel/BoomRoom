@@ -41,6 +41,7 @@ var app = {
 			type: 'POST',
 			url: '/rooms/add_song',
 			dataType: 'json',
+			async: false,
 			// TODO: Find out how to get the song info into this param
 			data: {song: {artist: artist , title: title , stream_url: stream_url, album_art: album_art, sc_ident: sc_ident, genre: genre}}
 		});

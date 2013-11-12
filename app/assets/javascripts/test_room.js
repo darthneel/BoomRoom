@@ -79,9 +79,10 @@ $(function() {
 			genre = search_return[index].genre;
 		}
 		app.addNewSong(artist, title, stream_url, album_art, sc_ident, genre);
-
-		playSong(sc_ident);
-
+		
+		if (typeof(song) === 'undefined'){
+			playSong(sc_ident);
+		}
 	});
 
 //** Media buttons 
