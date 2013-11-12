@@ -6,7 +6,6 @@ var room_id;
 
 // *** Plays a song based on the soundcloud id that is being passed in
 	function playSong(sc_ident, position){
-		console.log('function is hit');
 		if(typeof(position)==='undefined') position = 0;
 		SC.stream('/tracks/' + sc_ident, {position: position, onfinish: function(){
 			app.changeCurrentSong(sc_ident);
@@ -78,11 +77,14 @@ $(function() {
 		} else {
 			genre = search_return[index].genre;
 		}
-		app.addNewSong(artist, title, stream_url, album_art, sc_ident, genre);
-		
+
 		if (typeof(song) === 'undefined'){
+			console.log('if loop worked');
 			playSong(sc_ident);
 		}
+		
+		app.addNewSong(artist, title, stream_url, album_art, sc_ident, genre);
+		
 	});
 
 //** Media buttons 
