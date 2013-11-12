@@ -26,7 +26,7 @@
 
 	<ul id="current-users">
 		<% @users.each do |user| %>
-		<li>
+		<li id="<%= user.id %>">
 			<%= user.email %>
 		</li>
 		<% end %>	
