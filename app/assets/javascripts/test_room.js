@@ -78,11 +78,12 @@ $(function() {
 			genre = search_return[index].genre;
 		}
 
-		if (typeof(song) === 'undefined'){
-			console.log('if loop worked');
-			playSong(sc_ident);
-		}
-		
+		// if (typeof(song) === 'undefined'){
+		// 	console.log('if loop worked');
+		// 	playSong(sc_ident);
+		// }
+		playSong(sc_ident);
+
 		app.addNewSong(artist, title, stream_url, album_art, sc_ident, genre);
 		
 	});
