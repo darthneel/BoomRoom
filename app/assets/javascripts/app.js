@@ -11,6 +11,7 @@ var app = {
 			url: '/rooms/get_time',
 			type: 'POST',
 			dataType: 'json',
+			async: false,
 			data: {room_id: room_id}
 		}).done(function(data) {
 			console.log(data.elapsed);
