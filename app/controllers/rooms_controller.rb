@@ -86,16 +86,11 @@ class RoomsController < ApplicationController
 
   def events
     response.headers['Content-Type'] = 'text/event-stream'
-    # room_id = /\/rooms\/(.+)/.match(request.original_url)[1].to_i
     room_id = params[:room_id]
-
-    puts "THIS IS THE URL: #{request.original_url}"
-    puts "THIS IS THE ROOM ID: #{room_id}"
-
     sse = Streamer::SSE.new(response.stream)
     redis = Redis.new 
-    # redis.subscribe(['rooms.add_user', 'rooms.add_song']) do |on|
-    redis.subscribe(["add_song_#{room_id}", "add_user_#{room_id}", "change_song_#{room_id}", "remove_user_#{room_id}"]) do |on|
+
+    redis.subscribe(["add_song_#{room_id}", "add_user_#{room_id}", "change_song_#{room_id}", "remove_user_#{room_id}", "heart"]) do |on|
       on.message do |event, data|
       	if event == "add_song_#{room_id}"
       		sse.write(data, event: "add_song_#{room_id}")
@@ -105,15 +100,21 @@ class RoomsController < ApplicationController
         	sse.write(data, event: "change_song_#{room_id}")
         elsif event == "remove_user_#{room_id}"
         	sse.write(data, event: "remove_user_#{room_id}")
+        elsif event == "heart"
+        	sse.write(data, event: "heart")
       	end
       end
     end
-    render nothing: true
+    # render nothing: true
   rescue IOError
     # Client disconnected
+    redis.quit
+    sse.close
+    response.stream.close
   ensure
     redis.quit
     sse.close
+    response.stream.close
   end
 
   def song_params
