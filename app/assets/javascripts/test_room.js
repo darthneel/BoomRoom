@@ -78,9 +78,9 @@ $(function() {
 			genre = search_return[index].genre;
 		}
 
-		if (typeof(song) === 'undefined'){
-			console.log('if loop worked');
+		if(typeof(song) === 'undefined'){
 			playSong(sc_ident);
+			$('#current-track').text(title);
 		}
 
 
