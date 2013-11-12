@@ -26,11 +26,12 @@ $(function() {
 	  	$("#room-" + room_id + " #current-users #" + data.id).remove();
 	  });
 
-	  // source.addEventListener(room_id + '.change_song', function (e) {
-	  // 	console.log('change song redis triggered');
-	  // 	data = JSON.parse(e.data);
-	  // 	console.log(data);
-	  // 	window.playSong(data.sc_ident);
-	  // });
+	  source.addEventListener('change_song_'+room_id, function (e) {
+	  	console.log('change song redis triggered');
+	  	data = JSON.parse(e.data);
+	  	console.log(data);
+	  	window.playSong(data.sc_ident);
+	  	$("#room-" + room_id + " #current-track").text(data.title)
+	  });
 	}
 });

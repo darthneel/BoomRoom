@@ -42,6 +42,7 @@ class RoomsController < ApplicationController
 	end
 
 	def change_song
+		response.headers['Content-Type'] = 'text/javascript'
 		room = current_user.room
 		current_sc_ident = params[:current_sc_ident]
 
@@ -55,7 +56,9 @@ class RoomsController < ApplicationController
 
 		if new_song
 			new_song.update_attributes(currently_playing: true)
-			render :json => {sc_ident: new_song.sc_ident}
+
+			$redis.publish("change_song_#{room.id}", {sc_ident: new_song.sc_ident, title: new_song.title}.to_json)
+			render nothing: true
 		else
 			songs = Song.where(played: true, room_id: room.id)
 			
@@ -66,9 +69,9 @@ class RoomsController < ApplicationController
 			new_song = Song.where(played: false, room_id: room.id).limit(1).first
 			new_song.update_attributes(currently_playing: true)
 
-			# $redis.publish("#{room.id}.change_song", {sc_ident: new_song.sc_ident, room_id: room.id}.to_json)
-			# render nothing: true
-			render :json => {sc_ident: new_song.sc_ident}
+			$redis.publish("change_song_#{room.id}", {sc_ident: new_song.sc_ident, title: new_song.title}.to_json)
+			render nothing: true
+			# render :json => {sc_ident: new_song.sc_ident}
 		end
 	end
 
