@@ -6,8 +6,8 @@ var room_id;
 
 // *** Plays a song based on the soundcloud id that is being passed in
 	function playSong(sc_ident, position){
+		console.log('function is hit');
 		if(typeof(position)==='undefined') position = 0;
-		console.log(position);
 		SC.stream('/tracks/' + sc_ident, {position: position, onfinish: function(){
 			app.changeCurrentSong(sc_ident);
 		}
