@@ -66,6 +66,12 @@ class RoomsController < ApplicationController
 		room = Room.find(params[:room_id].to_i)
 		user = current_user
 		room.users.delete(user)
+		if room.users.length == 0
+			room.songs.each do |song|
+				song.destroy
+			end
+			room.destroy
+		end
 		$redis.publish("remove_user_#{room.id}", {user: current_user.username, id: current_user.id}.to_json)
 		render nothing: true
 	end
