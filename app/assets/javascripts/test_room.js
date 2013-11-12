@@ -28,9 +28,9 @@ var room_id;
 	}
 
 	window.onbeforeunload = function(e) {
-	console.log("Bye!");
-	
-	return null;
+		console.log("Bye!");
+		
+		return null;
 	};
 
 $(function() {
