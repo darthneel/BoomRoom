@@ -16,6 +16,7 @@ var app = {
 		}).done(function(data) {
 			console.log(data.elapsed);
 			if(data.sc_ident) {
+				$("#room-" + room_id + " #current-track").text(data.title);
 				window.playSong(data.sc_ident, data.elapsed);
 			}
 		});

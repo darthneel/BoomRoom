@@ -14,12 +14,11 @@ class RoomsController < ApplicationController
 		response.headers['Content-Type'] = 'text/javascript'
 		room = Room.find(params[:room_id])
 		current_song = Song.where(currently_playing: true).first
-		$redis.publish("add_user_#{room.id}", {user: current_user.email, id: current_user.id}.to_json)
+		$redis.publish("add_user_#{room.id}", {user: current_user.username, id: current_user.id}.to_json)
 		room.users << current_user
-
 		if current_song
 			elapsed = ((Time.now - current_song.updated_at) * 1000).to_i
-			render :json => {elapsed: elapsed, sc_ident: current_song.sc_ident}
+			render :json => {elapsed: elapsed, sc_ident: current_song.sc_ident, title: current_song.title}
 		else
 			render :json => false
 		end
@@ -29,11 +28,9 @@ class RoomsController < ApplicationController
 		response.headers['Content-Type'] = 'text/javascript'
 		room = current_user.room
 		new_song_params = song_params
-
 		if room.songs.length == 0
 			new_song_params[:currently_playing] = true
 		end
-
 		@song = Song.create(new_song_params)
 		room.songs << @song
     $redis.publish("add_song_#{room.id}", {title: @song.title}.to_json)
@@ -44,33 +41,24 @@ class RoomsController < ApplicationController
 		response.headers['Content-Type'] = 'text/javascript'
 		room = current_user.room
 		current_sc_ident = params[:current_sc_ident]
-
 		ended_song = Song.where(sc_ident: current_sc_ident, room_id: room.id).first
-
 		if ended_song
 			ended_song.update_attributes(played: true, currently_playing: false)
 		end
-
 		new_song = Song.where(played: false, room_id: room.id).limit(1).first
-
 		if new_song
 			new_song.update_attributes(currently_playing: true)
-
 			$redis.publish("change_song_#{room.id}", {sc_ident: new_song.sc_ident, title: new_song.title}.to_json)
 			render nothing: true
 		else
-			songs = Song.where(played: true, room_id: room.id)
-			
+			songs = Song.where(played: true, room_id: room.id)			
 			songs.each do |song|
 				song.update_attributes(played: false)
 			end
-
 			new_song = Song.where(played: false, room_id: room.id).limit(1).first
 			new_song.update_attributes(currently_playing: true)
-
 			$redis.publish("change_song_#{room.id}", {sc_ident: new_song.sc_ident, title: new_song.title}.to_json)
 			render nothing: true
-			# render :json => {sc_ident: new_song.sc_ident}
 		end
 	end
 
@@ -78,9 +66,7 @@ class RoomsController < ApplicationController
 		room = Room.find(params[:room_id].to_i)
 		user = current_user
 		room.users.delete(user)
-
-		$redis.publish("remove_user_#{room.id}", {user: current_user.email, id: current_user.id}.to_json)
-
+		$redis.publish("remove_user_#{room.id}", {user: current_user.username, id: current_user.id}.to_json)
 		render nothing: true
 	end
 
@@ -88,8 +74,7 @@ class RoomsController < ApplicationController
     response.headers['Content-Type'] = 'text/event-stream'
     room_id = params[:room_id]
     sse = Streamer::SSE.new(response.stream)
-    redis = Redis.new 
-
+    redis ||= Redis.new 
     redis.subscribe(["add_song_#{room_id}", "add_user_#{room_id}", "change_song_#{room_id}", "remove_user_#{room_id}", "heart"]) do |on|
       on.message do |event, data|
       	if event == "add_song_#{room_id}"
@@ -105,7 +90,6 @@ class RoomsController < ApplicationController
       	end
       end
     end
-    # render nothing: true
   rescue IOError
     # Client disconnected
     redis.quit
