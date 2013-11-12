@@ -71,7 +71,7 @@ class RoomsController < ApplicationController
 	end
 
 	def remove_user
-		room = Room.find(params[:room_id].to_i)
+		room = Room.find(params[:room_id])
 		puts room
 		puts room.id
 		user = current_user

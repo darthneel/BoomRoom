@@ -20,12 +20,12 @@ var app = {
 		});
 	},
 
-	removeUser: function(room_id) {
+	removeUser: function(id) {
 		$.ajax({
 			url: '/rooms/remove_user',
 			type: 'POST',
 			dataType: 'json',
-			data: {room_id: room_id}
+			data: {room_id: id}
 		});
 	},
 
