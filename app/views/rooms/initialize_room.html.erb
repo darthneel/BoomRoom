@@ -8,6 +8,10 @@
 		</ul>
 	</div>
 
+	<div id = "currently-playing">
+		<h2>Currently Playing: <span id = "current-track"></span><h2>
+	</div>
+
 	<div id="search">
 		<input type="text" name="search_box" id="search-text" size="15" placeholder="Search" autofocus>
 		<div id="search-button">Search</div>
@@ -25,6 +29,7 @@
 </div>
 
 	<ul id="current-users">
+		<li><%= @this_user.email %></li>
 		<% @users.each do |user| %>
 		<li id="<%= user.id %>">
 			<%= user.email %>
