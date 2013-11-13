@@ -13,7 +13,7 @@ class RoomsController < ApplicationController
 	def get_time # adds user
 		response.headers['Content-Type'] = 'text/javascript'
 		room = Room.find(params[:room_id])
-		current_song = Song.where(currently_playing: true).first
+		current_song = Song.where(currently_playing: true, room_id: room.id).first
 		$redis.publish("add_user_#{room.id}", {user: current_user.username, id: current_user.id}.to_json)
 		room.users << current_user
 		if current_song
