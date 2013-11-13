@@ -2,6 +2,8 @@ require 'streamer/sse'
 
 class RoomsController < ApplicationController
 	include ActionController::Live
+
+	before_filter :authenticate_user!
 	
 	def initialize_room  # main lobby
 		@room = Room.find(params[:id])

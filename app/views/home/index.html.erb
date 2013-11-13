@@ -6,7 +6,11 @@
 <% end %>
 
 
-<h3> Rooms Index </h3>
+<div id="all-rooms">
+
+
+<div id='mask' class='close_modal'></div> 
+
 
 <ul>
 	<% @rooms.each do |room| %>
@@ -15,3 +19,28 @@
 	</li>
 	<% end %>
 </ul>
+
+	<div id="create-room-link" class="modal">Create Room!</div>
+
+
+<div id="create-room" class="modal-window">
+	
+<%= form_for @room, url: "/home/create" do |f| %>
+	
+	<%= f.label "Room Name:" %>
+	<%= f.text_field :name, size: "15" %>
+<br>
+
+	<%= f.submit %>
+
+<% end %>
+
+<!-- 	<input type="text" name="search_box" id="search-text" size="25" placeholder="Enter the room name" autofocus>
+	<div id="create-room-button">Create!</div> -->
+
+</div>
+
+
+
+</div>
+
