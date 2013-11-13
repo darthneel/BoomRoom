@@ -8,7 +8,7 @@ WdiProject3::Application.routes.draw do
   get '/rooms/:id', to: "rooms#initialize_room", as: "room"
   get '/rooms/test_room', to: "rooms#test_room"
   get '/home/splash', to: "home#splash"
-  get '/home/index', to: "home#index"
+  get '/home/index', to: "home#index", as:"all_rooms"
 
   post '/home/create', to: "home#create"
   post '/rooms/add_song', to: "rooms#add_song"

@@ -125,6 +125,16 @@ header {
 	margin-top: 10px;
 }
 
+#temp-link {
+	position: relative;
+	top: 20%;
+	color: white;
+}
+
+#temp-link a {
+	color: white;
+}
+
 /***** Home/Index */
 #all-rooms {
 	width:100%;
