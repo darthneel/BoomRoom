@@ -112,13 +112,22 @@ class RoomsController < ApplicationController
 		render nothing: true
 	end
 
+	# Leave a message in the room chatroom -------------------------------------------------
+	def add_message
+		response.headers['Content-Type'] = 'text/javascript'
+		room = current_user.room
+		message = params[:message]
+		$redis.publish("add_message_#{room.id}", {message: message, author: current_user.username}.to_json)
+		render nothing: true
+	end
+
 	# Controls all redis subscriptions to each room ----------------------------------------
   def events
     response.headers['Content-Type'] = 'text/event-stream'
     room_id = params[:room_id]
     sse = Streamer::SSE.new(response.stream)
-    redis ||= Redis.new 
-    redis.subscribe(["add_song_#{room_id}", "add_user_#{room_id}", "change_song_#{room_id}", "remove_user_#{room_id}", "like_or_dislike_#{room_id}", "heart"]) do |on|
+    redis ||= Redis.new
+    redis.subscribe(["add_song_#{room_id}", "add_user_#{room_id}", "change_song_#{room_id}", "remove_user_#{room_id}", "like_or_dislike_#{room_id}", "add_message_#{room_id}", "heart"]) do |on|
       on.message do |event, data|
       	if event == "add_song_#{room_id}"
       		sse.write(data, event: "add_song_#{room_id}")
@@ -130,6 +139,8 @@ class RoomsController < ApplicationController
         	sse.write(data, event: "remove_user_#{room_id}")
         elsif event == "like_or_dislike_#{room_id}"
         	sse.write(data, event: "like_or_dislike_#{room_id}")
+        elsif event == "add_message_#{room_id}"
+        	sse.write(data, event: "add_message_#{room_id}")
         elsif event == "heart"
         	sse.write(data, event: "heart")
       	end

@@ -6,6 +6,7 @@ var dislike = 0;
 var like_count = 0;
 var dislike_count = 0;
 var isMuted = false;
+var volume = 50;
 
 $(function() {
 //***Connect to SoundCloud
@@ -18,6 +19,22 @@ $(function() {
 	searchButtonClick();
 	searchResultClick();
 	voteClick();
+	messageClick();
+
+	$('#slider').slider({
+		min: 0, 
+		max: 100, 
+		value: 50,
+		slide: function(event, ui) {}
+	});
+
+	$('#slider').on('slide', function() {
+		volume = $('#slider').slider('value');
+		$('#vol').text(volume);
+		if(song) {		
+			song.setVolume(volume);
+		}
+	});
 
 //** Media buttons 
 	$('#mute').on('click', function() {
@@ -46,7 +63,7 @@ function playSong(sc_ident, position) {
 		}
 		song = sound;
 		console.log(sound);
-		song.setVolume(100);
+		song.setVolume(volume);
 		song.play();
 	});
 }
@@ -118,6 +135,29 @@ function voteClick() {
 		if(dislike_count === 0) {
 			app.likeOrDislike('dislike');
 			dislike_count++;
+		}
+	});
+}
+
+function messageClick() {
+	$message_input = $('#message-input')
+
+	$('#send').on('click', function(e) {
+		e.preventDefault();
+		message = $message_input.val();
+		$message_input.val('');
+		if(message !== '') {
+			app.sendMessage(message);
+		}
+	});
+
+	$message_input.on('keyup', function(e) {
+		if(e.keyCode === 13) {
+			message = $message_input.val();
+			$message_input.val('');
+			if(message !== '') {
+				app.sendMessage(message);
+			}
 		}
 	});
 }

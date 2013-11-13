@@ -12,7 +12,7 @@
 //
 //= require jquery
 //= require jquery_ujs
-// require jquery-ui-1.10.3.custom/
+//= require jquery-ui-1.10.3.custom/js/jquery-ui-1.10.3.custom.min
 //= require soundcloud_sdk
 //= require app
 //= require test_room

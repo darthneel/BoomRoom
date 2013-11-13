@@ -10,8 +10,11 @@
 
 	<div id = "currently-playing">
 		<h2>Currently Playing: <span id="current-track"></span><h2>
-		<!-- <div id="slider"></div> -->
 	</div>
+
+	
+	<div id="slider"></div>
+	<div id="vol-tag">Volume</div>
 
 	<div id="search">
 		<input type="text" name="search_box" id="search-text" size="15" placeholder="Search" autofocus>
@@ -36,5 +39,11 @@
 			</li>
 		<% end %>	
 	</ul>
+
+	<div id="chatroom">
+		<div id="messages"></div>
+		<input id="message-input" type="text" placeholder="Enter message here..." />
+		<a id="send">Send</a>
+	</div>
 
 </div>

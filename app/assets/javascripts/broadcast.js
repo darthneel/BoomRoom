@@ -59,5 +59,12 @@ function prepareBroadcast() {
 	  		}
 	  	}
 	  });
+
+	  source.addEventListener("add_message_"+room_id, function (e) {
+	  	console.log('chat redis triggered');
+	  	data = JSON.parse(e.data);
+	  	console.log(data);
+	  	$('#room-' + room_id + " #messages").append('<div><span class="content">'+data.message+'</span><br/><span class="author"> - '+data.author+'</span></div><hr/></div>');
+	  });
 	}
 }

@@ -16,6 +16,7 @@ WdiProject3::Application.routes.draw do
   post '/rooms/get_time', to: "rooms#get_time"
   post '/rooms/remove_user', to: "rooms#remove_user"
   post '/rooms/like_or_dislike', to: "rooms#like_or_dislike"
+  post '/rooms/add_message', to: 'rooms#add_message'
 
   root 'home#splash'
 end
