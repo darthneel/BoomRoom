@@ -124,12 +124,10 @@ function voteClick() {
 
 window.onbeforeunload = function(e) {
 	if((document.URL).match(/\/rooms\/.+/)) {
-		song.destroy();
+		song.unload();
 		song = undefined;
 		var id = parseInt(room_id);
 		app.removeUser(id);
 	  return null;
 	}
 };
-
-

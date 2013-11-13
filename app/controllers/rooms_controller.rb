@@ -29,7 +29,10 @@ class RoomsController < ApplicationController
 		user = current_user
 		room.users.delete(user)
 		if room.users.length == 0
-			room.songs.delete_all
+			room.songs.each do |song|
+				song.destroy
+			end
+			
 			room.destroy
 		end
 		$redis.publish("remove_user_#{room.id}", {user: current_user.username, id: current_user.id}.to_json)
