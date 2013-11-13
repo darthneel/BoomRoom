@@ -11,7 +11,6 @@ var app = {
 			url: '/rooms/get_time',
 			type: 'POST',
 			dataType: 'json',
-			async: false,
 			data: {room_id: room_id}
 		}).done(function(data) {
 			console.log(data.elapsed);
@@ -41,7 +40,6 @@ var app = {
 		$.ajax({
 			type: 'POST',
 			url: '/rooms/add_song',
-			async: false,
 			dataType: 'json',
 			// TODO: Find out how to get the song info into this param
 			data: {song: {artist: artist , title: title , stream_url: stream_url, album_art: album_art, sc_ident: sc_ident, genre: genre}}
@@ -55,7 +53,6 @@ var app = {
 			type: 'POST',
 			url: '/rooms/change_song',
 			dataType: 'json',
-			async: false,
 			// TODO: Find out how to get the id of current song into this param
 			data: {current_sc_ident: sc_ident}
 		});
@@ -67,7 +64,6 @@ var app = {
 			type: 'POST',
 			url: '/rooms/like_or_dislike',
 			dataType: 'json',
-			async: false,
 			data: {vote: val}
 		});
 	}
