@@ -12,11 +12,16 @@
 //
 //= require jquery
 //= require jquery_ujs
+//= require modernizr-2.5.3.min
+// require masonry.pkgd.js
+//= require jquery.masonry.min
 //= require soundcloud_sdk
 //= require app
 //= require test_room
+//= require room
 //= require splashpage
 //= require home_index
+//= require masonry_test
 // require jquery.turbolinks
 // require turbolinks
 //= require broadcast

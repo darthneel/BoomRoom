@@ -1,6 +1,6 @@
 class HomeController < ApplicationController
 
-	skip_before_filter :authenticate_user!, :only => [:splash]
+	before_filter :authenticate_user!, :except => [:splash]
 
 	def index
 
@@ -20,6 +20,14 @@ class HomeController < ApplicationController
 	def room_params
 		params.require(:room).permit(:name)
 	end
+
+	def masonry_test
+		@songs = Room.find(3).songs
+	end
+
+	def room
+	end
+
 
 
 end
