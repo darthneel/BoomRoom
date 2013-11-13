@@ -9,7 +9,11 @@
 					</ul>
 				
 		</header>
-
+	
+	<div id="temp-link">
+		<%= link_to "Rooms", all_rooms_path %>
+	</div>
+	
 	<div id="sign-in" class="modal-window splash-modal">
 		<%= form_for(resource, :as => resource_name, :url => session_path(resource_name)) do |f| %>
 		<div>
