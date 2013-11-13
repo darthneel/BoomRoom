@@ -102,7 +102,6 @@ function searchResultClick() {
 }
 
 function voteClick() {
-	alert(this)
 	//**User interaction buttons
 	$('#like').on('click', function(e) {
 		e.stopPropagation();
