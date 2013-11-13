@@ -12,6 +12,11 @@ class RoomsController < ApplicationController
 		@users = @room.users
 		@playlist = @room.songs.order('id')
 		@this_user = current_user
+		current_song = Song.where(currently_playing: true, room_id: @room.id).first
+		if current_song
+			@likes = current_song.likes
+			@dislikes = current_song.dislikes
+		end
 	end
 
 	# Adds a new user to room and if song is playing, puts them in wherever that song is ---
@@ -52,9 +57,12 @@ class RoomsController < ApplicationController
 		if room.songs.length == 0
 			new_song_params[:currently_playing] = true
 		end
-		@song = Song.create(new_song_params)
-		room.songs << @song
-    $redis.publish("add_song_#{room.id}", {title: @song.title}.to_json)
+		check = Song.where(sc_ident: params[:song][:sc_ident])
+		if check.length == 0
+			@song = Song.create(new_song_params)
+			room.songs << @song
+		  $redis.publish("add_song_#{room.id}", {title: @song.title, added_by: current_user.username}.to_json)
+		end
     render nothing: true
 	end
 
@@ -95,12 +103,21 @@ class RoomsController < ApplicationController
 		if params[:vote] == 'like'
 			likes += 1
 			current_song.update_attributes(likes: likes)
-			$redis.publish("like_or_dislike_#{room.id}", {vote: 'like', sc_ident: current_song.sc_ident, users: users}.to_json)
+			$redis.publish("like_or_dislike_#{room.id}", {vote: 'like', sc_ident: current_song.sc_ident, users: users, likes: likes}.to_json)
 		elsif params[:vote] == 'dislike'
 			dislikes += 1
 			current_song.update_attributes(dislikes: dislikes)
-			$redis.publish("like_or_dislike_#{room.id}", {vote: 'dislike', sc_ident: current_song.sc_ident, users: users}.to_json)
+			$redis.publish("like_or_dislike_#{room.id}", {vote: 'dislike', sc_ident: current_song.sc_ident, users: users, dislikes: dislikes}.to_json)
 		end
+		render nothing: true
+	end
+
+	# Leave a message in the room chatroom -------------------------------------------------
+	def add_message
+		response.headers['Content-Type'] = 'text/javascript'
+		room = current_user.room
+		message = params[:message]
+		$redis.publish("add_message_#{room.id}", {message: message, author: current_user.username}.to_json)
 		render nothing: true
 	end
 
@@ -109,8 +126,8 @@ class RoomsController < ApplicationController
     response.headers['Content-Type'] = 'text/event-stream'
     room_id = params[:room_id]
     sse = Streamer::SSE.new(response.stream)
-    redis ||= Redis.new 
-    redis.subscribe(["add_song_#{room_id}", "add_user_#{room_id}", "change_song_#{room_id}", "remove_user_#{room_id}", "like_or_dislike_#{room_id}", "heart"]) do |on|
+    redis ||= Redis.new
+    redis.subscribe(["add_song_#{room_id}", "add_user_#{room_id}", "change_song_#{room_id}", "remove_user_#{room_id}", "like_or_dislike_#{room_id}", "add_message_#{room_id}", "heart"]) do |on|
       on.message do |event, data|
       	if event == "add_song_#{room_id}"
       		sse.write(data, event: "add_song_#{room_id}")
@@ -122,6 +139,8 @@ class RoomsController < ApplicationController
         	sse.write(data, event: "remove_user_#{room_id}")
         elsif event == "like_or_dislike_#{room_id}"
         	sse.write(data, event: "like_or_dislike_#{room_id}")
+        elsif event == "add_message_#{room_id}"
+        	sse.write(data, event: "add_message_#{room_id}")
         elsif event == "heart"
         	sse.write(data, event: "heart")
       	end

@@ -9,7 +9,7 @@ function prepareBroadcast() {
 	  	console.log('add song redis triggered');
 	  	data = JSON.parse(e.data);
 	  	console.log(data);
-	  	$("#room-" + room_id + " #playlist").append($('<li>').text(data.title));
+	  	$("#room-" + room_id + " #playlist").append($('<li>'+data.title+' added by '+data.added_by+'</li>'));
 	  });
 
 	  source.addEventListener('add_user_'+room_id, function (e) {
@@ -37,6 +37,9 @@ function prepareBroadcast() {
 	  	$('#room-' + room_id + " #like .num").text(like);
 	  	$('#room-' + room_id + " #dislike .num").text(dislike);
 	  	window.playSong(data.sc_ident);
+	  	if(isMuted) {
+	  		song.toggleMute();
+	  	}
 	  	$("#room-" + room_id + " #current-track").text(data.title);
 	  });
 
@@ -45,16 +48,24 @@ function prepareBroadcast() {
 	  	data = JSON.parse(e.data);
 	  	console.log(data);
 	  	if(data.vote === 'like') {
-	  		like++;
+	  		like = data.likes;
 	  		$('#room-' + room_id + " #like .num").text(like);
 	  	} else if(data.vote === 'dislike') {
-	  		dislike++;
+	  		dislike = data.dislikes;
 	  		$('#room-' + room_id + " #dislike .num").text(dislike);
 
 	  		if(dislike >= Math.ceil(data.users / 2)) {
 	  			app.changeCurrentSong(data.sc_ident);
 	  		}
 	  	}
+	  });
+
+	  source.addEventListener("add_message_"+room_id, function (e) {
+	  	console.log('chat redis triggered');
+	  	data = JSON.parse(e.data);
+	  	console.log(data);
+	  	$('#room-' + room_id + " #messages").append('<div><span class="content">'+data.message+'</span><br/><span class="author"> - '+data.author+'</span></div><hr/></div>');
+	  	$('#messages').scrollTop(999999);
 	  });
 	}
 }

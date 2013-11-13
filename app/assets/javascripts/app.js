@@ -70,6 +70,15 @@ var app = {
 			async: false,
 			data: {vote: val}
 		});
+	},
+
+	sendMessage: function(string) {
+		$.ajax({
+			type: 'POST',
+			url: '/rooms/add_message',
+			dataType: 'json',
+			data: {message: string}
+		});
 	}
 
 };
