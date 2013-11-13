@@ -1,21 +1,24 @@
-require 'streamer/sse'
+require 'streamer/sse' # found in lib
 
-class RoomsController < ApplicationController
-	include ActionController::Live
+class RoomsController < ApplicationController 
+	include ActionController::Live  # allows for use of SSE and concurrency (web socket)
 
 	before_filter :authenticate_user!
-	
-	def initialize_room  # main lobby
+
+
+	# Initializes each room ----------------------------------------------------------------
+	def initialize_room  
 		@room = Room.find(params[:id])
 		@users = @room.users
 		@playlist = @room.songs.order('id')
 		@this_user = current_user
 	end
 
-	def get_time # adds user
+	# Adds a new user to room and if song is playing, puts them in wherever that song is ---
+	def get_time 
 		response.headers['Content-Type'] = 'text/javascript'
 		room = Room.find(params[:room_id])
-		current_song = Song.where(currently_playing: true).first
+		current_song = Song.where(currently_playing: true, room_id: room.id).first
 		$redis.publish("add_user_#{room.id}", {user: current_user.username, id: current_user.id}.to_json)
 		room.users << current_user
 		if current_song
@@ -26,18 +29,22 @@ class RoomsController < ApplicationController
 		end
 	end
 
+	# When user closes window or leaves the page, removes them from the room ---------------
 	def remove_user
 		room = Room.find(params[:room_id].to_i)
 		user = current_user
 		room.users.delete(user)
 		if room.users.length == 0
-			room.songs.delete_all
+			room.songs.each do |song|
+				song.destroy
+			end
 			room.destroy
 		end
 		$redis.publish("remove_user_#{room.id}", {user: current_user.username, id: current_user.id}.to_json)
 		render nothing: true
 	end
 
+	# Adds song to the room playlist when user adds song -----------------------------------
 	def add_song
 		response.headers['Content-Type'] = 'text/javascript'
 		room = current_user.room
@@ -51,6 +58,7 @@ class RoomsController < ApplicationController
     render nothing: true
 	end
 
+	# Controls which song is playing (whether queued or the first) -------------------------
 	def change_song
 		response.headers['Content-Type'] = 'text/javascript'
 		room = current_user.room
@@ -76,6 +84,7 @@ class RoomsController < ApplicationController
 		end
 	end
 
+	# Action triggered when someone likes or dislikes a song -------------------------------
 	def like_or_dislike
 		response.headers['Content-Type'] = 'text/javascript'
 		room = current_user.room
@@ -95,6 +104,7 @@ class RoomsController < ApplicationController
 		render nothing: true
 	end
 
+	# Controls all redis subscriptions to each room ----------------------------------------
   def events
     response.headers['Content-Type'] = 'text/event-stream'
     room_id = params[:room_id]
@@ -128,6 +138,7 @@ class RoomsController < ApplicationController
     response.stream.close
   end
 
+  # Rails 4 strong parameters ------------------------------------------------------------
   def song_params
 		params.require(:song).permit(:title, :artist, :stream_url, :album_art, :sc_ident, :genre)
 	end

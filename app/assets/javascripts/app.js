@@ -31,7 +31,6 @@ var app = {
 			data: {room_id: id}
 		});
 	},
-
 	// Function to send an AJAX request to add new song to the database
 	// and include it in the current room song list
 
@@ -68,7 +67,7 @@ var app = {
 			type: 'POST',
 			url: '/rooms/like_or_dislike',
 			dataType: 'json',
-			// async: false,
+			async: false,
 			data: {vote: val}
 		});
 	}

@@ -31,7 +31,6 @@
 	</div>
 
 	<ul id="current-users">
-		<li><%= @this_user.username %></li>
 		<% @users.each do |user| %>
 			<li id="<%= user.id %>">
 				<%= user.username %>

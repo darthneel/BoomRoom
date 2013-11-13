@@ -9,7 +9,7 @@ function prepareBroadcast() {
 	  	console.log('add song redis triggered');
 	  	data = JSON.parse(e.data);
 	  	console.log(data);
-	  	$("#room-" + room_id + " #playlist").append($('<li >').text(data.title));
+	  	$("#room-" + room_id + " #playlist").append($('<li>').text(data.title));
 	  });
 
 	  source.addEventListener('add_user_'+room_id, function (e) {
@@ -32,9 +32,10 @@ function prepareBroadcast() {
 	  	console.log(data);
 	  	like = 0;
 	  	dislike = 0;
+	  	like_count = 0;
+	  	dislike_count = 0;
 	  	$('#room-' + room_id + " #like .num").text(like);
 	  	$('#room-' + room_id + " #dislike .num").text(dislike);
-	  	voteClick();
 	  	window.playSong(data.sc_ident);
 	  	$("#room-" + room_id + " #current-track").text(data.title);
 	  });
