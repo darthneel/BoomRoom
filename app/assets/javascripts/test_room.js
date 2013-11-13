@@ -3,6 +3,8 @@ var song;
 var room_id;
 var like = 0;
 var dislike = 0;
+var like_count = 0;
+var dislike_count = 0;
 
 $(function() {
 //***Connect to SoundCloud
@@ -14,6 +16,7 @@ $(function() {
 
 	searchButtonClick();
 	searchResultClick();
+	voteClick();
 
 //** Media buttons 
 	$('#pause').on('click', function() {
@@ -25,10 +28,10 @@ $(function() {
 		console.log(song);
 	});
 
-
 	// TODO: Talk to one of instructors for better way to do this.
 	if((document.URL).match(/\/rooms\/.+/)) {
 		getRoomId();
+
 		console.log(room_id);
 		app.newUser(room_id);
 	}
@@ -104,14 +107,18 @@ function searchResultClick() {
 function voteClick() {
 	//**User interaction buttons
 	$('#like').on('click', function(e) {
-		e.stopPropagation();
-		$(this).unbind();
-		app.likeOrDislike('like');
+		console.log('clicked');
+		if(like_count === 0) {
+			app.likeOrDislike('like');
+			like_count++;
+		}
 	});
 	$('#dislike').on('click', function(e) {
-		e.stopPropagation();
-		$(this).unbind();
-		app.likeOrDislike('dislike');
+		console.log('clicked');
+		if(dislike_count === 0) {
+			app.likeOrDislike('dislike');
+			dislike_count++;
+		}
 	});
 }
 
