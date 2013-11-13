@@ -1,3 +1,14 @@
+html, body {
+	height: 100%;
+	width: 100%;
+	margin: 0;
+	padding: 0;
+}
+
+body {
+
+  }
+
 #search-button {
 	height: 25px;
 	width: 100px;
@@ -29,3 +40,92 @@
 #buttons li {
 	padding: 10px;
 }
+
+#mask {  
+    position:absolute;
+    top:0px;  
+    left:0px;   
+    height:100%;  
+    width:100%;  
+    display:none; 
+  
+ 
+    background-color: black;  
+}  
+
+.modal-window {  
+    position:absolute;  
+    display:none;  
+}
+
+
+/***** SPLASH PAGE */
+
+#splash-wrapper {
+	width:100%;
+	height:100%;
+/*	background: url(record_stack.jpg) no-repeat center center fixed; 
+	  -webkit-background-size: cover;
+	  -moz-background-size: cover;
+	  -o-background-size: cover;
+	  background-size: cover;*/	
+	background-color: #34495e;
+}
+
+
+/***** SPLASH PAGE NAV */
+
+nav {
+    left:37%;
+    width: 100%;
+    height: 35px;
+    position: fixed;
+
+}
+
+#splash-nav {
+    width: auto;
+    left: 70%;
+    position: relative;
+    display: inline;
+    list-style: none;
+}
+
+#splash-nav li {
+  font-size: 17px;
+  float: left;
+  padding: 10px;
+}
+
+#splash-nav li:hover {
+  color:#2ecc71;
+  cursor: pointer;
+}
+
+header {
+    background: gray;
+    opacity: .5; 
+    width: 100%;
+    height: 40px;
+    z-index: 100;
+    position: fixed;
+}
+/***** Sign In Modal */
+.splash-modal {
+	padding: 15px;
+	position: relative;	
+	width: 25%;
+	top: 50%;
+	left:50%;
+	left: 50px;
+	background-color: white;
+}
+
+.splash-modal div {
+	margin-top: 10px;
+}
+
+
+
+
+

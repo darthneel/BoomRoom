@@ -17,5 +17,7 @@ WdiProject3::Application.routes.draw do
 
   post '/rooms/remove_user', to: "rooms#remove_user"
 
+  get '/home/splash', to: "home#splash"
+
   root 'home#index'
 end

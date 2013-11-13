@@ -15,6 +15,7 @@
 //= require soundcloud_sdk
 //= require app
 //= require test_room
+//= require splashpage
 // require jquery.turbolinks
 // require turbolinks
 //= require broadcast
