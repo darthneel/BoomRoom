@@ -37,6 +37,9 @@ function prepareBroadcast() {
 	  	$('#room-' + room_id + " #like .num").text(like);
 	  	$('#room-' + room_id + " #dislike .num").text(dislike);
 	  	window.playSong(data.sc_ident);
+	  	if(isMuted) {
+	  		song.toggleMute();
+	  	}
 	  	$("#room-" + room_id + " #current-track").text(data.title);
 	  });
 
@@ -45,10 +48,10 @@ function prepareBroadcast() {
 	  	data = JSON.parse(e.data);
 	  	console.log(data);
 	  	if(data.vote === 'like') {
-	  		like++;
+	  		like = data.likes;
 	  		$('#room-' + room_id + " #like .num").text(like);
 	  	} else if(data.vote === 'dislike') {
-	  		dislike++;
+	  		dislike = data.dislikes;
 	  		$('#room-' + room_id + " #dislike .num").text(dislike);
 
 	  		if(dislike >= Math.ceil(data.users / 2)) {

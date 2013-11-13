@@ -5,6 +5,7 @@ var like = 0;
 var dislike = 0;
 var like_count = 0;
 var dislike_count = 0;
+var isMuted = false;
 
 $(function() {
 //***Connect to SoundCloud
@@ -19,12 +20,9 @@ $(function() {
 	voteClick();
 
 //** Media buttons 
-	$('#pause').on('click', function() {
-		song.togglePause();
-		console.log(song);
-	});
 	$('#mute').on('click', function() {
 		song.toggleMute();
+		isMuted = !isMuted;
 		console.log(song);
 	});
 
@@ -67,9 +65,11 @@ function searchButtonClick() {
 			search_return = tracks;
 			var $search_results = $('#search-results');
 			$search_results.empty();
-			for(i=0; i<tracks.length; i++) {
-				var id = tracks[i].id;
-				$search_results.append($("<div class='each-result' id='song-"+id+"' data-index='"+i+"'><ul><li>"+tracks[i].title+"<ul><li><h4>"+tracks[i].user.username+"</h4></li></ul></li></ul></div>"));
+			for(i = 0; i < tracks.length; i++) {
+				if(tracks[i].streamable == true) {
+					var id = tracks[i].id;
+					$search_results.append($("<div class='each-result' id='song-"+id+"' data-index='"+i+"'><ul><li>"+tracks[i].title+"<ul><li><h4>"+tracks[i].user.username+"</h4></li></ul></li></ul></div>"));
+				}
 			}
 		});
 	});
@@ -86,13 +86,13 @@ function searchResultClick() {
 		var artist = search_return[index].user.username;
 		var album_art;
 		var genre;
-		if(search_return[index].artwork_url === null) {
-			album_art = "no image";
+		if(search_return[index].artwork_url === null || search_return[index].artwork_url === '') {
+			album_art = "http://epilepsyu.com/wp-content/uploads/2013/10/brain_music-150x150.jpeg";
 		} else {
 			album_art = search_return[index].artwork_url;
 		}
-		if(search_return[index].genre === null) {
-			genre = "no genre"; 
+		if(search_return[index].genre === null || search_return[index].genre === '') {
+			genre = "Not Given"; 
 		} else {
 			genre = search_return[index].genre;
 		}
@@ -124,8 +124,12 @@ function voteClick() {
 
 window.onbeforeunload = function(e) {
 	if((document.URL).match(/\/rooms\/.+/)) {
-		song.unload();
-		song = undefined;
+		console.log('this is being triggered');
+		if(song) {
+			song.unload();
+			song = undefined;
+		}
+		isMuted = false;
 		var id = parseInt(room_id);
 		app.removeUser(id);
 	  return null;

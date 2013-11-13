@@ -2,11 +2,9 @@
 
 	<div id = "buttons">
 		<ul>
-			<!-- <li id="play">Play</li> -->
-			<li id="pause">Pause</li>
 			<li id="mute">Mute</li>
-			<li id="like">Likes: <span class="num">0</span></li>
-			<li id="dislike">Dislikes: <span class="num">0</span></li>
+			<li id="like">Likes: <span class="num"><%= @likes || 0 %></span></li>
+			<li id="dislike">Dislikes: <span class="num"><%= @dislikes || 0 %></span></li>
 		</ul>
 	</div>
 
@@ -39,4 +37,3 @@
 	</ul>
 
 </div>
-

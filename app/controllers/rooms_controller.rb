@@ -12,6 +12,11 @@ class RoomsController < ApplicationController
 		@users = @room.users
 		@playlist = @room.songs.order('id')
 		@this_user = current_user
+		current_song = Song.where(currently_playing: true, room_id: @room.id).first
+		if current_song
+			@likes = current_song.likes
+			@dislikes = current_song.dislikes
+		end
 	end
 
 	# Adds a new user to room and if song is playing, puts them in wherever that song is ---
@@ -52,9 +57,12 @@ class RoomsController < ApplicationController
 		if room.songs.length == 0
 			new_song_params[:currently_playing] = true
 		end
-		@song = Song.create(new_song_params)
-		room.songs << @song
-    $redis.publish("add_song_#{room.id}", {title: @song.title}.to_json)
+		check = Song.where(sc_ident: params[:song][:sc_ident])
+		if check.length == 0
+			@song = Song.create(new_song_params)
+			room.songs << @song
+		  $redis.publish("add_song_#{room.id}", {title: @song.title}.to_json)
+		end
     render nothing: true
 	end
 
@@ -95,11 +103,11 @@ class RoomsController < ApplicationController
 		if params[:vote] == 'like'
 			likes += 1
 			current_song.update_attributes(likes: likes)
-			$redis.publish("like_or_dislike_#{room.id}", {vote: 'like', sc_ident: current_song.sc_ident, users: users}.to_json)
+			$redis.publish("like_or_dislike_#{room.id}", {vote: 'like', sc_ident: current_song.sc_ident, users: users, likes: likes}.to_json)
 		elsif params[:vote] == 'dislike'
 			dislikes += 1
 			current_song.update_attributes(dislikes: dislikes)
-			$redis.publish("like_or_dislike_#{room.id}", {vote: 'dislike', sc_ident: current_song.sc_ident, users: users}.to_json)
+			$redis.publish("like_or_dislike_#{room.id}", {vote: 'dislike', sc_ident: current_song.sc_ident, users: users, dislikes: dislikes}.to_json)
 		end
 		render nothing: true
 	end

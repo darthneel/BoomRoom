@@ -17,7 +17,5 @@
 //= require test_room
 //= require splashpage
 //= require home_index
-// require jquery.turbolinks
-// require turbolinks
 //= require broadcast
 // require_tree .
