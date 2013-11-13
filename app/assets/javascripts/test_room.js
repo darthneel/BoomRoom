@@ -1,12 +1,16 @@
 var search_return;
 var song;
 var room_id;
+var like = 0;
+var dislike = 0;
 
 $(function() {
 //***Connect to SoundCloud
 	SC.initialize({
 		client_id: '6fd538372b02e1f99a4145ee258cda36'
 	});
+
+	prepareBroadcast();
 
 	searchButtonClick();
 	searchResultClick();
@@ -19,6 +23,14 @@ $(function() {
 	$('#mute').on('click', function() {
 		song.toggleMute();
 		console.log(song);
+	});
+
+//**User interaction buttons
+	$('#like').on('click', function() {
+		app.likeOrDislike('like');
+	});
+	$('#dislike').on('click', function() {
+		app.likeOrDislike('dislike');
 	});
 
 	// TODO: Talk to one of instructors for better way to do this.
@@ -98,6 +110,8 @@ function searchResultClick() {
 
 window.onbeforeunload = function(e) {
 	if((document.URL).match(/\/rooms\/.+/)) {
+		song.unload();
+		song = undefined;
 		var id = parseInt(room_id);
 		app.removeUser(id);
 	  return null;

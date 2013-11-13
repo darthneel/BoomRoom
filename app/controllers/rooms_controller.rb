@@ -3,14 +3,14 @@ require 'streamer/sse'
 class RoomsController < ApplicationController
 	include ActionController::Live
 	
-	def initialize_room  # *** Adds a user to a room
+	def initialize_room  # main lobby
 		@room = Room.find(params[:id])
 		@users = @room.users
-		@playlist = @room.songs
+		@playlist = @room.songs.order('id')
 		@this_user = current_user
 	end
 
-	def get_time
+	def get_time # adds user
 		response.headers['Content-Type'] = 'text/javascript'
 		room = Room.find(params[:room_id])
 		current_song = Song.where(currently_playing: true).first
@@ -22,6 +22,18 @@ class RoomsController < ApplicationController
 		else
 			render :json => false
 		end
+	end
+
+	def remove_user
+		room = Room.find(params[:room_id].to_i)
+		user = current_user
+		room.users.delete(user)
+		if room.users.length == 0
+			room.songs.delete_all
+			room.destroy
+		end
+		$redis.publish("remove_user_#{room.id}", {user: current_user.username, id: current_user.id}.to_json)
+		render nothing: true
 	end
 
 	def add_song
@@ -43,7 +55,7 @@ class RoomsController < ApplicationController
 		current_sc_ident = params[:current_sc_ident]
 		ended_song = Song.where(sc_ident: current_sc_ident, room_id: room.id).first
 		if ended_song
-			ended_song.update_attributes(played: true, currently_playing: false)
+			ended_song.update_attributes(played: true, currently_playing: false, likes: 0, dislikes: 0)
 		end
 		new_song = Song.where(played: false, room_id: room.id).limit(1).first
 		if new_song
@@ -62,17 +74,22 @@ class RoomsController < ApplicationController
 		end
 	end
 
-	def remove_user
-		room = Room.find(params[:room_id].to_i)
-		user = current_user
-		room.users.delete(user)
-		if room.users.length == 0
-			room.songs.each do |song|
-				song.destroy
-			end
-			room.destroy
+	def like_or_dislike
+		response.headers['Content-Type'] = 'text/javascript'
+		room = current_user.room
+		users = room.users.length
+		current_song = Song.where(currently_playing: true).first
+		likes = current_song.likes
+		dislikes = current_song.dislikes
+		if params[:vote] == 'like'
+			likes += 1
+			current_song.update_attributes(likes: likes)
+			$redis.publish("like_or_dislike_#{room.id}", {vote: 'like', sc_ident: current_song.sc_ident, users: users}.to_json)
+		elsif params[:vote] == 'dislike'
+			dislikes += 1
+			current_song.update_attributes(dislikes: dislikes)
+			$redis.publish("like_or_dislike_#{room.id}", {vote: 'dislike', sc_ident: current_song.sc_ident, users: users}.to_json)
 		end
-		$redis.publish("remove_user_#{room.id}", {user: current_user.username, id: current_user.id}.to_json)
 		render nothing: true
 	end
 
@@ -81,7 +98,7 @@ class RoomsController < ApplicationController
     room_id = params[:room_id]
     sse = Streamer::SSE.new(response.stream)
     redis ||= Redis.new 
-    redis.subscribe(["add_song_#{room_id}", "add_user_#{room_id}", "change_song_#{room_id}", "remove_user_#{room_id}", "heart"]) do |on|
+    redis.subscribe(["add_song_#{room_id}", "add_user_#{room_id}", "change_song_#{room_id}", "remove_user_#{room_id}", "like_or_dislike_#{room_id}", "heart"]) do |on|
       on.message do |event, data|
       	if event == "add_song_#{room_id}"
       		sse.write(data, event: "add_song_#{room_id}")
@@ -91,6 +108,8 @@ class RoomsController < ApplicationController
         	sse.write(data, event: "change_song_#{room_id}")
         elsif event == "remove_user_#{room_id}"
         	sse.write(data, event: "remove_user_#{room_id}")
+        elsif event == "like_or_dislike_#{room_id}"
+        	sse.write(data, event: "like_or_dislike_#{room_id}")
         elsif event == "heart"
         	sse.write(data, event: "heart")
       	end

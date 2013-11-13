@@ -60,6 +60,17 @@ var app = {
 			// TODO: Find out how to get the id of current song into this param
 			data: {current_sc_ident: sc_ident}
 		});
+	},
+
+	// Function to send like or dislike to all users
+	likeOrDislike: function(val) {
+		$.ajax({
+			type: 'POST',
+			url: '/rooms/like_or_dislike',
+			dataType: 'json',
+			async: false,
+			data: {vote: val}
+		});
 	}
 
 };

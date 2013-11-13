@@ -1,4 +1,4 @@
-$(function() {
+function prepareBroadcast() {
 	if((document.URL).match(/\/rooms\/.+/)) {
 	  getRoomId();
 
@@ -30,8 +30,29 @@ $(function() {
 	  	console.log('change song redis triggered');
 	  	data = JSON.parse(e.data);
 	  	console.log(data);
+	  	like = 0;
+	  	dislike = 0;
+	  	$('#room-' + room_id + " #like .num").text(like);
+	  	$('#room-' + room_id + " #dislike .num").text(dislike);
 	  	window.playSong(data.sc_ident);
 	  	$("#room-" + room_id + " #current-track").text(data.title);
 	  });
+
+	  source.addEventListener("like_or_dislike_"+room_id, function (e) {
+	  	console.log('voted redis triggered');
+	  	data = JSON.parse(e.data);
+	  	console.log(data);
+	  	if(data.vote === 'like') {
+	  		like++;
+	  		$('#room-' + room_id + " #like .num").text(like);
+	  	} else if(data.vote === 'dislike') {
+	  		dislike++;
+	  		$('#room-' + room_id + " #dislike .num").text(dislike);
+
+	  		if(dislike >= Math.ceil(data.users / 2)) {
+	  			app.changeCurrentSong(data.sc_ident);
+	  		}
+	  	}
+	  });
 	}
-});
+}

@@ -17,5 +17,7 @@ WdiProject3::Application.routes.draw do
 
   post '/rooms/remove_user', to: "rooms#remove_user"
 
+  post '/rooms/like_or_dislike', to: "rooms#like_or_dislike"
+
   root 'home#index'
 end
