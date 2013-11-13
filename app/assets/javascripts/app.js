@@ -16,6 +16,7 @@ var app = {
 		}).done(function(data) {
 			console.log(data.elapsed);
 			if(data.sc_ident) {
+				$("#room-" + room_id + " #current-track").text(data.title);
 				window.playSong(data.sc_ident, data.elapsed);
 			}
 		});
@@ -41,6 +42,7 @@ var app = {
 		$.ajax({
 			type: 'POST',
 			url: '/rooms/add_song',
+			async: false,
 			dataType: 'json',
 			// TODO: Find out how to get the song info into this param
 			data: {song: {artist: artist , title: title , stream_url: stream_url, album_art: album_art, sc_ident: sc_ident, genre: genre}}

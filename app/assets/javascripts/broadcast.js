@@ -31,7 +31,7 @@ $(function() {
 	  	data = JSON.parse(e.data);
 	  	console.log(data);
 	  	window.playSong(data.sc_ident);
-	  	$("#room-" + room_id + " #current-track").text(data.title)
+	  	$("#room-" + room_id + " #current-track").text(data.title);
 	  });
 	}
 });
