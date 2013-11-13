@@ -9,7 +9,7 @@ function prepareBroadcast() {
 	  	console.log('add song redis triggered');
 	  	data = JSON.parse(e.data);
 	  	console.log(data);
-	  	$("#room-" + room_id + " #playlist").append($('<li>').text(data.title));
+	  	$("#room-" + room_id + " #playlist").append($('<li>'+data.title+' added by '+data.added_by+'</li>'));
 	  });
 
 	  source.addEventListener('add_user_'+room_id, function (e) {

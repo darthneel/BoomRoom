@@ -61,7 +61,7 @@ class RoomsController < ApplicationController
 		if check.length == 0
 			@song = Song.create(new_song_params)
 			room.songs << @song
-		  $redis.publish("add_song_#{room.id}", {title: @song.title}.to_json)
+		  $redis.publish("add_song_#{room.id}", {title: @song.title, added_by: current_user.username}.to_json)
 		end
     render nothing: true
 	end
