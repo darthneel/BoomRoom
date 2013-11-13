@@ -25,13 +25,6 @@ $(function() {
 		console.log(song);
 	});
 
-//**User interaction buttons
-	$('#like').on('click', function() {
-		app.likeOrDislike('like');
-	});
-	$('#dislike').on('click', function() {
-		app.likeOrDislike('dislike');
-	});
 
 	// TODO: Talk to one of instructors for better way to do this.
 	if((document.URL).match(/\/rooms\/.+/)) {
@@ -105,6 +98,21 @@ function searchResultClick() {
 			app.changeCurrentSong(sc_ident);
 			$('#current-track').text(title);
 		}
+	});
+}
+
+function voteClick() {
+	alert(this)
+	//**User interaction buttons
+	$('#like').on('click', function(e) {
+		e.stopPropagation();
+		$(this).unbind();
+		app.likeOrDislike('like');
+	});
+	$('#dislike').on('click', function(e) {
+		e.stopPropagation();
+		$(this).unbind();
+		app.likeOrDislike('dislike');
 	});
 }
 

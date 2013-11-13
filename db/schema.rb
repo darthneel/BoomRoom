@@ -46,6 +46,8 @@ ActiveRecord::Schema.define(version: 20131112192911) do
     t.string   "genre"
     t.boolean  "played",            default: false
     t.boolean  "currently_playing", default: false
+    t.integer  "likes",             default: 0
+    t.integer  "dislikes",          default: 0
     t.integer  "room_id"
     t.datetime "created_at"
     t.datetime "updated_at"

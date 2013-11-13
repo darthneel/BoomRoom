@@ -34,6 +34,7 @@ function prepareBroadcast() {
 	  	dislike = 0;
 	  	$('#room-' + room_id + " #like .num").text(like);
 	  	$('#room-' + room_id + " #dislike .num").text(dislike);
+	  	voteClick();
 	  	window.playSong(data.sc_ident);
 	  	$("#room-" + room_id + " #current-track").text(data.title);
 	  });

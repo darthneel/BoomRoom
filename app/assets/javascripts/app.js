@@ -68,7 +68,7 @@ var app = {
 			type: 'POST',
 			url: '/rooms/like_or_dislike',
 			dataType: 'json',
-			async: false,
+			// async: false,
 			data: {vote: val}
 		});
 	}
