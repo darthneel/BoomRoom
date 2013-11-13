@@ -65,7 +65,7 @@ function prepareBroadcast() {
 	  	data = JSON.parse(e.data);
 	  	console.log(data);
 	  	$('#room-' + room_id + " #messages").append('<div><span class="content">'+data.message+'</span><br/><span class="author"> - '+data.author+'</span></div><hr/></div>');
-	  	$('#chatroom').scrollTop = 9999999;
+	  	$('#messages').scrollTop(999999);
 	  });
 	}
 }

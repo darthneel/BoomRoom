@@ -191,7 +191,9 @@ header {
 #messages {
 	height: 300px;
 	width: 200px;
+	word-wrap: break-word;
 	overflow-y: scroll;
+	overflow-x: none;
 	border: 3px solid black;
 	margin-bottom: 0;
 }
