@@ -408,44 +408,6 @@ header {
 
 }
 
-
-/* Chatroom */
-/*#messages {
-	height: 300px;
-	width: 200px;
-	word-wrap: break-word;
-	overflow-y: scroll;
-	overflow-x: none;
-	border: 3px solid black;
-	margin-bottom: 0;
-}
-
-#message-input {
-	width: 120px;
-	height: 30px;
-	margin: 0;
-	padding: 0;
-}
-
-#send {
-	text-decoration: none;
-	background-color: black;
-	color: white;
-	width: 40px;
-	height: 30px;
-	margin: 0;
-	padding: 10px 25px 10px 15px;
-}
-
-.content {
-
-}
-
-.author {
-	font-size: 10px;
-	font-weight: italic;
-}*/
-
 #chatroom {
 	display: none;
 	margin-top: 8%;
@@ -464,7 +426,7 @@ header {
 	overflow-x: none;
 	border: 3px solid rgba(0,0,0,0.8);
 	margin-bottom: 0;
-	background-color: rgba(33, 33, 29, 0.3);
+	background-color: rgba(33, 33, 29, 0.6);
 	color: white;
 	font-family: Lato, sans-serif;
 }
