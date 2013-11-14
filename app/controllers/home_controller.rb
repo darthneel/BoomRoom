@@ -25,6 +25,7 @@ class HomeController < ApplicationController
 	end
 
 	def room
+		@playlist = @room.songs.order('id')
 	end
 
 

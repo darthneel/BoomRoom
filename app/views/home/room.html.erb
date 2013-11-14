@@ -1,7 +1,32 @@
+	<div id="song-controller">
+		<div id = "currently-playing">
+			<h4>Currently Playing // <span id="current-track"></span></h4>
+		</div>
+		<div id="side-by-side">
+			<div id="slider"></div>
+			<div id="vol-tag">Volume</div>
+			<div class="controller-buttons" id="mute">Mute</div>
+			<div class="controller-buttons" id="like">Likes: <span class="num"><%= @likes || 0 %></span></div>
+			<div class="controller-buttons" id="dislike">Dislikes: <span class="num"><%= @dislikes || 0 %></span></div>
+		</div>
+	</div>
+
+	<div id="playlist-userlist">
+		<div id="icons"></div>
+		<div id="playlist-div">
+			<ul id="playlist">
+				<% @playlist.each do |song| %>
+					<li><%= song.title %></li>
+				<% end %>
+			</ul>
+		</div>
+			<div id="users"></div>
+	</div>
+
+
 <div id="main-container">
 
 	<div id="main-page">
-		aaaa
 		<div id="logo-search">
 			<i class="fa fa-search"></i>
 		</div>
