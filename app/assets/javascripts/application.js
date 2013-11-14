@@ -21,6 +21,5 @@
 //= require room
 //= require splashpage
 //= require home_index
-//= require masonry_test
 //= require broadcast
 // require_tree .
