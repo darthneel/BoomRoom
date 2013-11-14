@@ -23,6 +23,7 @@ $(function() {
 	messageClick(); // found below
 	volumeSlider(); // found below
 	logoSearch(); // found below
+	searchResultHover(); // found below
 
 	// Trigger certain events on room page load
 	if((document.URL).match(/\/rooms\/.+/)) {
@@ -122,10 +123,17 @@ function searchSC(search_string) {
 	});
 }
 
-function eachResultHover() {
-	$('.each-result').on("hover", "div", function(){
-		
-	})
+// Adds a hover effect on the returned search results ------------------------------------
+function searchResultHover() {
+	$('.each-result').on("mouseenter", "div", function() {
+		$(this).animate({
+			"color": "#27ae60"
+		},500);
+	}, function() {
+		$(this).animate({
+			"color": "white"
+		}, 500);
+	});
 }
 
 // Puts a song from the search results to room playlist on click -------------------------

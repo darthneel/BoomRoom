@@ -14,6 +14,7 @@
 //= require jquery_ujs
 //= require jquery.masonry.min
 //= require jquery-ui-1.10.3.custom/js/jquery-ui-1.10.3.custom.min
+//= require jquery.color-2.1.2.min
 //= require soundcloud_sdk
 //= require app
 //= require main
