@@ -1,7 +1,3 @@
-
-window.scrollTo(document.body.offsetWidth * 0.2, 0);
-
-
 $(function(){
 
   function animateAlbumArt(){
@@ -20,9 +16,3 @@ $(function(){
     }
 
 });
-
-
-
-
-  // var window_width = $(window).width();
-  // $("#main-container").css("width", (window_width + (window_width * 0.2)));
