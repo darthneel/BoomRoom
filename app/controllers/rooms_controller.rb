@@ -163,7 +163,7 @@ class RoomsController < ApplicationController
         elsif event == "add_message_#{room_id}" # For the add message subscription
         	sse.write(data, event: "add_message_#{room_id}")
         elsif event == "heart" # For the heartbeat subscription
-        	sse.write(data, event: "heart") 
+        	sse.write(data, event: "heart")
       	end
       end
     end

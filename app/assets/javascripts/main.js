@@ -45,9 +45,9 @@ window.onbeforeunload = function(e) {
 	}
 };
 
-// Plays a song based on SoundCloud ID or current song position --------------------------
+// Plays a song based on SoundCloud ID and current song position --------------------------
 function playSong(sc_ident, position) {
-	if(typeof(position)==='undefined') position = 0; // Allows for new users to join with specific song position
+	if(typeof(position)==='undefined') position = 0; // If no position is given, defaults to 0
 	SC.stream('/tracks/' + sc_ident, {position: position, onfinish: function() {
 		app.changeCurrentSong(sc_ident); // Change song when previous one ends
 	}}, function(sound) {
@@ -71,16 +71,16 @@ function getRoomId() {
 
   $('#logo-search').on('click', function(){
     if ($("#main-container").hasClass('out-left')) {
-        $('#main-container').animate({
-          left: '0'
-        }, 500);
-        $('#main-container').toggleClass('out-left');
-      } else {
-        $('#main-container').animate({
-          left: '-20%'
-        }, 500);
-        $('#main-container').toggleClass('out-left');
-      }
+      $('#main-container').animate({
+        left: '0'
+      }, 500);
+      $('#main-container').toggleClass('out-left');
+    } else {
+      $('#main-container').animate({
+        left: '-20%'
+      }, 500);
+      $('#main-container').toggleClass('out-left');
+    }
   });
 
 // Returns search results from SoundCloud on click ---------------------------------------

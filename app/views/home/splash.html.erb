@@ -1,33 +1,33 @@
 <div id = "splash-wrapper">
-
-
-<div id='mask' class='close_modal'></div> 
-		<header>
-					<ul id="splash-nav">
-						<li class="links modal" id="sign-in-link">Sign In</li> 
-						<li class="links modal" id="sign-up-link">Sign Up</li>
-					</ul>
-				
-		</header>
-	
+	<div id="splash-title"></div>
+	<div id='mask' class='close_modal'></div> 
+	<header>
+		<ul id="splash-logo">
+			<li><span id="logo-first-word">boom</span> <span id="logo-slash">//</span> <span id="logo-second-word">room</span></li>
+		</ul>
+		<ul id="splash-nav">
+			<li class="links modal" id="sign-in-link">Sign In</li> 
+			<li class="links modal" id="sign-up-link">Sign Up</li>
+		</ul>		
+	</header>		
 	<div id="temp-link">
 		<%= link_to "Rooms", all_rooms_path %>
 	</div>
-	
+	<div id="quote-first-line"><span class="quote">"</span>Without music,</div>
+	<div id="quote-second-line">life would be a mistake.<span class="quote">"</span></div>
+	<div id="quote-author">- Friedrich Nietzsche</div>
+
 	<div id="sign-in" class="modal-window splash-modal">
 		<%= form_for(resource, :as => resource_name, :url => session_path(resource_name)) do |f| %>
-		<div>
-		  <%= f.email_field :email, :placeholder => 'E-mail', :autofocus => true %>
-		</div>
-
-		 <div>
-		  <%= f.password_field :password, :placeholder => 'Password' %>
-		</div>
-
-		<% if devise_mapping.rememberable? -%>
-		  <div><%= f.check_box :remember_me %> <%= f.label :remember_me %></div>
-		<% end -%>
-
+			<div>
+			  <%= f.email_field :email, :placeholder => 'E-mail', :autofocus => true %>
+			</div>
+			<div>
+			  <%= f.password_field :password, :placeholder => 'Password' %>
+			</div>
+				<% if devise_mapping.rememberable? -%>
+				  <div><%= f.check_box :remember_me %> <%= f.label :remember_me %></div>
+				<% end %>
 		  <div>
 		  	<%= f.submit "Sign in" %>
 		  </div>
@@ -36,30 +36,24 @@
 
 	<div id="sign-up" class="modal-window splash-modal">
 		<%= form_for(resource, :as => resource_name, :url => registration_path(resource_name)) do |f| %>
-		<%= devise_error_messages! %>
-
-		<div>
-		  <%= f.email_field :email, :placeholder => 'E-mail', :autofocus => true %>
-		</div>
-
-		<div>
-		  <%= f.text_field :username, :placeholder => 'Username' %>
-		</div>
-
-	  <div>
-		  <%= f.password_field :password, :placeholder => 'Password' %>
-		</div>
-
-	  <div>
-		  <%= f.password_field :password_confirmation, :placeholder => 'Password Confirmation' %>
-		</div>
-
-	  <div>
-	  	<%= f.submit "Sign up" %>
-		</div>
-			<% end %>
+			<%= devise_error_messages! %>
+			<div>
+			  <%= f.email_field :email, :placeholder => 'E-mail', :autofocus => true %>
+			</div>
+			<div>
+			  <%= f.text_field :username, :placeholder => 'Username' %>
+			</div>
+		  <div>
+			  <%= f.password_field :password, :placeholder => 'Password' %>
+			</div>
+		  <div>
+			  <%= f.password_field :password_confirmation, :placeholder => 'Password Confirmation' %>
+			</div>
+		  <div>
+		  	<%= f.submit "Sign up" %>
+			</div>
+		<% end %>
 	</div>
-
 </div>
 
 
