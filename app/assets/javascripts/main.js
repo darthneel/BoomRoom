@@ -23,6 +23,7 @@ $(function() {
 	messageClick(); // found below
 	volumeSlider(); // found below
 	logoSearch(); // found below
+	logoChat(); // found below
 	searchResultHover(); // found below
 
 	// Trigger certain events on room page load
@@ -71,7 +72,7 @@ function getRoomId() {
 
 // Slides out search menu ----------------------------------------------------------------
 function logoSearch() {
-  $('#logo-search').on('click', function(){
+  $('#logo-search').on('click', function() {
     if ($("#main-container").hasClass('out-left')) {
       $('#main-container').animate({
         left: '0'
@@ -84,6 +85,13 @@ function logoSearch() {
       $('#main-container').toggleClass('out-left');
     }
   });
+}
+
+// Displays chat room --------------------------------------------------------------------
+function logoChat() {
+	$('#logo-chat').on('click', function() {
+		$('#chatroom').fadeToggle(500);
+	}); 
 }
 
 // Returns search results from SoundCloud on click ---------------------------------------
@@ -125,20 +133,24 @@ function searchSC(search_string) {
 
 // Adds a hover effect on the returned search results ------------------------------------
 function searchResultHover() {
-	$('.each-result').on("mouseenter", "div", function() {
+	$("#search-results").on("mouseenter", "div", function() {
 		$(this).animate({
-			"color": "#27ae60"
-		},500);
-	}, function() {
+			"color": "#27ae60",
+			"opacity": "1"
+		}, 500);
+	});
+
+	$("#search-results").on("mouseleave", "div", function() {
 		$(this).animate({
-			"color": "white"
+			"color": "white",
+			"opacity": "0.7"
 		}, 500);
 	});
 }
 
 // Puts a song from the search results to room playlist on click -------------------------
 function searchResultClick() {
-	$( "#search-results" ).on("click", "div", function() {
+	$("#search-results").on("click", "div", function() {
 		console.log(this);
 		var index = $(this).attr('data-index');
 		var sc_ident = search_return[index].id;
