@@ -343,7 +343,7 @@ header {
 #song-controller{
 	position: fixed;
 	z-index: 1000;
-	background-color: rgba(33 33, 29, 0.3);
+	background-color: rgba(33, 33, 29, 0.3);
 	width: 40%;
 	margin-left: 1%;
 	margin-top: 1%;
