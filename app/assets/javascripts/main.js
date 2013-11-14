@@ -67,25 +67,58 @@ function getRoomId() {
 	room_id = parseInt(room_id_unparsed.replace("room-",""));
 }
 
+// Slides out search menu ----------------------------------------------
+
+  $('#logo-search').on('click', function(){
+    if ($("#main-container").hasClass('out-left')) {
+        $('#main-container').animate({
+          left: '0'
+        }, 500);
+        $('#main-container').toggleClass('out-left');
+      } else {
+        $('#main-container').animate({
+          left: '-20%'
+        }, 500);
+        $('#main-container').toggleClass('out-left');
+      }
+  });
+
 // Returns search results from SoundCloud on click ---------------------------------------
 function searchButtonClick() {
 	$('#search-button').on('click', function() {
 		var search_string = $('#search-text').val();
-		SC.get('/tracks', { q: search_string, limit: 25, order: 'hotness', streamable: true }, function(tracks) {
-			console.log(tracks); 
-			search_return = tracks; // Returns all search results from SoundCloud
-			var $search_results = $('#search-results');
-			$search_results.empty();
-			for(i = 0; i < tracks.length; i++) {
-				if(tracks[i].streamable == true) { // Checks to see if the track can be streamed
-					var id = tracks[i].id;
-					$search_results.append($("<div class='each-result' id='song-"+id+"' data-index='"+i+"'><ul><li>"+tracks[i].title+"<ul><li><h4>"+tracks[i].user.username+"</h4></li></ul></li></ul></div>"));
-				}
-			}
-		});
+		$search_text.val('');
+		if(search_string !== '') {
+			searchSC(search_string);
+		}
 	});
+
+	var $search_text = $('#search-text');
+  $search_text.on('keyup', function(e) {
+    if(e.keyCode === 13) {
+      search_string = $search_text.val();
+      $search_text.val('');
+      if(search_string !== '') {
+				searchSC(search_string);
+			}
+    }
+  });
 }
 
+function searchSC(search_string) {
+	SC.get('/tracks', { q: search_string, limit: 25, order: 'hotness', streamable: true }, function(tracks) {
+		console.log(tracks); 
+		search_return = tracks; // Returns all search results from SoundCloud
+		var $search_results = $('#search-results');
+		$search_results.empty();
+		for(i = 0; i < tracks.length; i++) {
+			if(tracks[i].streamable == true) { // Checks to see if the track can be streamed
+				var id = tracks[i].id;
+				$search_results.append($("<div class='each-result' id='song-"+id+"' data-index='"+i+"'><ul><li>"+tracks[i].title+"<ul><li><h4>"+tracks[i].user.username+"</h4></li></ul></li></ul></div>"));
+			}
+		}
+	});
+}
 // Puts a song from the search results to room playlist on click -------------------------
 function searchResultClick() {
 	$( "#search-results" ).on("click", "div", function() {
@@ -182,4 +215,5 @@ function volumeSlider() {
 			song.setVolume(volume); // Changes song volume based on slider value
 		}
 	});
+
 }
