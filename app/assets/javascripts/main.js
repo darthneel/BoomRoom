@@ -116,6 +116,7 @@ function searchButtonClick() {
   });
 }
 
+// Queries the SoundCloud API for songs matching a search string -------------------------
 function searchSC(search_string) {
 	SC.get('/tracks', { q: search_string, limit: 25, order: 'hotness', streamable: true }, function(tracks) {
 		console.log(tracks);
@@ -170,6 +171,7 @@ function searchResultClick() {
 			genre = search_return[index].genre;
 		}
 		app.addNewSong(artist, title, stream_url, album_art, sc_ident, genre);
+		animateAlbumArt(sc_ident, album_art);
 		if(typeof(song) === 'undefined'){
 			app.changeCurrentSong(sc_ident); // Plays if no song is in the room yet
 			$('#current-track').text(title); // Changes currently playing text
@@ -227,6 +229,20 @@ function muteButton() {
 		console.log(song);
 	});
 }
+
+// Masonry album art --------------------------------------------------------------------- 
+function animateAlbumArt(sc_ident, album_art) {
+  var $image = $("<div id='art-"+sc_ident+"' class='cover-art'><img src="+album_art+">");
+  $container.prepend($image).masonry('reload');
+}
+
+var $container = $('#album-art-container');
+var msnry = $container.data('masonry');
+$container.masonry({
+  itemSelector: '.cover-art',
+  columnWidth: 125,
+  isAnimated: true
+});
 
 // jQuery UI slider for volume -----------------------------------------------------------
 function volumeSlider() {
