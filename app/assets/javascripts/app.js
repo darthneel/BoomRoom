@@ -1,11 +1,7 @@
 var app = app || {};
 
 var app = {
-	// Function to send an AJAX request to return the current song play time
-	// after a new user is added to the room.
-
-	// TODO: Need to add get_time method to Rooms controller and have it
-	// 			 render json for the soundcloud stream url
+	// Adds a new user to the room and plays the rooms current song ------------------------
 	newUser: function(room_id) {
 		$.ajax({
 			url: '/rooms/get_time',
@@ -22,6 +18,7 @@ var app = {
 		});
 	},
 
+	// Removes user from the room ----------------------------------------------------------
 	removeUser: function(id) {
 		$.ajax({
 			url: '/rooms/remove_user',
@@ -31,37 +28,30 @@ var app = {
 			data: {room_id: id}
 		});
 	},
-	// Function to send an AJAX request to add new song to the database
-	// and include it in the current room song list
 
-	// TODO: Need to add add_song method to Rooms controller and have it
-	// 			 create the song and append it to Room.songs. Find out how 
-  //       we'll be accessing song object data to pass back
+	// Adds a new song to the rooms playlist when user picks one ---------------------------
 	addNewSong: function(artist, title, stream_url, album_art, sc_ident, genre) {
 		$.ajax({
 			type: 'POST',
 			url: '/rooms/add_song',
 			async: false,
 			dataType: 'json',
-			// TODO: Find out how to get the song info into this param
 			data: {song: {artist: artist , title: title , stream_url: stream_url, album_art: album_art, sc_ident: sc_ident, genre: genre}}
 		});
 	},
 
-	// Function to send an AJAX request to change the current song in the room
-	// and to return the next song to the room?
+	// Changes the song in room when previous one ends, or none are existing ---------------
 	changeCurrentSong: function(sc_ident) {
 		$.ajax({
 			type: 'POST',
 			url: '/rooms/change_song',
 			dataType: 'json',
 			async: false,
-			// TODO: Find out how to get the id of current song into this param
 			data: {current_sc_ident: sc_ident}
 		});
 	},
 
-	// Function to send like or dislike to all users
+	// Likes or dislikes the currently playing song ----------------------------------------
 	likeOrDislike: function(val) {
 		$.ajax({
 			type: 'POST',
@@ -72,6 +62,7 @@ var app = {
 		});
 	},
 
+	// Send a message to the room ----------------------------------------------------------
 	sendMessage: function(string) {
 		$.ajax({
 			type: 'POST',

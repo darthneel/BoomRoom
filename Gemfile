@@ -3,11 +3,18 @@ source 'https://rubygems.org'
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '4.0.0'
 
+# Use devise for user information
 gem 'devise'
+
+# Use soundcloud API gem to stream music
 gem 'soundcloud'
+
+# Use a puma web server for multi-threading (concurrent users)
 gem 'puma'
+
+# Use redis as a pub/sub service
 gem 'redis'
-gem 'pry'
+
 # Use postgresql as the database for Active Record
 gem 'pg'
 
@@ -17,51 +24,27 @@ gem 'sass-rails', '~> 4.0.0'
 # Use Uglifier as compressor for JavaScript assets
 gem 'uglifier', '>= 1.3.0'
 
-# Use CoffeeScript for .js.coffee assets and views
-gem 'coffee-rails', '~> 4.0.0'
-
-# See https://github.com/sstephenson/execjs#readme for more supported runtimes
-# gem 'therubyracer', platforms: :ruby
-
 # Use jquery as the JavaScript library
 gem 'jquery-rails'
-
-# Turbolinks makes following links in your web application faster. Read more: https://github.com/rails/turbolinks
-
-# Make turbolinks work with jquery
-gem 'jquery-turbolinks'
 
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
 gem 'jbuilder', '~> 1.2'
 
-# group :doc do
-#   # bundle exec rake doc:rails generates the API under doc/api.
-#   gem 'sdoc', require: false
-# end
+# Use ActiveModel has_secure_password
+# gem 'bcrypt-ruby', '~> 3.0.0'
 
+# Testing gems
 group :test do
   gem 'faker'
   gem 'capybara'
   gem 'database_cleaner'
   gem 'launchy'
+  gem 'simplecov'
 end
 
+# Gems for TDD
 group :development, :test do
   gem 'annotate'
-
   gem 'rspec-rails'
-  # gem 'factory_girl_rails'
   gem 'guard-rspec'
 end
-
-# Use ActiveModel has_secure_password
-# gem 'bcrypt-ruby', '~> 3.0.0'
-
-# Use unicorn as the app server
-# gem 'unicorn'
-
-# Use Capistrano for deployment
-# gem 'capistrano', group: :development
-
-# Use debugger
-# gem 'debugger', group: [:development, :test]

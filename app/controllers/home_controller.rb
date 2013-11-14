@@ -3,7 +3,6 @@ class HomeController < ApplicationController
 	before_filter :authenticate_user!, :except => [:splash]
 
 	def index
-
 		@rooms = Room.all
 		@room = Room.new
 	end
