@@ -224,5 +224,4 @@ function volumeSlider() {
 			song.setVolume(volume); // Changes song volume based on slider value
 		}
 	});
-
 }
