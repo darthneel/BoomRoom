@@ -22,6 +22,7 @@ $(function() {
 	voteClick(); // found below
 	messageClick(); // found below
 	volumeSlider(); // found below
+	logoSearch(); // found below
 
 	// Trigger certain events on room page load
 	if((document.URL).match(/\/rooms\/.+/)) {
@@ -67,8 +68,8 @@ function getRoomId() {
 	room_id = parseInt(room_id_unparsed.replace("room-",""));
 }
 
-// Slides out search menu ----------------------------------------------
-
+// Slides out search menu ----------------------------------------------------------------
+function logoSearch() {
   $('#logo-search').on('click', function(){
     if ($("#main-container").hasClass('out-left')) {
         $('#main-container').animate({
@@ -82,6 +83,7 @@ function getRoomId() {
         $('#main-container').toggleClass('out-left');
       }
   });
+}
 
 // Returns search results from SoundCloud on click ---------------------------------------
 function searchButtonClick() {
@@ -112,13 +114,20 @@ function searchSC(search_string) {
 		var $search_results = $('#search-results');
 		$search_results.empty();
 		for(i = 0; i < tracks.length; i++) {
-			if(tracks[i].streamable == true) { // Checks to see if the track can be streamed
+			if(tracks[i].streamable === true) { // Checks to see if the track can be streamed
 				var id = tracks[i].id;
-				$search_results.append($("<div class='each-result' id='song-"+id+"' data-index='"+i+"'><ul><li>"+tracks[i].title+"<ul><li><h4>"+tracks[i].user.username+"</h4></li></ul></li></ul></div>"));
+				$search_results.append($("<div class='each-result' id='song-"+id+"' data-index='"+i+"'><div id='results-title'>"+tracks[i].title+"</div></div>"));
 			}
 		}
 	});
 }
+
+function eachResultHover() {
+	$('.each-result').on("hover", "div", function(){
+		
+	})
+}
+
 // Puts a song from the search results to room playlist on click -------------------------
 function searchResultClick() {
 	$( "#search-results" ).on("click", "div", function() {
