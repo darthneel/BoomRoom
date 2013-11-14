@@ -52,11 +52,11 @@ body {
 #splash-wrapper {
 	width:100%;
 	height:100%;
-	background: url(beatles.jpg) no-repeat center center fixed; 
-	  -webkit-background-size: cover;
-	     -moz-background-size: cover;
-	       -o-background-size: cover;
-	          background-size: cover;
+	background: url(/public/beatles.jpg) no-repeat center center fixed; 
+	-webkit-background-size: cover;
+	-moz-background-size: cover;
+	-o-background-size: cover;
+	background-size: cover;
 }
 
 
@@ -81,17 +81,17 @@ body {
 }
 
 #logo-first-word {
-	font-family: ;
+	font-family: Lato;
 	color: #F47E20;
 }
 
 #logo-second-word {
-	font-family: ;
+	font-family: Lato;
 	color: #F22738;
 }
 
 #logo-slash {
-	font-family: ;
+	font-family: Lato;
 	color: #00ADEE;
 	font-weight: bold;
 	font-size: 40px;
@@ -329,7 +329,7 @@ header {
 	width: 70%;
 	margin-left: -1%;
 	display: inline-block;
-	--webkit-border-radius: 5px 0px 0px 5px;
+	-webkit-border-radius: 5px 0px 0px 5px;
 	border-radius: 5px 0px 0px 5px;
 }
 
@@ -343,7 +343,7 @@ header {
 #song-controller{
 	position: fixed;
 	z-index: 1000;
-	background-color: rgba(33 33, 29, 0.3);
+	background-color: rgba(33, 33, 29, 0.3);
 	width: 40%;
 	margin-left: 1%;
 	margin-top: 1%;
