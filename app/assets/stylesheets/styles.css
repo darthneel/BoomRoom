@@ -339,12 +339,11 @@ header {
 #song-controller{
 	position: fixed;
 	z-index: 1000;
-	background-color: rgba(33, 33, 29, 0.3);
+	background-color: rgba(33 33, 29, 0.3);
 	width: 40%;
 	margin-left: 1%;
 	margin-top: 1%;
 	padding: .5%;
-
 }
 
 #currently-playing{
@@ -377,6 +376,8 @@ header {
 /***** Playlist/Userlist */
 #playlist-userlist{
 	position: fixed;
+	line-height: 20px;
+	display: inline-block;
 	color:white;
 	font-size: 12px;
 	font-family: 'Lato', sans-serif;
@@ -384,17 +385,31 @@ header {
 	z-index: 2000;
 	height: 50%;
 	width: 60%;
-	overflow-y:scroll;
 }
 
-#playlist {
-	float: right;
+#playlist-div {
+	margin-top: 1%;
+	margin-left: 12%;
+	width: 30%;
 	background-color: black;
+	padding:1%;
+	list-style-type: none;
+	position: fixed;
+	overflow: scroll;	
+}
+
+#playlist-div h4 {
+	margin:0;
 }
 
 #users {
-	float: left;
+	margin-top: 1%;
+	/*margin-left: 1%;*/
+	position: fixed;
+	width:10%;
 	background-color: black;
+	overflow-y:scroll;
+
 }
 
 
