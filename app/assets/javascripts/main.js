@@ -7,6 +7,7 @@ var like_count = 0; // Seems redundant, but being used to stop user from voting 
 var dislike_count = 0; // Seems redundant, but being used to stop user from voting more than once per song
 var isMuted = false; // Carries mute result from one song to the next
 var volume = 50; // Default volume
+var num_messages = 0 // Default number of messages received
 
 // Document ready function ---------------------------------------------------------------
 $(function() {
@@ -90,7 +91,8 @@ function logoSearch() {
 // Displays chat room --------------------------------------------------------------------
 function logoChat() {
 	$('#logo-chat').on('click', function() {
-		$('#chatroom').fadeToggle(500);
+		$('#chatroom').stop().fadeToggle(500);
+		checkMessages();
 	}); 
 }
 
@@ -219,6 +221,22 @@ function messageClick() {
 			}
 		}
 	});
+}
+
+// Checks to see if you have unviewed messages -------------------------------------------
+function checkMessages() {
+	$logo_chat = $('#logo-chat')
+	if($('#chatroom:visible').length === 0 && num_messages > 0) {
+		$logo_chat.animate({
+			"background-color": "red"
+		}, 300);
+		console.log(num_messages);
+	} else {
+		num_messages = 0;
+		$logo_chat.animate({
+			"background-color": "black"
+		}, 300);
+	}
 }
 
 // Mute button ---------------------------------------------------------------------------

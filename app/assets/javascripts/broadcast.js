@@ -75,6 +75,8 @@ function prepareBroadcast() {
 	  	console.log('chat redis triggered');
 	  	data = JSON.parse(e.data);
 	  	console.log(data);
+	  	num_messages++;
+	  	checkMessages();
 	  	$('#room-' + room_id + " #messages").append('<div><span class="content">'+data.message+'</span><br/><span class="author"> - '+data.author+'</span></div><hr/></div>');
 	  	$('#messages').scrollTop(999999);
 	  });
