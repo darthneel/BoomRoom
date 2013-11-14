@@ -3,7 +3,7 @@
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
 #main-page {
-  background: url(grey_gradient.png) no-repeat center center fixed; 
+  background: url(image-path('grey_gradient.png')) no-repeat center center fixed; 
   -webkit-background-size: cover;
   -moz-background-size: cover;
   -o-background-size: cover;
@@ -11,5 +11,5 @@
 }
 
 #search-bar {
-	background:url(low_contrast_linen.png);
+	background:url(image-path('low_contrast_linen.png'));
 }
