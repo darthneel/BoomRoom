@@ -163,7 +163,8 @@ function searchResultClick() {
 		var album_art;
 		var genre;
 		if(search_return[index].artwork_url === null || search_return[index].artwork_url === '') {
-			album_art = "http://epilepsyu.com/wp-content/uploads/2013/10/brain_music-150x150.jpeg"; // Default album art
+			album_art_array = ["http://epilepsyu.com/wp-content/uploads/2013/10/brain_music-150x150.jpeg", "http://hammarica.com/wp-content/uploads/2013/10/1005-Ghost-Crew-Hammarica-PR-657-DJ-Agency-Bookings-Electronic-Dance-Music-News-80x80.jpg", "http://www.cellphone-wallpapers.net/thumb.php?p=Wallpapers/User/20869-colors---rainbow.jpg&m=1&h=75&w=90", "http://media.npr.org/assets/news/2010/02/19/giantfish_sq-e1595c4822f1bcbd17bb2882a030859498a2b876-s11.jpg"]; // Default album art
+			album_art = album_art_array[Math.floor(Math.random() * album_art_array.length)];
 		} else {
 			album_art = search_return[index].artwork_url;
 		}
@@ -173,11 +174,12 @@ function searchResultClick() {
 			genre = search_return[index].genre;
 		}
 		app.addNewSong(artist, title, stream_url, album_art, sc_ident, genre);
-		// animateAlbumArt(sc_ident, album_art);
+		console.log('added to db');
 		if(typeof(song) === 'undefined'){
 			app.changeCurrentSong(sc_ident); // Plays if no song is in the room yet
 			$('#current-track').text(title); // Changes currently playing text
 		}
+		animateAlbumArt(sc_ident, album_art);
 	});
 }
 
@@ -249,24 +251,39 @@ function muteButton() {
 }
 
 // Masonry album art --------------------------------------------------------------------- 
-function animateAlbumArt(sc_ident, album_art) {
-  var $image = $("<div id='art-"+sc_ident+"' class='cover-art'><img src="+album_art+">");
-  $container.prepend($image).masonry('reload');
-}
 
-var $container = $('#album-art-container');
-var msnry = $container.data('masonry');
-$container.masonry({
+// var $container = $('#album-art-container');
+// var msnry = $container.data('masonry');
+// $container.masonry({
+//   itemSelector: '.cover-art',
+//   columnWidth: 125,
+//   isAnimated: true
+// });
+
+function animateAlbumArt(sc_ident, album_art) {
+	console.log(sc_ident);
+	console.log(album_art);
+	var $container = $('#album-art-container');
+	var msnry = $container.data('masonry');
+	$container.masonry({
   itemSelector: '.cover-art',
-  columnWidth: 125,
+  columnWidth: 80,
   isAnimated: true
 });
+
+	if($("#art-"+sc_ident).length === 0) {
+		var random_num = (Math.random()*70)+90;
+	  var $image_div = $("<div id='art-"+sc_ident+"' class='cover-art'><img style='height: "+random_num+"px; width: "+random_num+"px;' src="+album_art+">");
+	  var $img =  $("#art-"+sc_ident+" img");
+	  $container.prepend($image_div).masonry('reload');
+	}
+}
 
 // jQuery UI slider for volume -----------------------------------------------------------
 function volumeSlider() {
 	$('#slider').slider({
 		min: 0, // Ranges from 0-100 (SoundCloud volume range)
-		max: 100, 
+		max: 100,
 		value: 50,	// Default volume is 50
 		slide: function(event, ui) {}
 	});

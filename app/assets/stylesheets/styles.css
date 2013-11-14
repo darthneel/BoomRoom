@@ -1,4 +1,4 @@
-html, body {
+html, body {	
 	height: 100%;
 	width: 100%;
 	margin: 0;
@@ -200,9 +200,9 @@ header {
 }
 
 #album-art-container{
-	margin-left: 44%;
+	margin-left: 46%;
 	margin-top: 1%;
-	position: fixed;
+	position: absolute;
 	height: 98%;
 	width: 47%;
 	overflow-y: scroll;
@@ -391,7 +391,9 @@ header {
 	padding:1%;
 	list-style-type: none;
 	position: fixed;
-	overflow: scroll;	
+	overflow-y: scroll;
+	height: 50%;
+
 }
 
 #playlist-div h4 {
