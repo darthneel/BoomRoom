@@ -1,48 +1,72 @@
+
 <div class="room" id="room-<%= @room.id %>">
 
-	<div id = "buttons">
-		<ul>
-			<li id="mute">Mute</li>
-			<li id="like">Likes: <span class="num"><%= @likes || 0 %></span></li>
-			<li id="dislike">Dislikes: <span class="num"><%= @dislikes || 0 %></span></li>
-		</ul>
+	<div id="song-controller">
+		<div id = "currently-playing">
+			<h4>Currently Playing // <span id="current-track"></span></h4>
+		</div>
+		<div id="side-by-side">
+			<div id="slider"></div>
+			<div id="vol-tag">Volume</div>
+			<div class="controller-buttons" id="mute">Mute</div>
+			<div class="controller-buttons" id="like">Likes: <span class="num"><%= @likes || 0 %></span></div>
+			<div class="controller-buttons" id="dislike">Dislikes: <span class="num"><%= @dislikes || 0 %></span></div>
+		</div>
 	</div>
 
-	<div id = "currently-playing">
-		<h2>Currently Playing: <span id="current-track"></span><h2>
+	<div id="playlist-userlist">
+		<div id="icons"></div>
+		<div id="playlist-div">
+			<ul id="playlist">
+				<% @playlist.each do |song| %>
+					<li><%= song.title %></li>
+				<% end %>
+			</ul>
+		</div>
+			<div id="users"></div>
 	</div>
 
-	<div id="slider"></div>
-	<div id="vol-tag">Volume</div>
 
-	<div id="search">
-		<input type="text" name="search_box" id="search-text" size="15" placeholder="Search" autofocus>
-		<div id="search-button">Search</div>
-	</div>
+	<div id="main-container">
 
-	<div id="search-results"></div>
+		<div id="main-page">
+			<div id="logo-search">
+				<i class="fa fa-search"></i>
+			</div>
 
-	<div>
-		<h2>Playlist</h2>
-		<ul id="playlist">
-			<% @playlist.each do |song| %>
-				<li><%= song.title %></li>
-			<% end %>
-		</ul>
-	</div>
+			<div id="logo-chat">
+				<i class="fa fa-comment-o"></i>
+			</div>
 
-	<ul id="current-users">
-		<% @users.each do |user| %>
-			<li id="<%= user.id %>">
-				<%= user.username %>
-			</li>
-		<% end %>	
-	</ul>
+			<div id="chatroom">
+				<div id="messages"></div>
+				<div id="mess-wrap">
+					<div id="message-input-wrap">
+						<input id="message-input" type="text" placeholder="Enter message here..." />
+					</div>
+					<div id="send-button">
+						<i id="send" class="fa fa-chevron-right"></i>
+					</div>
+				</div>
+			</div>
+		</div>
 
-	<div id="chatroom">
-		<div id="messages"></div>
-		<input id="message-input" type="text" placeholder="Enter message here..." />
-		<a id="send">Send</a>
+		<div id="search-bar">
+			<div id="search-wrapper">
+				<div id="search">
+					<input type="text" name="search_box" id="search-text" size="27" placeholder="  Search">
+				</div>
+				<div id="search-button">
+					<i id="search-chevron" class="fa fa-chevron-right"></i>
+				</div>	
+			</div>
+
+			<div id="search-results">	
+
+			</div>
+
+		</div>
+
 	</div>
 
 </div>

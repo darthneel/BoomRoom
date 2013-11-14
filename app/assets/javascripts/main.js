@@ -23,7 +23,8 @@ $(function() {
 	messageClick(); // found below
 	volumeSlider(); // found below
 	logoSearch(); // found below
-	searchResultHover(); // found below
+	logoChat(); // found below
+	// searchResultHover(); // found below
 
 	// Trigger certain events on room page load
 	if((document.URL).match(/\/rooms\/.+/)) {
@@ -71,19 +72,26 @@ function getRoomId() {
 
 // Slides out search menu ----------------------------------------------------------------
 function logoSearch() {
-  $('#logo-search').on('click', function(){
-    if ($("#main-container").hasClass('out-left')) {
-      $('#main-container').animate({
+  $('#logo-search').on('click', function() {
+    if ($(".room").hasClass('out-left')) {
+      $('.room').animate({
         left: '0'
       }, 500);
-      $('#main-container').toggleClass('out-left');
+      $('.room').toggleClass('out-left');
     } else {
-      $('#main-container').animate({
+      $('.room').animate({
         left: '-20%'
       }, 500);
-      $('#main-container').toggleClass('out-left');
+      $('.room').toggleClass('out-left');
     }
   });
+}
+
+// Displays chat room --------------------------------------------------------------------
+function logoChat() {
+	$('#logo-chat').on('click', function() {
+		$('#chatroom').fadeToggle(500);
+	}); 
 }
 
 // Returns search results from SoundCloud on click ---------------------------------------
@@ -110,14 +118,14 @@ function searchButtonClick() {
 
 function searchSC(search_string) {
 	SC.get('/tracks', { q: search_string, limit: 25, order: 'hotness', streamable: true }, function(tracks) {
-		console.log(tracks); 
+		console.log(tracks);
 		search_return = tracks; // Returns all search results from SoundCloud
 		var $search_results = $('#search-results');
 		$search_results.empty();
 		for(i = 0; i < tracks.length; i++) {
 			if(tracks[i].streamable === true) { // Checks to see if the track can be streamed
 				var id = tracks[i].id;
-				$search_results.append($("<div class='each-result' id='song-"+id+"' data-index='"+i+"'><div id='results-title'>"+tracks[i].title+"</div></div>"));
+				$search_results.append($("<div class='each-result' id='song-"+id+"' data-index='"+i+"'><span id='results-title'>"+tracks[i].title+"</span></div>"));
 			}
 		}
 	});
@@ -125,20 +133,24 @@ function searchSC(search_string) {
 
 // Adds a hover effect on the returned search results ------------------------------------
 function searchResultHover() {
-	$('.each-result').on("mouseenter", "div", function() {
+	$("#search-results").on("mouseenter", "div", function() {
 		$(this).animate({
-			"color": "#27ae60"
-		},500);
-	}, function() {
+			"color": "#27ae60",
+			"opacity": "1"
+		}, 500);
+	});
+
+	$("#search-results").on("mouseleave", "div", function() {
 		$(this).animate({
-			"color": "white"
+			"color": "white",
+			"opacity": "0.7"
 		}, 500);
 	});
 }
 
 // Puts a song from the search results to room playlist on click -------------------------
 function searchResultClick() {
-	$( "#search-results" ).on("click", "div", function() {
+	$("#search-results").on("click", "div", function() {
 		console.log(this);
 		var index = $(this).attr('data-index');
 		var sc_ident = search_return[index].id;
@@ -232,5 +244,4 @@ function volumeSlider() {
 			song.setVolume(volume); // Changes song volume based on slider value
 		}
 	});
-
 }

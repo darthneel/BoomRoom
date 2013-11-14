@@ -10,6 +10,12 @@ body {
 	overflow: hidden;
 }
 
+.room {
+	width: 100%;
+	position: absolute;
+  height: 100%;
+}
+
 .each-result {
 	width: 400px;
 }
@@ -50,7 +56,7 @@ body {
 	  -webkit-background-size: cover;
 	     -moz-background-size: cover;
 	       -o-background-size: cover;
-	          background-size: cover;	
+	          background-size: cover;
 }
 
 
@@ -185,7 +191,7 @@ header {
 	background-color: red;
 	text-align: center;
 	padding-top: 5px;
-	margin-top: 10%;
+	/*margin-top: 10%;*/
 }
 
 #create-room {
@@ -206,13 +212,13 @@ header {
 
 /***** Room ***************/
 
-.main-container {
+/*.main-container {
     position:absolute;
     width: 100%;
     height: 100%;
-}
+}*/
 
-#search-bar{
+#search-bar {
 	position: absolute;
 	width: 20%;
 	height: 100%;
@@ -221,7 +227,7 @@ header {
 	left:100%;
 }
 
-#main-page{
+#main-page {
 	position: absolute;
 	width: 100%;
 	height: 100%;
@@ -233,7 +239,7 @@ header {
   -o-background-size: cover;
   background-size: cover;}
 
-#logo-search{
+#logo-search {
 	padding: 5px;
 	line-height: 30px;
 	margin-top: 2%;
@@ -244,9 +250,30 @@ header {
 	width:35px;
 	height:35px;
 	position: fixed;
+	cursor: pointer;
 }
 
-#search-results{
+#logo-chat {
+	padding: 5px;
+	line-height: 30px;
+	margin-top: 8%;
+	margin-left: 93%;
+	text-align: center;
+	background-color: black;
+	color: white;
+	width: 35px;
+	height: 35px;
+	font-size: 20px;
+	position: fixed;
+	cursor: pointer;
+	z-index: 30;
+}
+
+.fa-comment-o {
+	margin-top: 2%;
+}
+
+#search-results {
 	background-color: rgba(236, 240, 241,0.1);
 	margin: 0 auto;
 	margin-top: 60px;
@@ -266,6 +293,7 @@ header {
 	width: 75%;
 	margin-top: 10px;
 	color: white;
+	cursor: pointer;
 }
 
 
@@ -283,25 +311,25 @@ header {
 	cursor: pointer;
 	text-align: center;
 	color: white;
-	/*border: solid 1px white; */
 	border-left:0px;
 	background: #27ae60;
-	width:20px;
+	width: 9%;
 	height:16px;
 	display: inline-block;
-	/*margin-top: -1px;*/
 }
 
 #search-text{
 	margin: 0;
 	float: left;
-	height: 20px;	
+	height: 20px;
+	width: 70%;
+	margin-left: -1%;
 	display: inline-block;
 	--webkit-border-radius: 5px 0px 0px 5px;
 	border-radius: 5px 0px 0px 5px;
 }
 
-.fa-chevron-right {
+#search-chevron {
 	position: relative;
 	top:2px;
 	/*bottom: 5px;*/
@@ -355,7 +383,7 @@ header {
 
 
 /* Chatroom */
-#messages {
+/*#messages {
 	height: 300px;
 	width: 200px;
 	word-wrap: break-word;
@@ -389,8 +417,73 @@ header {
 .author {
 	font-size: 10px;
 	font-weight: italic;
+}*/
+
+#chatroom {
+	display: none;
+	margin-top: 8%;
+	margin-left: 78%;
+	position: fixed;
+	height: 330px;
+	width: 200px;
 }
 
+#messages {
+	height: 300px;
+	width: 200px;
+	word-wrap: break-word;
+	overflow-y: scroll;
+	overflow-x: none;
+	border: 3px solid black;
+	margin-bottom: 0;
+}
+
+#message-input-wrap {
+
+}
+
+#message-input {
+	margin: 0;
+	float: left;
+	height: 20px;
+	width: 82%;
+	display: inline-block;
+}
+
+#send {
+	float: left;
+	margin: 0;
+	padding: 5px 5px;
+	font-size:14px;
+	cursor: pointer;
+	text-align: center;
+	color: white;
+	border-left:0px;
+	background: black;
+	width: 10%;
+	height: 15px;
+	display: inline-block;
+}
+
+.content {
+
+}
+
+.author {
+	font-size: 10px;
+	font-weight: italic;
+}
+
+
+#next {
+	font-size: 50px;
+	text-decoration: none;
+	margin: 0 50px;
+}
+
+#sign-out-link a {
+	text-decoration: none;
+}
 
 
 
