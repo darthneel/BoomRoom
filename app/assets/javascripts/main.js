@@ -171,7 +171,8 @@ function searchResultClick() {
 			genre = search_return[index].genre;
 		}
 		app.addNewSong(artist, title, stream_url, album_art, sc_ident, genre);
-		// animateAlbumArt(sc_ident, album_art);
+		console.log('added to db');
+		animateAlbumArt(sc_ident, album_art);
 		if(typeof(song) === 'undefined'){
 			app.changeCurrentSong(sc_ident); // Plays if no song is in the room yet
 			$('#current-track').text(title); // Changes currently playing text
@@ -231,18 +232,30 @@ function muteButton() {
 }
 
 // Masonry album art --------------------------------------------------------------------- 
-function animateAlbumArt(sc_ident, album_art) {
-  var $image = $("<div id='art-"+sc_ident+"' class='cover-art'><img src="+album_art+">");
-  $container.prepend($image).masonry('reload');
-}
 
-var $container = $('#album-art-container');
-var msnry = $container.data('masonry');
-$container.masonry({
+// var $container = $('#album-art-container');
+// var msnry = $container.data('masonry');
+// $container.masonry({
+//   itemSelector: '.cover-art',
+//   columnWidth: 125,
+//   isAnimated: true
+// });
+
+function animateAlbumArt(sc_ident, album_art) {
+	console.log(sc_ident);
+	console.log(album_art);
+	var $container = $('#album-art-container');
+	var msnry = $container.data('masonry');
+	$container.masonry({
   itemSelector: '.cover-art',
   columnWidth: 125,
   isAnimated: true
 });
+
+  var $image = $("<div id='art-"+sc_ident+"' class='cover-art'><img src="+album_art+">");
+  console.log($image);
+  $container.prepend($image).masonry('reload');
+}
 
 // jQuery UI slider for volume -----------------------------------------------------------
 function volumeSlider() {

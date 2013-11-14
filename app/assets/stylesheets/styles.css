@@ -1,4 +1,4 @@
-html, body {
+html, body {	
 	height: 100%;
 	width: 100%;
 	margin: 0;
@@ -401,7 +401,9 @@ header {
 	padding:1%;
 	list-style-type: none;
 	position: fixed;
-	overflow: scroll;	
+	overflow-y: scroll;
+	height: 50%;
+
 }
 
 #playlist-div h4 {
