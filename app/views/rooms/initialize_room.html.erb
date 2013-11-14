@@ -7,7 +7,7 @@
 		</div>
 		<div id="side-by-side">
 			<div id="slider"></div>
-			<div id="vol-tag">Volume</div>
+		<!-- 	<div id="vol-tag">Volume</div> -->
 			<div class="controller-buttons" id="mute">Mute</div>
 			<div class="controller-buttons" id="like">Likes: <span class="num"><%= @likes || 0 %></span></div>
 			<div class="controller-buttons" id="dislike">Dislikes: <span class="num"><%= @dislikes || 0 %></span></div>
@@ -15,23 +15,14 @@
 	</div>
 
 	<div id="playlist-userlist">
-			<div id="users">
-					<h4>Users //</h4>
+		<div id="users">
+			<h4>Users //</h4>
 					<ul id="current-users">
 							<% @users.each do |user| %>
 						<li id="<%= user.id %>">
 							<%= user.username %>
 						</li>
 							<% end %>	
-						<li>TESTUSER</li>
-						<li>TESTUSER</li>
-						<li>TESTUSER</li>
-						<li>TESTUSER</li>
-						<li>TESTUSER</li>
-						<li>TESTUSER</li>
-						<li>TESTUSER</li>
-						<li>TESTUSER</li>
-						<li>TESTUSER</li>
 					</ul>
 			</div>
 
@@ -41,17 +32,14 @@
 				<% @playlist.each do |song| %>
 					<li><%= song.title %></li>
 				<% end %>
-				<li>TESTTTttttttTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT</li>
-				<li>TESTTTttttttTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT</li>
-				<li>TESTTTttttttTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT</li>
-				<li>TESTTTttttttTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT</li>
-				<li>TESTTTttttttTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT</li>
 			</ul>
 		</div>
 	</div>
 
 
 	<div id="main-container">
+
+		<div id="album-art-container" class="masonry"></div>
 
 		<div id="main-page">
 			<div id="logo-search">
