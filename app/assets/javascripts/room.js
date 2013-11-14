@@ -1,10 +1,7 @@
 
-window.scrollTo(document.body.offsetWidth * 0.2, 0);
-
-
 $(function(){
 
-  function animateAlbumArt(){
+  function animateAlbumArt(sc_ident, album_art){
     var $container = $('#album-art-container');
     
     var msnry = $container.data('masonry');
@@ -18,6 +15,29 @@ $(function(){
       var $image = $( "<div id='art-"+sc_ident+"' class='cover-art'><img src="+album_art+">" );
       $container.prepend( $image ).masonry( 'reload' );
     }
+
+  $('#logo-search').on('click', function(){
+    if ($("#main-container").hasClass('out-left')) {
+        $('#main-container').animate({
+          left: '0'
+        }, 500);
+        $('#main-container').toggleClass('out-left');
+      } else {
+        $('#main-container').animate({
+          left: '-20%'
+        }, 500);
+        $('#main-container').toggleClass('out-left');
+      }
+  });
+
+  var $search_text = $('#search-text');
+
+  $search_text.on('keyup', function(e) {
+    if(e.keyCode === 13) {
+      search_text = $search_text_input.val();
+        console.log("search_text");
+      }
+    });
 
 });
 
