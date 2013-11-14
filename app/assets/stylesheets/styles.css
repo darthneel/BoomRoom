@@ -8,11 +8,11 @@ html, body {
 body {
 	width: 125%;
 	overflow: hidden;
-
 }
 
-
-
+.each-result {
+	width: 400px;
+}
 
 
 #playlist {
@@ -30,59 +30,93 @@ body {
 }
 
 #mask {  
-    position:absolute;
-    top:0px;  
-    left:0px;   
-    height:100%;  
-    width:100%;  
-    display:none; 
-  
- 
-    background-color: black;  
+  position:absolute;
+  top:0px;  
+  left:0px;   
+  height:100%;  
+  width:100%;  
+  display:none; 
+  background-color: black;  
 }  
 
 .modal-window {  
-    position:absolute;  
-    display:none;  
+  position:absolute;  
+  display:none;  
 }
 
 
-/***** SPLASH PAGE */
-
+/***** Splash Page *****/
 #splash-wrapper {
 	width:100%;
 	height:100%;
-/*	background: url(record_stack.jpg) no-repeat center center fixed; 
+	background: url(beatles.jpg) no-repeat center center fixed; 
 	  -webkit-background-size: cover;
-	  -moz-background-size: cover;
-	  -o-background-size: cover;
-	  background-size: cover;*/	
-	background-color: #34495e;
+	     -moz-background-size: cover;
+	       -o-background-size: cover;
+	          background-size: cover;	
 }
 
 
-/***** SPLASH PAGE NAV */
-
-nav {
-    left:37%;
-    width: 100%;
-    height: 35px;
-    position: fixed;
-
-}
-
+/***** Splash Page Nav *****/
 #splash-nav {
-    width: auto;
-    left: 70%;
-    position: relative;
-    display: inline;
-    list-style: none;
+  width: auto;
+  display: inline;
+  list-style: none;
 }
 
 #splash-nav li {
   font-size: 17px;
-  float: left;
+  float: right;
   padding: 10px;
+}
+
+#splash-logo li {
+	float: left;
+	font-size: 25px;
+	padding: 10px;
+	list-style-type: none;
+}
+
+#logo-first-word {
+	font-family: ;
+	color: #F47E20;
+}
+
+#logo-second-word {
+	font-family: ;
+	color: #F22738;
+}
+
+#logo-slash {
+	font-family: ;
+	color: #00ADEE;
+	font-weight: bold;
+	font-size: 40px;
+	position: relative;
+	top: 6px;
+}
+
+#quote-first-line {
+	position: absolute;
+	top: 28%;
+	left: 10%;
+	font-size: 50px;
+	font-family: 'Playball';
+}
+
+#quote-second-line {
+	position: absolute;
+	top: 35%;
+	left: 12%;
+	font-size: 50px;
+	font-family: 'Playball';
+}
+
+#quote-author {
+	position: absolute;
+	top: 47%;
+	left: 12%;
+	font-size: 30px;
 }
 
 .links:hover {
@@ -91,12 +125,10 @@ nav {
 }
 
 header {
-    background: gray;
-    opacity: .5; 
-    width: 100%;
-    height: 40px;
-    z-index: 100;
-    position: fixed;
+  width: 100%;
+  height: 40px;
+  z-index: 100;
+  position: fixed;
 }
 /***** Splash Page Modals */
 .splash-modal {

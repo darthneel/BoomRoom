@@ -12,16 +12,16 @@ $(function() {
 	   });  
 
 	function close_modal(){  
-      $('#mask').fadeOut(500);  
-      $('.modal-window').fadeOut(500);  
+      $('#mask').stop().fadeOut(500);  
+      $('.modal-window').stop().fadeOut(500);  
 	}  
 
 	function show_modal(modal_id){
-			$('#mask').fadeOut(0);  
-      $('.modal-window').fadeOut(0);
+			$('#mask').stop().fadeOut(0);  
+      $('.modal-window').stop().fadeOut(0);
       $('#mask').css({ 'display' : 'block', opacity : 0});  
-      $('#mask').fadeTo(500,0.8);  
-      $('#'+modal_id).fadeIn(500);  
+      $('#mask').stop().fadeTo(500,0.8);  
+      $('#'+modal_id).stop().fadeIn(500);  
 	}  
 
 });
