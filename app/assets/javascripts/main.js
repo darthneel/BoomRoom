@@ -24,7 +24,7 @@ $(function() {
 	volumeSlider(); // found below
 	logoSearch(); // found below
 	logoChat(); // found below
-	// searchResultHover(); // found below
+	searchResultHover(); // found below
 
 	// Trigger certain events on room page load
 	if((document.URL).match(/\/rooms\/.+/)) {

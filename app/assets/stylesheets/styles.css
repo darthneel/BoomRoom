@@ -21,12 +21,12 @@ body {
 }
 
 
-#playlist {
+/*#playlist {
 	width: 45%;
 	float: left;
 	margin-left: 5%;
 }
-
+*/
 #search {
 	margin-top: 20px;
 }
@@ -376,8 +376,24 @@ header {
 
 /***** Playlist/Userlist */
 #playlist-userlist{
+	position: fixed;
+	color:white;
+	font-size: 12px;
+	font-family: 'Lato', sans-serif;
+	margin-top: 20%;
+	z-index: 2000;
 	height: 50%;
-	width: 50%;
+	width: 60%;
+	overflow-y:scroll;
+}
+
+#playlist {
+	float: right;
+	background-color: black;
+}
+
+#users {
+	float: left;
 	background-color: black;
 }
 
