@@ -30,10 +30,14 @@ class RoomsController < ApplicationController
 		$redis.publish("add_user_#{room.id}", {user: current_user.username, id: current_user.id}.to_json)
 		# --- end ---
 		room.users << current_user
+		album_arts = []
+		room.songs.order('id').each do |song|
+			album_arts << song.album_art
+		end
 		# --- Sends currently playing song data to new user if a song is playing ---
 		if current_song 
 			elapsed = ((Time.now - current_song.updated_at) * 1000).to_i
-			render :json => {elapsed: elapsed, sc_ident: current_song.sc_ident, title: current_song.title}
+			render :json => {elapsed: elapsed, sc_ident: current_song.sc_ident, title: current_song.title, album_arts: album_arts}
 		else
 			render :json => false # Does nothing if no song is playing
 		end
@@ -73,7 +77,7 @@ class RoomsController < ApplicationController
 		if check.length == 0
 			@song = Song.create(new_song_params)
 			room.songs << @song
-		  $redis.publish("add_song_#{room.id}", {title: @song.title, added_by: current_user.username}.to_json)
+		  $redis.publish("add_song_#{room.id}", {title: @song.title, added_by: current_user.username, sc_ident: @song.sc_ident, album_art: @song.album_art}.to_json)
 		end
     render nothing: true
 	end

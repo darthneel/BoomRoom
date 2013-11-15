@@ -13,6 +13,18 @@ function prepareBroadcast() {
 	  	data = JSON.parse(e.data);
 	  	console.log(data);
 	  	$("#room-" + room_id + " #playlist").append($('<li>'+data.title+' added by '+data.added_by+'</li>'));
+	  	// --- Masonry Append ---
+  		var $container = $("#room-" + room_id + " #album-art-container");
+			var msnry = $container.data('masonry');
+			$container.masonry({
+			  itemSelector: '.cover-art',
+			  columnWidth: 80,
+			  isAnimated: true
+			});
+			var random_num = (Math.random()*70)+90;
+		  var $image_div = $("<div id='art-"+data.sc_ident+"' class='cover-art'><img style='height: "+random_num+"px; width: "+random_num+"px;' src="+data.album_art+">");
+		  $container.prepend($image_div).masonry('reload');
+		  // --- end ---
 	  });
 
 	  // Publishes when a new user joins the room ------------------------------------------
