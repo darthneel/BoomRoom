@@ -20,6 +20,11 @@ body {
 	width: 400px;
 }
 
+.serif-font {
+	font-family: 'Antic Slab', serif;
+}
+
+
 #search {
 	margin-top: 20px;
 }
@@ -344,33 +349,64 @@ header {
 #song-controller{
 	position: fixed;
 	z-index: 1000;
-	background-color: rgba(33, 33, 29, 0.3);
+	background-color: transparent;
 	width: 40%;
 	margin-left: 1%;
-	margin-top: 1%;
+	margin-top: 5%;
 	padding: .5%;
-	border: 3px solid rgba(0,0,0,0.8);
 }
 
 #currently-playing{
+	/*position: absolute;*/
+	width: 100%;
+	margin-bottom: 2%;
 	font-family: 'Lato', sans-serif;
 	color:white;
 }
 
-.controller-buttons{
+#currently-playing-static{
+	display: inline-block;
+}
+
+#current-track {
+	display: inline-block;
 	font-family: 'Lato', sans-serif;
+	color: #2c3e50;
+}
+
+.controller-buttons {
+	margin-top: 4%;
 	color: white;
-	font-size: 15px;
+	font-size: 17px;
 	line-height: 20px;
 }
 
-#side-by-side{
+#side-by-side {
+	clear: both;
+}
+
+#mute {
 	float:left;
+	cursor: pointer;
+}
+
+#like {
+	font-family: 'Lato', sans-serif;
+	margin-left: 100px;
+	float:left;
+	cursor: pointer;
+}
+
+#dislike {
+	font-family: 'Lato', sans-serif;
+	margin-left: 30px;
+	float:left;
+	cursor: pointer;
 }
 
 /* Room Slider */
 #slider {
-	margin-top: 5%;
+	margin-top: 2%;
 	width: 100%;
 }
 
@@ -388,21 +424,21 @@ header {
 	color:white;
 	font-size: 13px;
 	font-family: 'Lato', sans-serif;
-	margin-top: 20%;
+	margin-top: 18%;
 	z-index: 2000;
 	height: 50%;
 	width: 60%;
 }
 
 #playlist-container {
+	float:left;
 	margin-top: 1%;
-	margin-left: 12%;
+	margin-left: 13%;
 	width: 33%;
 	background-color: transparent;
 	padding:1%;
 	position: fixed;
-	
-	height: 40%;
+	height: 53%;
 }
 
 #playlist-container ul {
@@ -425,14 +461,32 @@ header {
 	font-size: 11px;
 }
 
-#users {
+#users-container {
+	float: left;
 	margin-top: 1%;
-	/*margin-left: 1%;*/
 	position: fixed;
 	width:10%;
+	height: 50%;
+	padding: 1%;
 	background-color: transparent;
-	overflow-y:scroll;
+}
 
+#users-container h4 {
+	font-family: 'Antic Slab', serif;
+	margin:0;
+}
+
+#users-container ul {
+	list-style-type: none;
+}
+
+#users {
+/*	margin-top: 1%;
+	/*margin-left: 1%;*/
+	position: fixed;
+	width:100%;
+	overflow-y:scroll;
+	height: 100%
 }
 
 #chatroom {
@@ -446,14 +500,14 @@ header {
 }
 
 #messages {
-	height: 300px;
+	height: 125%;
 	width: 200px;
 	word-wrap: break-word;
 	overflow-y: scroll;
 	overflow-x: none;
 	border: 3px solid rgba(0,0,0,0.8);
 	margin-bottom: 0;
-	background-color: rgba(33, 33, 29, 0.6);
+	background-color: rgba(33, 33, 29, 0.9);
 	color: white;
 	font-family: Lato, sans-serif;
 }
@@ -480,7 +534,6 @@ header {
 	color: white;
 	border-left:0px;
 	background: black;
-	width: 10%;
 	height: 15px;
 	display: inline-block;
 }

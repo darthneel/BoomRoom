@@ -68,6 +68,7 @@ class RoomsController < ApplicationController
 		response.headers['Content-Type'] = 'text/javascript' # Tells Rails/Redis that content is JavaScript
 		room = current_user.room
 		new_song_params = song_params
+		new_song_params[:added_by] = current_user.username
 		# --- If this is the first song, set it as currently playing ---
 		if room.songs.length == 0
 			new_song_params[:currently_playing] = true
@@ -77,7 +78,7 @@ class RoomsController < ApplicationController
 		if check.length == 0
 			@song = Song.create(new_song_params)
 			room.songs << @song
-		  $redis.publish("add_song_#{room.id}", {title: @song.title, added_by: current_user.username, sc_ident: @song.sc_ident, album_art: @song.album_art}.to_json)
+		  $redis.publish("add_song_#{room.id}", {title: @song.title, added_by: @song.added_by, sc_ident: @song.sc_ident, album_art: @song.album_art}.to_json)
 		end
     render nothing: true
 	end

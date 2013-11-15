@@ -4,14 +4,14 @@
 	<div id="page-left">
 		<div id="song-controller">
 			<div id = "currently-playing">
-				<h4>Currently Playing // <span id="current-track"></span></h4>
+				<div id="currently-playing-static"><h3 class="serif-font">Currently Playing //</h3></div>
+				<div id="current-track"></div>
 			</div>
+			<div id="slider"></div>
 			<div id="side-by-side">
-				<div id="slider"></div>
-			<!-- 	<div id="vol-tag">Volume</div> -->
-					<div class="controller-buttons" id="mute">Mute</div>
-				<div class="controller-buttons" id="like">Likes: <span class="num"><%= @likes || 0 %></span></div>
-				<div class="controller-buttons" id="dislike">Dislikes: <span class="num"><%= @dislikes || 0 %></span></div>
+				<div class="controller-buttons serif-font" id="mute">Mute</div>
+				<div class="controller-buttons" id="like"><i class="fa fa-thumbs-o-up"></i> <span class="num"><%= @likes || 0 %></span></div>
+				<div class="controller-buttons" id="dislike"><i class="fa fa-thumbs-o-down"></i> <span class="num"><%= @dislikes || 0 %></span></div>
 			</div>
 		</div>
 
@@ -19,26 +19,26 @@
 			<div id="users-container">
 				<h4>Users //</h4>
 				<div id="users">
-							<ul id="current-users">
-									<% @users.each do |user| %>
-								<li id="<%= user.id %>">
-									<%= user.username %>
-								</li>
-									<% end %>	
-							</ul>
-					</div>
+						<ul id="current-users">
+								<% @users.each do |user| %>
+							<li id="<%= user.id %>">
+								<%= user.username %>
+							</li>
+								<% end %>	
+						</ul>
+				</div>
+			</div>
 
 			<div id="playlist-container">
 				<h4>Playlist //</h4>
 				<div id="playlist-div">
-					<ul id="playlist">
-						<% @playlist.each do |song| %>
-							<li><i class="fa fa-chevron-right"></i><%= song.title %></li>
-						<% end %>
-					</ul>
+				<ul id="playlist">
+					<% @playlist.each do |song| %>
+						<li><i class="fa fa-chevron-right"></i>&nbsp;&nbsp;<%= song.title %><br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="added-by">added by <%= song.added_by %></span></li>
+					<% end %>
+				</ul>
 				</div>
 			</div>
-
 		</div>
 	</div>
 
@@ -47,12 +47,9 @@
 			<div id="logo-search">
 				<i class="fa fa-search"></i>
 			</div>
-
 			<div id="logo-chat">
 				<i class="fa fa-comment-o"></i>
 			</div>
-			<div id="album-art-container" class="masonry"></div>
-			
 			<div id="chatroom">
 				<div id="messages"></div>
 				<div id="mess-wrap">
@@ -64,6 +61,7 @@
 					</div>
 				</div>
 			</div>
+			<div id="album-art-container" class="masonry"></div>
 		</div>
 
 		<div id="search-bar">
