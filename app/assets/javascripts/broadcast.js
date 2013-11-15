@@ -12,7 +12,7 @@ function prepareBroadcast() {
 	  	console.log('add song redis triggered');
 	  	data = JSON.parse(e.data);
 	  	console.log(data);
-	  	$("#room-" + room_id + " #playlist").append($('<li>'+data.title+' added by '+data.added_by+'</li>'));
+	  	$("#room-" + room_id + " #playlist").append($('<li><i class="fa fa-chevron-right"></i> &nbsp;'+data.title+'<br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="added-by">added by '+data.added_by+'</span></li>'));
 	  	// --- Masonry Append ---
   		var $container = $("#room-" + room_id + " #album-art-container");
 			var msnry = $container.data('masonry');

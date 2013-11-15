@@ -20,13 +20,11 @@ body {
 	width: 400px;
 }
 
-
-/*#playlist {
-	width: 45%;
-	float: left;
-	margin-left: 5%;
+.serif-font {
+	font-family: 'Antic Slab', serif;
 }
-*/
+
+
 #search {
 	margin-top: 20px;
 }
@@ -281,8 +279,8 @@ header {
 }
 
 .cover-art img {
-	-webkit-box-shadow:  1px 1px 5px 1px rgba(0, 0, 0, 84);     
-        box-shadow:  1px 1px 5px 1px rgba(0, 0, 0, 84);
+	-webkit-box-shadow:  1px 1px 5px 1px #292929;        
+    			box-shadow:  1px 1px 5px 1px #292929;
 }
 
 /***** Room ***************/
@@ -417,33 +415,64 @@ header {
 #song-controller{
 	position: fixed;
 	z-index: 1000;
-	background-color: rgba(33, 33, 29, 0.3);
+	background-color: transparent;
 	width: 40%;
 	margin-left: 1%;
-	margin-top: 1%;
+	margin-top: 5%;
 	padding: .5%;
-	border: 3px solid rgba(0,0,0,0.8);
 }
 
 #currently-playing{
+	/*position: absolute;*/
+	width: 100%;
+	margin-bottom: 2%;
 	font-family: 'Lato', sans-serif;
 	color:white;
 }
 
-.controller-buttons{
+#currently-playing-static{
+	display: inline-block;
+}
+
+#current-track {
+	display: inline-block;
 	font-family: 'Lato', sans-serif;
+	color: #2c3e50;
+}
+
+.controller-buttons {
+	margin-top: 4%;
 	color: white;
-	font-size: 15px;
+	font-size: 17px;
 	line-height: 20px;
 }
 
-#side-by-side{
+#side-by-side {
+	clear: both;
+}
+
+#mute {
 	float:left;
+	cursor: pointer;
+}
+
+#like {
+	font-family: 'Lato', sans-serif;
+	margin-left: 100px;
+	float:left;
+	cursor: pointer;
+}
+
+#dislike {
+	font-family: 'Lato', sans-serif;
+	margin-left: 30px;
+	float:left;
+	cursor: pointer;
 }
 
 /* Room Slider */
 #slider {
-	margin-top: 5%;
+	margin-top: 2%;
 	width: 100%;
 }
 
@@ -459,39 +488,71 @@ header {
 	line-height: 20px;
 	display: inline-block;
 	color:white;
-	font-size: 12px;
+	font-size: 13px;
 	font-family: 'Lato', sans-serif;
-	margin-top: 20%;
+	margin-top: 18%;
 	z-index: 2000;
 	height: 50%;
 	width: 60%;
 }
 
-#playlist-div {
+#playlist-container {
+	float:left;
 	margin-top: 1%;
-	margin-left: 12%;
-	width: 30%;
-	background-color: black;
+	margin-left: 13%;
+	width: 33%;
+	background-color: transparent;
 	padding:1%;
-	list-style-type: none;
 	position: fixed;
-	overflow-y: scroll;
-	height: 50%;
-
+	height: 53%;
 }
 
-#playlist-div h4 {
+#playlist-container ul {
+	list-style-type: none;
+}
+
+#playlist-container h4 {
+	font-family: 'Antic Slab', serif;
 	margin:0;
 }
 
-#users {
+#playlist-div{
+	height: 100%;
+	width:100%;
+	overflow-y: scroll;
+}
+
+.added-by {
+	color: #2c3e50;
+	font-size: 11px;
+}
+
+#users-container {
+	float: left;
 	margin-top: 1%;
-	/*margin-left: 1%;*/
 	position: fixed;
 	width:10%;
-	background-color: black;
-	overflow-y:scroll;
+	height: 50%;
+	padding: 1%;
+	background-color: transparent;
+}
 
+#users-container h4 {
+	font-family: 'Antic Slab', serif;
+	margin:0;
+}
+
+#users-container ul {
+	list-style-type: none;
+}
+
+#users {
+/*	margin-top: 1%;
+	/*margin-left: 1%;*/
+	position: fixed;
+	width:100%;
+	overflow-y:scroll;
+	height: 100%
 }
 
 #chatroom {
