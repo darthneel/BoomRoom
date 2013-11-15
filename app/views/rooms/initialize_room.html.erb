@@ -16,25 +16,29 @@
 		</div>
 
 		<div id="playlist-userlist">
-			<div id="users">
+			<div id="users-container">
 				<h4>Users //</h4>
-						<ul id="current-users">
-								<% @users.each do |user| %>
-							<li id="<%= user.id %>">
-								<%= user.username %>
-							</li>
-								<% end %>	
-						</ul>
-				</div>
+				<div id="users">
+							<ul id="current-users">
+									<% @users.each do |user| %>
+								<li id="<%= user.id %>">
+									<%= user.username %>
+								</li>
+									<% end %>	
+							</ul>
+					</div>
 
-			<div id="playlist-div">
+			<div id="playlist-container">
 				<h4>Playlist //</h4>
-				<ul id="playlist">
-					<% @playlist.each do |song| %>
-						<li><%= song.title %></li>
-					<% end %>
-				</ul>
+				<div id="playlist-div">
+					<ul id="playlist">
+						<% @playlist.each do |song| %>
+							<li><i class="fa fa-chevron-right"></i><%= song.title %></li>
+						<% end %>
+					</ul>
+				</div>
 			</div>
+
 		</div>
 	</div>
 
