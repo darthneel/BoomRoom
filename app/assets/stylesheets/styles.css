@@ -279,8 +279,8 @@ header {
 }
 
 .cover-art img {
-	-webkit-box-shadow:  1px 1px 5px 1px rgba(0, 0, 0, 84);     
-        box-shadow:  1px 1px 5px 1px rgba(0, 0, 0, 84);
+	-webkit-box-shadow:  1px 1px 5px 1px #292929;        
+    			box-shadow:  1px 1px 5px 1px #292929;
 }
 
 /***** Room ***************/
