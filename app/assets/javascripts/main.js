@@ -74,18 +74,23 @@ function getRoomId() {
 function logoSearch() {
   $('#logo-search').on('click', function() {
     if ($(".room").hasClass('out-left')) {
-      $('.room').animate({
+      $('.room').stop().animate({
         left: '0'
       }, 500);
       $('.room').toggleClass('out-left');
     } else {
-      $('.room').animate({
+      $('.room').stop().animate({
         left: '-20%'
       }, 500);
       $('.room').toggleClass('out-left');
     }
   });
 }
+
+// function clickAnywhereToSlideSearchBack() {
+// 	$('#main-container').
+// }
+
 
 // Displays chat room --------------------------------------------------------------------
 function logoChat() {

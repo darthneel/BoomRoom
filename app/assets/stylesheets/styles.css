@@ -200,13 +200,23 @@ header {
 }
 
 #album-art-container{
-	margin-left: 46%;
+	margin-left: 54%;
 	margin-top: 1%;
 	position: absolute;
-	height: 98%;
-	width: 47%;
+	height: 100%;
+	width: 40%;
 	overflow-y: scroll;
 	z-index: 200;
+}
+
+.cover-art {
+	margin-top: 4px;
+	margin-bottom: 4px;
+}
+
+.cover-art img {
+	-webkit-box-shadow:  1px 1px 5px 1px rgba(0, 0, 0, 84);     
+        box-shadow:  1px 1px 5px 1px rgba(0, 0, 0, 84);
 }
 
 /***** Room ***************/
@@ -232,12 +242,18 @@ header {
 	top: 0;
 	left: 0;	
 }
+	
+#page-left {
+	background-color: #00bf7f;
+	height: 100%;
+	width: 52%;
+}
 
 #logo-search {
 	padding: 5px;
 	line-height: 30px;
 	margin-top: 2%;
-	margin-left:93%;
+	margin-left:95%;
 	text-align: center;
 	background-color:black;
 	color: white;
@@ -245,13 +261,15 @@ header {
 	height:35px;
 	position: fixed;
 	cursor: pointer;
+	z-index: 202;
+
 }
 
 #logo-chat {
 	padding: 5px;
 	line-height: 30px;
 	margin-top: 8%;
-	margin-left: 93%;
+	margin-left: 95%;
 	text-align: center;
 	background-color: black;
 	color: white;
