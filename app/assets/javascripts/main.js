@@ -31,8 +31,14 @@ $(function() {
 	// Trigger certain events on room page load
 	if((document.URL).match(/\/rooms\/.+/)) {
 		getRoomId(); // change global variable
+		$('#room-'+room_id).fadeIn(1000);
 		console.log(room_id); 
 		app.newUser(room_id); // add new user to room list
+	}
+
+	if((document.URL).match(/\/home\/index/)) {
+		$('#all-rooms').fadeIn(1000);
+		findRoom();
 	}
 });
 
@@ -70,6 +76,17 @@ function playSong(sc_ident, position) {
 function getRoomId() {
 	room_id_unparsed = $(".room").attr('id');
 	room_id = parseInt(room_id_unparsed.replace("room-",""));
+}
+
+// Index page room listeners -------------------------------------------------------------
+function findRoom() {
+	$('#find-room').on('click', function() {
+		$('.roomlist').stop().fadeIn(600);
+	});
+
+	$('#create-room-link').on('click', function() {
+		$('.roomlist').stop().fadeOut(600);
+	});
 }
 
 // Slides out search menu ----------------------------------------------------------------

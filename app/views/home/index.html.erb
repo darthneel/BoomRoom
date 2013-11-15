@@ -1,38 +1,34 @@
 <div id="all-rooms">
-
-
-<div id='mask' class='close_modal'></div> 
-
-
-<ul>
-	<% @rooms.each do |room| %>
-	<li>
-		<%= link_to room.name, room_path(room) %>
-	</li>
-	<% end %>
-</ul>
-
-	<div id="create-room-link" class="modal">Create Room!</div>
-
-
-<div id="create-room" class="modal-window">
-	
-<%= form_for @room, url: "/home/create" do |f| %>
-	
-	<%= f.label "Room Name:" %>
-	<%= f.text_field :name, size: "15" %>
-<br>
-
-	<%= f.submit %>
-
-<% end %>
-
-<!-- 	<input type="text" name="search_box" id="search-text" size="25" placeholder="Enter the room name" autofocus>
-	<div id="create-room-button">Create!</div> -->
-
+	<div id="all-rooms-mask">
+		<div id='mask' class='close_modal'></div>
+		<div id="options">
+			<div id="create-room-link" class="modal">Create Room!</div>
+			<div id="or"> OR </div>
+			<div id="find-room">Find an Existing Room!</div>
+		</div>
+		<div id="create-room" class="modal-window">
+			<%= form_for @room, url: "/home/create" do |f| %>
+				<div id="name-field">
+					<%= f.label 'Room Name:' %>
+					<%= f.text_field :name %>
+				</div>
+				<div>
+					<%= f.submit %>
+				</div>
+			<% end %>
+		</div>
+		<% if @rooms.length > 0 %>
+			<ul id="room-list" class="roomlist">
+				<% @rooms.each do |room| %>
+					<li>
+						<%= link_to room.name, room_path(room) %>
+					</li>
+				<% end %>
+			</ul>
+		<% else %>
+			<ul id="room-list-empty" class="roomlist"> 
+				<li>No rooms exist yet. Create one!</li> 
+			</ul>
+		<% end %>
+	</div>
 </div>
-
-
-
-</div>
-
