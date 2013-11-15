@@ -31,7 +31,7 @@
 				<h4>Playlist //</h4>
 				<ul id="playlist">
 					<% @playlist.each do |song| %>
-						<li><%= song.title %></li>
+						<li><%= song.title %> <span class="added-by">added by <%= song.added_by %></span></li>
 					<% end %>
 				</ul>
 			</div>
@@ -43,12 +43,9 @@
 			<div id="logo-search">
 				<i class="fa fa-search"></i>
 			</div>
-
 			<div id="logo-chat">
 				<i class="fa fa-comment-o"></i>
 			</div>
-			<div id="album-art-container" class="masonry"></div>
-			
 			<div id="chatroom">
 				<div id="messages"></div>
 				<div id="mess-wrap">
@@ -60,6 +57,7 @@
 					</div>
 				</div>
 			</div>
+			<div id="album-art-container" class="masonry"></div>
 		</div>
 
 		<div id="search-bar">

@@ -439,14 +439,14 @@ header {
 }
 
 #messages {
-	height: 300px;
+	height: 125%;
 	width: 200px;
 	word-wrap: break-word;
 	overflow-y: scroll;
 	overflow-x: none;
 	border: 3px solid rgba(0,0,0,0.8);
 	margin-bottom: 0;
-	background-color: rgba(33, 33, 29, 0.6);
+	background-color: rgba(33, 33, 29, 0.9);
 	color: white;
 	font-family: Lato, sans-serif;
 }
@@ -473,7 +473,6 @@ header {
 	color: white;
 	border-left:0px;
 	background: black;
-	width: 10%;
 	height: 15px;
 	display: inline-block;
 }
