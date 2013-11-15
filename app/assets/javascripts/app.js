@@ -15,6 +15,14 @@ var app = {
 				$("#room-" + room_id + " #current-track").text(data.title);
 				window.playSong(data.sc_ident, data.elapsed);
 			}
+			if(data.album_arts) {
+				setTimeout(function() {
+					for(var i = 0; i < data.album_arts.length; i++) {
+						console.log(data.album_arts[i]);
+						window.animateAlbumArt(data.album_arts[i]);
+					}
+				}, 500);
+			}
 		});
 	},
 

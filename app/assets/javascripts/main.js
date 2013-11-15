@@ -7,6 +7,7 @@ var like_count = 0; // Seems redundant, but being used to stop user from voting 
 var dislike_count = 0; // Seems redundant, but being used to stop user from voting more than once per song
 var isMuted = false; // Carries mute result from one song to the next
 var volume = 50; // Default volume
+var num_messages = 0 // Default number of messages received
 
 // Document ready function ---------------------------------------------------------------
 $(function() {
@@ -19,6 +20,7 @@ $(function() {
 	prepareBroadcast(); // found at broadcast.js
 	searchButtonClick(); // found below
 	searchResultClick(); // found below
+	muteButton(); // found below
 	voteClick(); // found below
 	messageClick(); // found below
 	volumeSlider(); // found below
@@ -74,11 +76,13 @@ function getRoomId() {
 function logoSearch() {
   $('#logo-search').on('click', function() {
     if ($(".room").hasClass('out-left')) {
+    	$('#search-text').attr('disabled', 'disabled');
       $('.room').stop().animate({
         left: '0'
       }, 500);
       $('.room').toggleClass('out-left');
     } else {
+    	$('#search-text').removeAttr('disabled');
       $('.room').stop().animate({
         left: '-20%'
       }, 500);
@@ -95,7 +99,8 @@ function logoSearch() {
 // Displays chat room --------------------------------------------------------------------
 function logoChat() {
 	$('#logo-chat').on('click', function() {
-		$('#chatroom').fadeToggle(500);
+		$('#chatroom').stop().fadeToggle(500);
+		checkMessages();
 	}); 
 }
 
@@ -117,6 +122,7 @@ function searchButtonClick() {
       if(search_string !== '') {
 				searchSC(search_string);
 			}
+			$('#search-results').scrollTop(0);
     }
   });
 }
@@ -178,11 +184,10 @@ function searchResultClick() {
 		}
 		app.addNewSong(artist, title, stream_url, album_art, sc_ident, genre);
 		console.log('added to db');
-		if(typeof(song) === 'undefined'){
+		if(typeof(song) === 'undefined') {
 			app.changeCurrentSong(sc_ident); // Plays if no song is in the room yet
 			$('#current-track').text(title); // Changes currently playing text
 		}
-		animateAlbumArt(sc_ident, album_art);
 	});
 }
 
@@ -228,6 +233,22 @@ function messageClick() {
 	});
 }
 
+// Checks to see if you have unviewed messages -------------------------------------------
+function checkMessages() {
+	$logo_chat = $('#logo-chat')
+	if($('#chatroom:visible').length === 0 && num_messages > 0) {
+		$logo_chat.animate({
+			"background-color": "red"
+		}, 300);
+		console.log(num_messages);
+	} else {
+		num_messages = 0;
+		$logo_chat.animate({
+			"background-color": "black"
+		}, 300);
+	}
+}
+
 // Mute button ---------------------------------------------------------------------------
 function muteButton() {
 	$('#mute').on('click', function() {
@@ -238,32 +259,17 @@ function muteButton() {
 }
 
 // Masonry album art --------------------------------------------------------------------- 
-
-// var $container = $('#album-art-container');
-// var msnry = $container.data('masonry');
-// $container.masonry({
-//   itemSelector: '.cover-art',
-//   columnWidth: 125,
-//   isAnimated: true
-// });
-
-function animateAlbumArt(sc_ident, album_art) {
-	console.log(sc_ident);
-	console.log(album_art);
+function animateAlbumArt(album_art) {
 	var $container = $('#album-art-container');
 	var msnry = $container.data('masonry');
 	$container.masonry({
-  itemSelector: '.cover-art',
-  columnWidth: 80,
-  isAnimated: true
-});
-
-	if($("#art-"+sc_ident).length === 0) {
-		var random_num = (Math.random()*70)+90;
-	  var $image_div = $("<div id='art-"+sc_ident+"' class='cover-art'><img style='height: "+random_num+"px; width: "+random_num+"px;' src="+album_art+">");
-	  var $img =  $("#art-"+sc_ident+" img");
-	  $container.prepend($image_div).masonry('reload');
-	}
+	  itemSelector: '.cover-art',
+	  columnWidth: 80,
+	  isAnimated: true
+	});
+	var random_num = (Math.random()*70)+90;
+  var $image_div = $("<div class='cover-art'><img style='height: "+random_num+"px; width: "+random_num+"px;' src="+album_art+">");
+  $container.prepend($image_div).masonry('reload');
 }
 
 // jQuery UI slider for volume -----------------------------------------------------------
